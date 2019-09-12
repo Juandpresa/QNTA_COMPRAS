@@ -1,0 +1,1565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ComprasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bancos">
+          <Key>
+            <PropertyRef Name="BancoId" />
+          </Key>
+          <Property Name="BancoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CentroCostos">
+          <Key>
+            <PropertyRef Name="CentroCostosID" />
+          </Key>
+          <Property Name="CentroCostosID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="RFC" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NumeroExterior" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumeroInterior" Type="varchar" MaxLength="10" />
+          <Property Name="Colonia" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Alcaldia" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EstaActivo" Type="bit" />
+        </EntityType>
+        <EntityType Name="ClienteCentroCostos">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+            <PropertyRef Name="CentroCostosID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="CentroCostosID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="ConceptoID" />
+          </Key>
+          <Property Name="ConceptoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoPagoID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ImporteParcial" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SolicitudId" Type="int" />
+        </EntityType>
+        <EntityType Name="Contacto">
+          <Key>
+            <PropertyRef Name="ContactoID" />
+          </Key>
+          <Property Name="ContactoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProveedorID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono1" Type="bigint" Nullable="false" />
+          <Property Name="Telefono2" Type="bigint" />
+          <Property Name="CorreoElectronico1" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="CorreoElectronico2" Type="varchar" MaxLength="150" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="EstatusId" />
+          </Key>
+          <Property Name="EstatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FormaPago">
+          <Key>
+            <PropertyRef Name="FormaPagoID" />
+          </Key>
+          <Property Name="FormaPagoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Moneda">
+          <Key>
+            <PropertyRef Name="MonedaID" />
+          </Key>
+          <Property Name="MonedaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nomenclatura" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pagadora">
+          <Key>
+            <PropertyRef Name="PagadoraID" />
+          </Key>
+          <Property Name="PagadoraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Periocidad">
+          <Key>
+            <PropertyRef Name="PeriocidadID" />
+          </Key>
+          <Property Name="PeriocidadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorID" />
+          </Key>
+          <Property Name="ProveedorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="RFC" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NumeroExterior" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumeroInterior" Type="varchar" MaxLength="10" />
+          <Property Name="Colonia" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Alcaldia" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReferenciaBancaria">
+          <Key>
+            <PropertyRef Name="ReferenciaBancariaID" />
+          </Key>
+          <Property Name="ReferenciaBancariaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProveedorID" Type="int" Nullable="false" />
+          <Property Name="BancoID" Type="int" />
+          <Property Name="MonedaID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Cuenta" Type="varchar" MaxLength="15" />
+          <Property Name="Clabe" Type="varchar" MaxLength="20" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoGasto">
+          <Key>
+            <PropertyRef Name="TipoGastoID" />
+          </Key>
+          <Property Name="TipoGastoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="TipoPagoID" />
+          </Key>
+          <Property Name="TipoPagoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EstaActivo" Type="bit" />
+        </EntityType>
+        <EntityType Name="ArchivoXML">
+          <Key>
+            <PropertyRef Name="ArchivoXMLID" />
+          </Key>
+          <Property Name="ArchivoXMLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SolicitudID" Type="int" Nullable="false" />
+          <Property Name="NombreArchivoXML" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ArchivoXML" Type="varbinary(max)" />
+          <Property Name="FechaAlmacenamiento" Type="datetime" Nullable="false" />
+          <Property Name="SeCargoXML" Type="bit" />
+        </EntityType>
+        <EntityType Name="Comprobante">
+          <Key>
+            <PropertyRef Name="ComprobanteID" />
+          </Key>
+          <Property Name="ComprobanteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SolicitudID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Archivo" Type="varbinary(max)" />
+          <Property Name="FechaAlmacenamiento" Type="datetime" Nullable="false" />
+          <Property Name="SeCargoComprobante" Type="bit" />
+        </EntityType>
+        <EntityType Name="DetalleSolicitud">
+          <Key>
+            <PropertyRef Name="DetalleSolicitudID" />
+          </Key>
+          <Property Name="DetalleSolicitudID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SolicitudId" Type="int" Nullable="false" />
+          <Property Name="PagadoraID" Type="int" Nullable="false" />
+          <Property Name="NumeroFactura" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NumeroPago" Type="int" Nullable="false" />
+          <Property Name="ImporteParcial" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ImporteLetra" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
+          <Property Name="FechaFactura" Type="datetime" Nullable="false" />
+          <Property Name="FechaPago" Type="datetime" />
+          <Property Name="Porcentaje" Type="int" />
+          <Property Name="ClienteID" Type="int" />
+        </EntityType>
+        <EntityType Name="DistribucionGasto">
+          <Key>
+            <PropertyRef Name="DistribucionGastoID" />
+          </Key>
+          <Property Name="DistribucionGastoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SolicitudID" Type="int" />
+          <Property Name="ClienteId" Type="int" />
+          <Property Name="CentroCostosID" Type="int" />
+          <Property Name="Porc" Type="int" />
+          <Property Name="Importe" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SolicitudID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Archivo" Type="varbinary(max)" />
+          <Property Name="FechaAlmacenamiento" Type="datetime" Nullable="false" />
+          <Property Name="SeCargoFactura" Type="bit" />
+        </EntityType>
+        <EntityType Name="Pago">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+            <PropertyRef Name="EstatusID" />
+            <PropertyRef Name="DetalleSolicitudID" />
+          </Key>
+          <Property Name="CuentaID" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="EstatusID" Type="int" Nullable="false" />
+          <Property Name="DetalleSolicitudID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seguimiento">
+          <Key>
+            <PropertyRef Name="SolicitudID" />
+            <PropertyRef Name="EstatusID" />
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="SolicitudID" Type="int" Nullable="false" />
+          <Property Name="EstatusID" Type="int" Nullable="false" />
+          <Property Name="CuentaID" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Solicitud">
+          <Key>
+            <PropertyRef Name="SolicitudID" />
+          </Key>
+          <Property Name="SolicitudID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProveedorID" Type="int" Nullable="false" />
+          <Property Name="FormaPagoID" Type="int" Nullable="false" />
+          <Property Name="TipoGastoID" Type="int" Nullable="false" />
+          <Property Name="PeriocidadID" Type="int" Nullable="false" />
+          <Property Name="CantidadPagos" Type="int" Nullable="false" />
+          <Property Name="ImporteTotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ImporteLetra" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaInicioPagos" Type="datetime" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+          <Property Name="CuentaIDModificacion" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="PagadoraID" Type="int" />
+          <Property Name="ObservacionesOtroFormaP" Type="varchar" MaxLength="300" />
+          <Property Name="ObsOtroTipoGasto" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="idTipoUsuario" />
+          </Key>
+          <Property Name="idTipoUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Perfil" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTipoUsuario" Type="int" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AMaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Autorizacion">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="CuentaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoAcceso" Type="varchar" MaxLength="6" />
+          <Property Name="FechaCreacion" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Cliente_DetalleSolicitud">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="DetalleSolicitud">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_DistribucionGasto">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="0..1" />
+          <End Role="DistribucionGasto" Type="Self.DistribucionGasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="DistribucionGasto">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concepto_TipoPago">
+          <End Role="TipoPago" Type="Self.TipoPago" Multiplicity="1" />
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPago">
+              <PropertyRef Name="TipoPagoID" />
+            </Principal>
+            <Dependent Role="Concepto">
+              <PropertyRef Name="TipoPagoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_Factura">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contacto_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Contacto" Type="Self.Contacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Contacto">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormaPago_Solicitud">
+          <End Role="FormaPago" Type="Self.FormaPago" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaPago">
+              <PropertyRef Name="FormaPagoID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="FormaPagoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagadora_DetalleSolicitud">
+          <End Role="Pagadora" Type="Self.Pagadora" Multiplicity="1" />
+          <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pagadora">
+              <PropertyRef Name="PagadoraID" />
+            </Principal>
+            <Dependent Role="DetalleSolicitud">
+              <PropertyRef Name="PagadoraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Periocidad_Solicitud">
+          <End Role="Periocidad" Type="Self.Periocidad" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periocidad">
+              <PropertyRef Name="PeriocidadID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="PeriocidadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proveedor_Solicitud">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaBancaria_Banco">
+          <End Role="Bancos" Type="Self.Bancos" Multiplicity="0..1" />
+          <End Role="ReferenciaBancaria" Type="Self.ReferenciaBancaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bancos">
+              <PropertyRef Name="BancoId" />
+            </Principal>
+            <Dependent Role="ReferenciaBancaria">
+              <PropertyRef Name="BancoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaBancaria_Moneda">
+          <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+          <End Role="ReferenciaBancaria" Type="Self.ReferenciaBancaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="MonedaID" />
+            </Principal>
+            <Dependent Role="ReferenciaBancaria">
+              <PropertyRef Name="MonedaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaBancaria_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="ReferenciaBancaria" Type="Self.ReferenciaBancaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="ReferenciaBancaria">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_Comprobante">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_Concepto">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="0..1" />
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="Concepto">
+              <PropertyRef Name="SolicitudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_DetalleSolicitud">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="DetalleSolicitud">
+              <PropertyRef Name="SolicitudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_XML">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="ArchivoXML" Type="Self.ArchivoXML" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="ArchivoXML">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoGasto_Solicitud">
+          <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGasto">
+              <PropertyRef Name="TipoGastoID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="TipoGastoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_TipoUsuario">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="idTipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComprasModelStoreContainer">
+          <EntitySet Name="Bancos" EntityType="Self.Bancos" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="CentroCostos" EntityType="Self.CentroCostos" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="ClienteCentroCostos" EntityType="Self.ClienteCentroCostos" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Concepto" EntityType="Self.Concepto" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Contacto" EntityType="Self.Contacto" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="FormaPago" EntityType="Self.FormaPago" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Moneda" EntityType="Self.Moneda" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Pagadora" EntityType="Self.Pagadora" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Periocidad" EntityType="Self.Periocidad" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="ReferenciaBancaria" EntityType="Self.ReferenciaBancaria" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="TipoGasto" EntityType="Self.TipoGasto" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="Catalogos" store:Type="Tables" />
+          <EntitySet Name="ArchivoXML" EntityType="Self.ArchivoXML" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="Comprobante" EntityType="Self.Comprobante" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="DetalleSolicitud" EntityType="Self.DetalleSolicitud" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="DistribucionGasto" EntityType="Self.DistribucionGasto" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="Pago" EntityType="Self.Pago" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="Solicitud" EntityType="Self.Solicitud" Schema="Compras" store:Type="Tables" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Autorizacion" EntityType="Self.Autorizacion" Schema="Seguridad" store:Type="Tables" />
+          <AssociationSet Name="FK_Cliente_DetalleSolicitud" Association="Self.FK_Cliente_DetalleSolicitud">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_DistribucionGasto" Association="Self.FK_Cliente_DistribucionGasto">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="DistribucionGasto" EntitySet="DistribucionGasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concepto_TipoPago" Association="Self.FK_Concepto_TipoPago">
+            <End Role="TipoPago" EntitySet="TipoPago" />
+            <End Role="Concepto" EntitySet="Concepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_Factura" Association="Self.FK_Consulta_Factura">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contacto_Proveedor" Association="Self.FK_Contacto_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Contacto" EntitySet="Contacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormaPago_Solicitud" Association="Self.FK_FormaPago_Solicitud">
+            <End Role="FormaPago" EntitySet="FormaPago" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagadora_DetalleSolicitud" Association="Self.FK_Pagadora_DetalleSolicitud">
+            <End Role="Pagadora" EntitySet="Pagadora" />
+            <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Periocidad_Solicitud" Association="Self.FK_Periocidad_Solicitud">
+            <End Role="Periocidad" EntitySet="Periocidad" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proveedor_Solicitud" Association="Self.FK_Proveedor_Solicitud">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaBancaria_Banco" Association="Self.FK_ReferenciaBancaria_Banco">
+            <End Role="Bancos" EntitySet="Bancos" />
+            <End Role="ReferenciaBancaria" EntitySet="ReferenciaBancaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaBancaria_Moneda" Association="Self.FK_ReferenciaBancaria_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="ReferenciaBancaria" EntitySet="ReferenciaBancaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaBancaria_Proveedor" Association="Self.FK_ReferenciaBancaria_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="ReferenciaBancaria" EntitySet="ReferenciaBancaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_Comprobante" Association="Self.FK_Solicitud_Comprobante">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_Concepto" Association="Self.FK_Solicitud_Concepto">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="Concepto" EntitySet="Concepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_DetalleSolicitud" Association="Self.FK_Solicitud_DetalleSolicitud">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_XML" Association="Self.FK_Solicitud_XML">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="ArchivoXML" EntitySet="ArchivoXML" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoGasto_Solicitud" Association="Self.FK_TipoGasto_Solicitud">
+            <End Role="TipoGasto" EntitySet="TipoGasto" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_TipoUsuario" Association="Self.FK_Usuarios_TipoUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ComprasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bancos">
+          <Key>
+            <PropertyRef Name="BancoId" />
+          </Key>
+          <Property Name="BancoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ReferenciaBancaria" Relationship="Self.FK_ReferenciaBancaria_Banco" FromRole="Bancos" ToRole="ReferenciaBancaria" />
+        </EntityType>
+        <EntityType Name="CentroCostos">
+          <Key>
+            <PropertyRef Name="CentroCostosID" />
+          </Key>
+          <Property Name="CentroCostosID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RazonSocial" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RFC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroExterior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroInterior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Colonia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Alcaldia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="Boolean" />
+          <NavigationProperty Name="DetalleSolicitud" Relationship="Self.FK_Cliente_DetalleSolicitud" FromRole="Cliente" ToRole="DetalleSolicitud" />
+        </EntityType>
+        <EntityType Name="ClienteCentroCostos">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+            <PropertyRef Name="CentroCostosID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="CentroCostosID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="ConceptoID" />
+          </Key>
+          <Property Name="ConceptoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoPagoID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImporteParcial" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SolicitudId" Type="Int32" />
+          <NavigationProperty Name="TipoPago" Relationship="Self.FK_Concepto_TipoPago" FromRole="Concepto" ToRole="TipoPago" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Solicitud_Concepto" FromRole="Concepto" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="Contacto">
+          <Key>
+            <PropertyRef Name="ContactoID" />
+          </Key>
+          <Property Name="ContactoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono1" Type="Int64" Nullable="false" />
+          <Property Name="Telefono2" Type="Int64" />
+          <Property Name="CorreoElectronico1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CorreoElectronico2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_Contacto_Proveedor" FromRole="Contacto" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="EstatusId" />
+          </Key>
+          <Property Name="EstatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FormaPago">
+          <Key>
+            <PropertyRef Name="FormaPagoID" />
+          </Key>
+          <Property Name="FormaPagoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_FormaPago_Solicitud" FromRole="FormaPago" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="Moneda">
+          <Key>
+            <PropertyRef Name="MonedaID" />
+          </Key>
+          <Property Name="MonedaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nomenclatura" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ReferenciaBancaria" Relationship="Self.FK_ReferenciaBancaria_Moneda" FromRole="Moneda" ToRole="ReferenciaBancaria" />
+        </EntityType>
+        <EntityType Name="Pagadora">
+          <Key>
+            <PropertyRef Name="PagadoraID" />
+          </Key>
+          <Property Name="PagadoraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alias" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DetalleSolicitud" Relationship="Self.FK_Pagadora_DetalleSolicitud" FromRole="Pagadora" ToRole="DetalleSolicitud" />
+        </EntityType>
+        <EntityType Name="Periocidad">
+          <Key>
+            <PropertyRef Name="PeriocidadID" />
+          </Key>
+          <Property Name="PeriocidadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Periocidad_Solicitud" FromRole="Periocidad" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorID" />
+          </Key>
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RFC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroExterior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroInterior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Colonia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Alcaldia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Contacto" Relationship="Self.FK_Contacto_Proveedor" FromRole="Proveedor" ToRole="Contacto" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Proveedor_Solicitud" FromRole="Proveedor" ToRole="Solicitud" />
+          <NavigationProperty Name="ReferenciaBancaria" Relationship="Self.FK_ReferenciaBancaria_Proveedor" FromRole="Proveedor" ToRole="ReferenciaBancaria" />
+        </EntityType>
+        <EntityType Name="ReferenciaBancaria">
+          <Key>
+            <PropertyRef Name="ReferenciaBancariaID" />
+          </Key>
+          <Property Name="ReferenciaBancariaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" />
+          <Property Name="BancoID" Type="Int32" />
+          <Property Name="MonedaID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cuenta" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Clabe" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bancos" Relationship="Self.FK_ReferenciaBancaria_Banco" FromRole="ReferenciaBancaria" ToRole="Bancos" />
+          <NavigationProperty Name="Moneda" Relationship="Self.FK_ReferenciaBancaria_Moneda" FromRole="ReferenciaBancaria" ToRole="Moneda" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_ReferenciaBancaria_Proveedor" FromRole="ReferenciaBancaria" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="TipoGasto">
+          <Key>
+            <PropertyRef Name="TipoGastoID" />
+          </Key>
+          <Property Name="TipoGastoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_TipoGasto_Solicitud" FromRole="TipoGasto" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="TipoPagoID" />
+          </Key>
+          <Property Name="TipoPagoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="Boolean" />
+          <NavigationProperty Name="Concepto" Relationship="Self.FK_Concepto_TipoPago" FromRole="TipoPago" ToRole="Concepto" />
+        </EntityType>
+        <EntityType Name="ArchivoXML">
+          <Key>
+            <PropertyRef Name="ArchivoXMLID" />
+          </Key>
+          <Property Name="ArchivoXMLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolicitudID" Type="Int32" Nullable="false" />
+          <Property Name="NombreArchivoXML" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ArchivoXML1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FechaAlmacenamiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SeCargoXML" Type="Boolean" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Solicitud_XML" FromRole="ArchivoXML" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="Comprobante">
+          <Key>
+            <PropertyRef Name="ComprobanteID" />
+          </Key>
+          <Property Name="ComprobanteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolicitudID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Archivo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FechaAlmacenamiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SeCargoComprobante" Type="Boolean" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Solicitud_Comprobante" FromRole="Comprobante" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="DetalleSolicitud">
+          <Key>
+            <PropertyRef Name="DetalleSolicitudID" />
+          </Key>
+          <Property Name="DetalleSolicitudID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolicitudId" Type="Int32" Nullable="false" />
+          <Property Name="PagadoraID" Type="Int32" Nullable="false" />
+          <Property Name="NumeroFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroPago" Type="Int32" Nullable="false" />
+          <Property Name="ImporteParcial" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ImporteLetra" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaPago" Type="DateTime" Precision="3" />
+          <Property Name="Porcentaje" Type="Int32" />
+          <Property Name="ClienteID" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_DetalleSolicitud" FromRole="DetalleSolicitud" ToRole="Cliente" />
+          <NavigationProperty Name="Pagadora" Relationship="Self.FK_Pagadora_DetalleSolicitud" FromRole="DetalleSolicitud" ToRole="Pagadora" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Solicitud_DetalleSolicitud" FromRole="DetalleSolicitud" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="DistribucionGasto">
+          <Key>
+            <PropertyRef Name="DistribucionGastoID" />
+          </Key>
+          <Property Name="DistribucionGastoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolicitudID" Type="Int32" />
+          <Property Name="ClienteId" Type="Int32" />
+          <Property Name="CentroCostosID" Type="Int32" />
+          <Property Name="Porc" Type="Int32" />
+          <Property Name="Importe" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Cliente_DistribucionGasto" FromRole="DistribucionGasto" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolicitudID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Archivo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FechaAlmacenamiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SeCargoFactura" Type="Boolean" />
+          <NavigationProperty Name="Solicitud" Relationship="Self.FK_Consulta_Factura" FromRole="Factura" ToRole="Solicitud" />
+        </EntityType>
+        <EntityType Name="Pago">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+            <PropertyRef Name="EstatusID" />
+            <PropertyRef Name="DetalleSolicitudID" />
+          </Key>
+          <Property Name="CuentaID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstatusID" Type="Int32" Nullable="false" />
+          <Property Name="DetalleSolicitudID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seguimiento">
+          <Key>
+            <PropertyRef Name="SolicitudID" />
+            <PropertyRef Name="EstatusID" />
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="SolicitudID" Type="Int32" Nullable="false" />
+          <Property Name="EstatusID" Type="Int32" Nullable="false" />
+          <Property Name="CuentaID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Solicitud">
+          <Key>
+            <PropertyRef Name="SolicitudID" />
+          </Key>
+          <Property Name="SolicitudID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" />
+          <Property Name="FormaPagoID" Type="Int32" Nullable="false" />
+          <Property Name="TipoGastoID" Type="Int32" Nullable="false" />
+          <Property Name="PeriocidadID" Type="Int32" Nullable="false" />
+          <Property Name="CantidadPagos" Type="Int32" Nullable="false" />
+          <Property Name="ImporteTotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ImporteLetra" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaInicioPagos" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CuentaIDModificacion" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PagadoraID" Type="Int32" />
+          <Property Name="ObservacionesOtroFormaP" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ObsOtroTipoGasto" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Concepto" Relationship="Self.FK_Solicitud_Concepto" FromRole="Solicitud" ToRole="Concepto" />
+          <NavigationProperty Name="FormaPago" Relationship="Self.FK_FormaPago_Solicitud" FromRole="Solicitud" ToRole="FormaPago" />
+          <NavigationProperty Name="Periocidad" Relationship="Self.FK_Periocidad_Solicitud" FromRole="Solicitud" ToRole="Periocidad" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_Proveedor_Solicitud" FromRole="Solicitud" ToRole="Proveedor" />
+          <NavigationProperty Name="TipoGasto" Relationship="Self.FK_TipoGasto_Solicitud" FromRole="Solicitud" ToRole="TipoGasto" />
+          <NavigationProperty Name="ArchivoXML" Relationship="Self.FK_Solicitud_XML" FromRole="Solicitud" ToRole="ArchivoXML" />
+          <NavigationProperty Name="Comprobante" Relationship="Self.FK_Solicitud_Comprobante" FromRole="Solicitud" ToRole="Comprobante" />
+          <NavigationProperty Name="DetalleSolicitud" Relationship="Self.FK_Solicitud_DetalleSolicitud" FromRole="Solicitud" ToRole="DetalleSolicitud" />
+          <NavigationProperty Name="DistribucionGasto" Relationship="Self.FK_Cliente_DistribucionGasto" FromRole="Solicitud" ToRole="DistribucionGasto" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Consulta_Factura" FromRole="Solicitud" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="idTipoUsuario" />
+          </Key>
+          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_TipoUsuario" FromRole="TipoUsuario" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UActivo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TipoUsuario" Relationship="Self.FK_Usuarios_TipoUsuario" FromRole="Usuarios" ToRole="TipoUsuario" />
+        </EntityType>
+        <EntityType Name="Autorizacion">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="CuentaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoAcceso" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_ReferenciaBancaria_Banco">
+          <End Role="Bancos" Type="Self.Bancos" Multiplicity="0..1" />
+          <End Role="ReferenciaBancaria" Type="Self.ReferenciaBancaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bancos">
+              <PropertyRef Name="BancoId" />
+            </Principal>
+            <Dependent Role="ReferenciaBancaria">
+              <PropertyRef Name="BancoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_DetalleSolicitud">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="DetalleSolicitud">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concepto_TipoPago">
+          <End Role="TipoPago" Type="Self.TipoPago" Multiplicity="1" />
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPago">
+              <PropertyRef Name="TipoPagoID" />
+            </Principal>
+            <Dependent Role="Concepto">
+              <PropertyRef Name="TipoPagoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_Concepto">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="0..1" />
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="Concepto">
+              <PropertyRef Name="SolicitudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contacto_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Contacto" Type="Self.Contacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Contacto">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormaPago_Solicitud">
+          <End Role="FormaPago" Type="Self.FormaPago" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaPago">
+              <PropertyRef Name="FormaPagoID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="FormaPagoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaBancaria_Moneda">
+          <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+          <End Role="ReferenciaBancaria" Type="Self.ReferenciaBancaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="MonedaID" />
+            </Principal>
+            <Dependent Role="ReferenciaBancaria">
+              <PropertyRef Name="MonedaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagadora_DetalleSolicitud">
+          <End Role="Pagadora" Type="Self.Pagadora" Multiplicity="1" />
+          <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pagadora">
+              <PropertyRef Name="PagadoraID" />
+            </Principal>
+            <Dependent Role="DetalleSolicitud">
+              <PropertyRef Name="PagadoraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Periocidad_Solicitud">
+          <End Role="Periocidad" Type="Self.Periocidad" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periocidad">
+              <PropertyRef Name="PeriocidadID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="PeriocidadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proveedor_Solicitud">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaBancaria_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="ReferenciaBancaria" Type="Self.ReferenciaBancaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="ReferenciaBancaria">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoGasto_Solicitud">
+          <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="1" />
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGasto">
+              <PropertyRef Name="TipoGastoID" />
+            </Principal>
+            <Dependent Role="Solicitud">
+              <PropertyRef Name="TipoGastoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_XML">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="ArchivoXML" Type="Self.ArchivoXML" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="ArchivoXML">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_Comprobante">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solicitud_DetalleSolicitud">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="DetalleSolicitud">
+              <PropertyRef Name="SolicitudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_DistribucionGasto">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="0..1" />
+          <End Role="DistribucionGasto" Type="Self.DistribucionGasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="DistribucionGasto">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_Factura">
+          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solicitud">
+              <PropertyRef Name="SolicitudID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="SolicitudID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_TipoUsuario">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="idTipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComprasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bancos" EntityType="Self.Bancos" />
+          <EntitySet Name="CentroCostos" EntityType="Self.CentroCostos" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="ClienteCentroCostos" EntityType="Self.ClienteCentroCostos" />
+          <EntitySet Name="Concepto" EntityType="Self.Concepto" />
+          <EntitySet Name="Contacto" EntityType="Self.Contacto" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" />
+          <EntitySet Name="FormaPago" EntityType="Self.FormaPago" />
+          <EntitySet Name="Moneda" EntityType="Self.Moneda" />
+          <EntitySet Name="Pagadora" EntityType="Self.Pagadora" />
+          <EntitySet Name="Periocidad" EntityType="Self.Periocidad" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <EntitySet Name="ReferenciaBancaria" EntityType="Self.ReferenciaBancaria" />
+          <EntitySet Name="TipoGasto" EntityType="Self.TipoGasto" />
+          <EntitySet Name="TipoPago" EntityType="Self.TipoPago" />
+          <EntitySet Name="ArchivoXML" EntityType="Self.ArchivoXML" />
+          <EntitySet Name="Comprobante" EntityType="Self.Comprobante" />
+          <EntitySet Name="DetalleSolicitud" EntityType="Self.DetalleSolicitud" />
+          <EntitySet Name="DistribucionGasto" EntityType="Self.DistribucionGasto" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="Pago" EntityType="Self.Pago" />
+          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" />
+          <EntitySet Name="Solicitud" EntityType="Self.Solicitud" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="Autorizacion" EntityType="Self.Autorizacion" />
+          <AssociationSet Name="FK_ReferenciaBancaria_Banco" Association="Self.FK_ReferenciaBancaria_Banco">
+            <End Role="Bancos" EntitySet="Bancos" />
+            <End Role="ReferenciaBancaria" EntitySet="ReferenciaBancaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_DetalleSolicitud" Association="Self.FK_Cliente_DetalleSolicitud">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concepto_TipoPago" Association="Self.FK_Concepto_TipoPago">
+            <End Role="TipoPago" EntitySet="TipoPago" />
+            <End Role="Concepto" EntitySet="Concepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_Concepto" Association="Self.FK_Solicitud_Concepto">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="Concepto" EntitySet="Concepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contacto_Proveedor" Association="Self.FK_Contacto_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Contacto" EntitySet="Contacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormaPago_Solicitud" Association="Self.FK_FormaPago_Solicitud">
+            <End Role="FormaPago" EntitySet="FormaPago" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaBancaria_Moneda" Association="Self.FK_ReferenciaBancaria_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="ReferenciaBancaria" EntitySet="ReferenciaBancaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagadora_DetalleSolicitud" Association="Self.FK_Pagadora_DetalleSolicitud">
+            <End Role="Pagadora" EntitySet="Pagadora" />
+            <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Periocidad_Solicitud" Association="Self.FK_Periocidad_Solicitud">
+            <End Role="Periocidad" EntitySet="Periocidad" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proveedor_Solicitud" Association="Self.FK_Proveedor_Solicitud">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaBancaria_Proveedor" Association="Self.FK_ReferenciaBancaria_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="ReferenciaBancaria" EntitySet="ReferenciaBancaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoGasto_Solicitud" Association="Self.FK_TipoGasto_Solicitud">
+            <End Role="TipoGasto" EntitySet="TipoGasto" />
+            <End Role="Solicitud" EntitySet="Solicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_XML" Association="Self.FK_Solicitud_XML">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="ArchivoXML" EntitySet="ArchivoXML" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_Comprobante" Association="Self.FK_Solicitud_Comprobante">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Solicitud_DetalleSolicitud" Association="Self.FK_Solicitud_DetalleSolicitud">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_DistribucionGasto" Association="Self.FK_Cliente_DistribucionGasto">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="DistribucionGasto" EntitySet="DistribucionGasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_Factura" Association="Self.FK_Consulta_Factura">
+            <End Role="Solicitud" EntitySet="Solicitud" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_TipoUsuario" Association="Self.FK_Usuarios_TipoUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ComprasModelStoreContainer" CdmEntityContainer="ComprasEntities">
+          <EntitySetMapping Name="Bancos">
+            <EntityTypeMapping TypeName="ComprasModel.Bancos">
+              <MappingFragment StoreEntitySet="Bancos">
+                <ScalarProperty Name="BancoId" ColumnName="BancoId" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CentroCostos">
+            <EntityTypeMapping TypeName="ComprasModel.CentroCostos">
+              <MappingFragment StoreEntitySet="CentroCostos">
+                <ScalarProperty Name="CentroCostosID" ColumnName="CentroCostosID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="ComprasModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="NumeroExterior" ColumnName="NumeroExterior" />
+                <ScalarProperty Name="NumeroInterior" ColumnName="NumeroInterior" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="Alcaldia" ColumnName="Alcaldia" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClienteCentroCostos">
+            <EntityTypeMapping TypeName="ComprasModel.ClienteCentroCostos">
+              <MappingFragment StoreEntitySet="ClienteCentroCostos">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="CentroCostosID" ColumnName="CentroCostosID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concepto">
+            <EntityTypeMapping TypeName="ComprasModel.Concepto">
+              <MappingFragment StoreEntitySet="Concepto">
+                <ScalarProperty Name="ConceptoID" ColumnName="ConceptoID" />
+                <ScalarProperty Name="TipoPagoID" ColumnName="TipoPagoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ImporteParcial" ColumnName="ImporteParcial" />
+                <ScalarProperty Name="SolicitudId" ColumnName="SolicitudId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacto">
+            <EntityTypeMapping TypeName="ComprasModel.Contacto">
+              <MappingFragment StoreEntitySet="Contacto">
+                <ScalarProperty Name="ContactoID" ColumnName="ContactoID" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
+                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
+                <ScalarProperty Name="CorreoElectronico1" ColumnName="CorreoElectronico1" />
+                <ScalarProperty Name="CorreoElectronico2" ColumnName="CorreoElectronico2" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="ComprasModel.Estatus">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormaPago">
+            <EntityTypeMapping TypeName="ComprasModel.FormaPago">
+              <MappingFragment StoreEntitySet="FormaPago">
+                <ScalarProperty Name="FormaPagoID" ColumnName="FormaPagoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Moneda">
+            <EntityTypeMapping TypeName="ComprasModel.Moneda">
+              <MappingFragment StoreEntitySet="Moneda">
+                <ScalarProperty Name="MonedaID" ColumnName="MonedaID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nomenclatura" ColumnName="Nomenclatura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pagadora">
+            <EntityTypeMapping TypeName="ComprasModel.Pagadora">
+              <MappingFragment StoreEntitySet="Pagadora">
+                <ScalarProperty Name="PagadoraID" ColumnName="PagadoraID" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periocidad">
+            <EntityTypeMapping TypeName="ComprasModel.Periocidad">
+              <MappingFragment StoreEntitySet="Periocidad">
+                <ScalarProperty Name="PeriocidadID" ColumnName="PeriocidadID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="ComprasModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="NumeroExterior" ColumnName="NumeroExterior" />
+                <ScalarProperty Name="NumeroInterior" ColumnName="NumeroInterior" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="Alcaldia" ColumnName="Alcaldia" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferenciaBancaria">
+            <EntityTypeMapping TypeName="ComprasModel.ReferenciaBancaria">
+              <MappingFragment StoreEntitySet="ReferenciaBancaria">
+                <ScalarProperty Name="ReferenciaBancariaID" ColumnName="ReferenciaBancariaID" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="BancoID" ColumnName="BancoID" />
+                <ScalarProperty Name="MonedaID" ColumnName="MonedaID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
+                <ScalarProperty Name="Clabe" ColumnName="Clabe" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoGasto">
+            <EntityTypeMapping TypeName="ComprasModel.TipoGasto">
+              <MappingFragment StoreEntitySet="TipoGasto">
+                <ScalarProperty Name="TipoGastoID" ColumnName="TipoGastoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPago">
+            <EntityTypeMapping TypeName="ComprasModel.TipoPago">
+              <MappingFragment StoreEntitySet="TipoPago">
+                <ScalarProperty Name="TipoPagoID" ColumnName="TipoPagoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArchivoXML">
+            <EntityTypeMapping TypeName="ComprasModel.ArchivoXML">
+              <MappingFragment StoreEntitySet="ArchivoXML">
+                <ScalarProperty Name="ArchivoXMLID" ColumnName="ArchivoXMLID" />
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
+                <ScalarProperty Name="NombreArchivoXML" ColumnName="NombreArchivoXML" />
+                <ScalarProperty Name="ArchivoXML1" ColumnName="ArchivoXML" />
+                <ScalarProperty Name="FechaAlmacenamiento" ColumnName="FechaAlmacenamiento" />
+                <ScalarProperty Name="SeCargoXML" ColumnName="SeCargoXML" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comprobante">
+            <EntityTypeMapping TypeName="ComprasModel.Comprobante">
+              <MappingFragment StoreEntitySet="Comprobante">
+                <ScalarProperty Name="ComprobanteID" ColumnName="ComprobanteID" />
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="FechaAlmacenamiento" ColumnName="FechaAlmacenamiento" />
+                <ScalarProperty Name="SeCargoComprobante" ColumnName="SeCargoComprobante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleSolicitud">
+            <EntityTypeMapping TypeName="ComprasModel.DetalleSolicitud">
+              <MappingFragment StoreEntitySet="DetalleSolicitud">
+                <ScalarProperty Name="DetalleSolicitudID" ColumnName="DetalleSolicitudID" />
+                <ScalarProperty Name="SolicitudId" ColumnName="SolicitudId" />
+                <ScalarProperty Name="PagadoraID" ColumnName="PagadoraID" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="NumeroPago" ColumnName="NumeroPago" />
+                <ScalarProperty Name="ImporteParcial" ColumnName="ImporteParcial" />
+                <ScalarProperty Name="ImporteLetra" ColumnName="ImporteLetra" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaFactura" ColumnName="FechaFactura" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistribucionGasto">
+            <EntityTypeMapping TypeName="ComprasModel.DistribucionGasto">
+              <MappingFragment StoreEntitySet="DistribucionGasto">
+                <ScalarProperty Name="DistribucionGastoID" ColumnName="DistribucionGastoID" />
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="CentroCostosID" ColumnName="CentroCostosID" />
+                <ScalarProperty Name="Porc" ColumnName="Porc" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="ComprasModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="FechaAlmacenamiento" ColumnName="FechaAlmacenamiento" />
+                <ScalarProperty Name="SeCargoFactura" ColumnName="SeCargoFactura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pago">
+            <EntityTypeMapping TypeName="ComprasModel.Pago">
+              <MappingFragment StoreEntitySet="Pago">
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+                <ScalarProperty Name="EstatusID" ColumnName="EstatusID" />
+                <ScalarProperty Name="DetalleSolicitudID" ColumnName="DetalleSolicitudID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seguimiento">
+            <EntityTypeMapping TypeName="ComprasModel.Seguimiento">
+              <MappingFragment StoreEntitySet="Seguimiento">
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
+                <ScalarProperty Name="EstatusID" ColumnName="EstatusID" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Solicitud">
+            <EntityTypeMapping TypeName="ComprasModel.Solicitud">
+              <MappingFragment StoreEntitySet="Solicitud">
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="FormaPagoID" ColumnName="FormaPagoID" />
+                <ScalarProperty Name="TipoGastoID" ColumnName="TipoGastoID" />
+                <ScalarProperty Name="PeriocidadID" ColumnName="PeriocidadID" />
+                <ScalarProperty Name="CantidadPagos" ColumnName="CantidadPagos" />
+                <ScalarProperty Name="ImporteTotal" ColumnName="ImporteTotal" />
+                <ScalarProperty Name="ImporteLetra" ColumnName="ImporteLetra" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="FechaInicioPagos" ColumnName="FechaInicioPagos" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="CuentaIDModificacion" ColumnName="CuentaIDModificacion" />
+                <ScalarProperty Name="PagadoraID" ColumnName="PagadoraID" />
+                <ScalarProperty Name="ObservacionesOtroFormaP" ColumnName="ObservacionesOtroFormaP" />
+                <ScalarProperty Name="ObsOtroTipoGasto" ColumnName="ObsOtroTipoGasto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUsuario">
+            <EntityTypeMapping TypeName="ComprasModel.TipoUsuario">
+              <MappingFragment StoreEntitySet="TipoUsuario">
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="ComprasModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="APaterno" ColumnName="APaterno" />
+                <ScalarProperty Name="AMaterno" ColumnName="AMaterno" />
+                <ScalarProperty Name="UActivo" ColumnName="UActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Autorizacion">
+            <EntityTypeMapping TypeName="ComprasModel.Autorizacion">
+              <MappingFragment StoreEntitySet="Autorizacion">
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+                <ScalarProperty Name="CodigoAcceso" ColumnName="CodigoAcceso" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

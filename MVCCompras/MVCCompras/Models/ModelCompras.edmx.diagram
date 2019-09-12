@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bc3be48dceae4ccc9ad1b85c8facd756" Name="Diagram1">
+        <EntityTypeShape EntityType="ComprasModel.Bancos" Width="1.5" PointX="3.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.CentroCostos" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Cliente" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.ClienteCentroCostos" Width="1.5" PointX="2.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Concepto" Width="1.5" PointX="8.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Contacto" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Estatus" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.FormaPago" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Moneda" Width="1.5" PointX="3.75" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Pagadora" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Periocidad" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Proveedor" Width="1.5" PointX="0.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.ReferenciaBancaria" Width="1.5" PointX="6" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.TipoGasto" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.TipoPago" Width="1.5" PointX="6" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.ArchivoXML" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Comprobante" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.DetalleSolicitud" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.DistribucionGasto" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Factura" Width="1.5" PointX="5.25" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Pago" Width="1.5" PointX="10.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Seguimiento" Width="1.5" PointX="10.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Solicitud" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.TipoUsuario" Width="1.5" PointX="10.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Usuarios" Width="1.5" PointX="13" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComprasModel.Autorizacion" Width="1.5" PointX="10.75" PointY="11.625" IsExpanded="true" />
+        <AssociationConnector Association="ComprasModel.FK_ReferenciaBancaria_Banco" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Cliente_DetalleSolicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Concepto_TipoPago" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Solicitud_Concepto" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Contacto_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_FormaPago_Solicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_ReferenciaBancaria_Moneda" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Pagadora_DetalleSolicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Periocidad_Solicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Proveedor_Solicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_ReferenciaBancaria_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_TipoGasto_Solicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Solicitud_XML" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Solicitud_Comprobante" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Solicitud_DetalleSolicitud" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Cliente_DistribucionGasto" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Consulta_Factura" ManuallyRouted="false" />
+        <AssociationConnector Association="ComprasModel.FK_Usuarios_TipoUsuario" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
