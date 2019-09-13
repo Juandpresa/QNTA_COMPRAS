@@ -12,14 +12,14 @@ namespace MVCCompras.Models
     public int idUsuario { get; set; }
     public int idTipoUsuario { get; set; }
 
-
+    [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", ErrorMessage = "El formato de correo es: ejemplo@gmail.com")]
     [Required(ErrorMessage = "Correo Requerido")]
     [Display(Name = "Correo")]
     [MaxLength(50)]
-    [RegularExpression(@"^[A-Za-z]{3}-[0-9]{4}$", ErrorMessage = "El formato de matricula es XXX-0000")]
     public string Correo { get; set; }
 
     [Required(ErrorMessage = "Contraseña Requerida")]
+    [Display(Name = "Contraseña")]
     public string Pass { get; set; }
     public string Nombre { get; set; }
     public string APaterno { get; set; }
