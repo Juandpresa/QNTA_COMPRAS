@@ -97,10 +97,15 @@
         <ul class="nav pull-right top-menu">
             <!-- user login dropdown start-->
             <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <span class="username">Jenifer Smith</span>
-                    <b class="caret"></b>
-                </a>
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                @if (Session["Correo"] != null)
+                {
+                <span class="username"> Welcome @Session["Correo"].ToString()</span>
+                
+                }
+
+                <b class="caret"></b>
+              </a>
                 <ul class="dropdown-menu extended logout">
                     <div class="log-arrow-up"></div>
                     <li class="eborder-top">
