@@ -110,11 +110,6 @@
                                                 <div class="col-md-10">
                                                     @Html.EditorFor(model => model.PagadoraID, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.PagadoraID, "", new { @class = "text-danger" })
-
-
-                                                    @Html.DropDownListFor(m => m.PagadoraID, new SelectList(UIDataHelper.ObtenerPagadoras(), "PagadoraID", "RazonSocial"),
-                                                    "Seleccionar...", new { @class = "form-control select2 select2-hidden-accessible" })
-                                                    @Html.ValidationMessageFor(m => m.PagadoraID, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="form-group">
