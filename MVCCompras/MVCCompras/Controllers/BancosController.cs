@@ -120,9 +120,7 @@ namespace MVCCompras.Controllers
       {
 
         throw;
-      }
-      
-     
+      }    
     }
 
     // POST: Bancos/Edit/5
@@ -132,28 +130,62 @@ namespace MVCCompras.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult Edit([Bind(Include = "BancoId,Alias,Nombre,EstaActivo")] Bancos bancos)
     {
-      if (ModelState.IsValid)
+      try
       {
-        db.Entry(bancos).State = EntityState.Modified;
-        db.SaveChanges();
-        return RedirectToAction("Index");
+        if (Session["idUsuario"] != null)
+        {
+          if (ModelState.IsValid)
+          {
+            db.Entry(bancos).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+          }
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
+        }
       }
+      catch (Exception)
+      {
+
+        throw;
+      }     
+
       return View(bancos);
     }
 
     // GET: Bancos/Delete/5
     public ActionResult Delete(int? id)
     {
-      if (id == null)
+      try
       {
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        if (Session["idUsuario"] != null)
+        {
+          if (id == null)
+          {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+          }
+          Bancos bancos = db.Bancos.Find(id);
+          if (bancos == null)
+          {
+            return HttpNotFound();
+          }
+          return View();
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
+        }
       }
-      Bancos bancos = db.Bancos.Find(id);
-      if (bancos == null)
+      catch (Exception)
       {
-        return HttpNotFound();
+
+        throw;
       }
-      return View(bancos);
+      
     }
 
     // POST: Bancos/Delete/5
