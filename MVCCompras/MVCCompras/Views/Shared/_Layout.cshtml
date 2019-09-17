@@ -20,10 +20,10 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <span>@Html.ActionLink("Inicio", "Index", "Home")</span>
+            <a href="@Url.Action("Index", "Home")"><i class="icon_house_alt"></i>Inicio</a>
           </li>
           <li class="sub-menu">
-            <span>@Html.ActionLink("Solicitud", "Create", "Solicituds")</span>
+            <a href="@Url.Action("Create", "Solicituds")"><i class="icon_document_alt"></i>Solicitud</a>
           </li>
 
         </ul>
