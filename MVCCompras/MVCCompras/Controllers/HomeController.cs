@@ -71,7 +71,8 @@ namespace MVCCompras.Controllers
             //En sesion idTipoUsuario guardar lo que tenga objeto user en el campo IdTipoUsuario y convertirlo a string
             Session["idTipoUsuario"] = user.idTipoUsuario.ToString();
             //Redirecciona a la vista Index
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("../Solicituds/Index");
 
           }
           else

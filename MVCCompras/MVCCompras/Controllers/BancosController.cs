@@ -10,13 +10,13 @@ using MVCCompras.Models;
 
 namespace MVCCompras.Controllers
 {
-    public class BancosController : Controller
-    {
-        private ComprasEntities db = new ComprasEntities();
+  public class BancosController : Controller
+  {
+    private ComprasEntities db = new ComprasEntities();
 
-        // GET: Bancos
-        public ActionResult Index()
-        {
+    // GET: Bancos
+    public ActionResult Index()
+    {
       try
       {
         if (Session["idUsuario"] != null)
@@ -27,7 +27,7 @@ namespace MVCCompras.Controllers
         else
         {
           //Si sesion es null redirecciona a la vista de login
-          return RedirectToAction("Login");
+          return RedirectToAction("../Home/Login");
         }
       }
       catch (Exception)
@@ -35,53 +35,61 @@ namespace MVCCompras.Controllers
 
         throw;
       }
-            
-        }
 
-        // GET: Bancos/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Bancos bancos = db.Bancos.Find(id);
-            if (bancos == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bancos);
-        }
+    }
 
-        // GET: Bancos/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+    // GET: Bancos/Details/5
+    public ActionResult Details(int? id)
+    {
+      if (id == null)
+      {
+        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+      }
+      Bancos bancos = db.Bancos.Find(id);
+      if (bancos == null)
+      {
+        return HttpNotFound();
+      }
+      return View(bancos);
+    }
 
-        // POST: Bancos/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BancoId,Alias,Nombre,EstaActivo")] Bancos bancos)
-        {
+    // GET: Bancos/Create
+    public ActionResult Create()
+    {
+      if (Session["idUsuario"] != null)
+      {
+        return View();
+      }
+      else
+      {
+        //Si sesion es null redirecciona a la vista de login
+        return RedirectToAction("../Home/Login");
+      }
+
+    }
+
+    // POST: Bancos/Create
+    // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+    // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create([Bind(Include = "BancoId,Alias,Nombre,EstaActivo")] Bancos bancos)
+    {
       try
       {
         if (Session["idUsuario"] != null)
         {
-
           if (ModelState.IsValid)
           {
             db.Bancos.Add(bancos);
             db.SaveChanges();
             return RedirectToAction("Index");
           }
-          else
-          {
-            //Si sesion es null redirecciona a la vista de login
-            return RedirectToAction("Login");
-          }
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
         }
       }
       catch (Exception)
@@ -90,73 +98,82 @@ namespace MVCCompras.Controllers
         throw;
       }
 
-            return View(bancos);
-        }
-
-        // GET: Bancos/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Bancos bancos = db.Bancos.Find(id);
-            if (bancos == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bancos);
-        }
-
-        // POST: Bancos/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BancoId,Alias,Nombre,EstaActivo")] Bancos bancos)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(bancos).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(bancos);
-        }
-
-        // GET: Bancos/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Bancos bancos = db.Bancos.Find(id);
-            if (bancos == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bancos);
-        }
-
-        // POST: Bancos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Bancos bancos = db.Bancos.Find(id);
-            db.Bancos.Remove(bancos);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      return View(bancos);
     }
+
+    // GET: Bancos/Edit/5
+    public ActionResult Edit(int? id)
+    {
+      try
+      {
+        if (Session["idUsuario"] != null)
+        {
+          return View();
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+      
+     
+    }
+
+    // POST: Bancos/Edit/5
+    // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+    // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit([Bind(Include = "BancoId,Alias,Nombre,EstaActivo")] Bancos bancos)
+    {
+      if (ModelState.IsValid)
+      {
+        db.Entry(bancos).State = EntityState.Modified;
+        db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      return View(bancos);
+    }
+
+    // GET: Bancos/Delete/5
+    public ActionResult Delete(int? id)
+    {
+      if (id == null)
+      {
+        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+      }
+      Bancos bancos = db.Bancos.Find(id);
+      if (bancos == null)
+      {
+        return HttpNotFound();
+      }
+      return View(bancos);
+    }
+
+    // POST: Bancos/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Bancos bancos = db.Bancos.Find(id);
+      db.Bancos.Remove(bancos);
+      db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        db.Dispose();
+      }
+      base.Dispose(disposing);
+    }
+  }
 }
