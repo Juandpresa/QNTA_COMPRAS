@@ -17,7 +17,25 @@ namespace MVCCompras.Controllers
         // GET: Bancos
         public ActionResult Index()
         {
-            return View(db.Bancos.ToList());
+      try
+      {
+        if (Session["idUsuario"] != null)
+        {
+          //Si sesion trae datos permite el acceso a la vista
+          return View(db.Bancos.ToList());
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("Login");
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+            
         }
 
         // GET: Bancos/Details/5
@@ -48,12 +66,29 @@ namespace MVCCompras.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BancoId,Alias,Nombre,EstaActivo")] Bancos bancos)
         {
-            if (ModelState.IsValid)
-            {
-                db.Bancos.Add(bancos);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+      try
+      {
+        if (Session["idUsuario"] != null)
+        {
+
+          if (ModelState.IsValid)
+          {
+            db.Bancos.Add(bancos);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+          }
+          else
+          {
+            //Si sesion es null redirecciona a la vista de login
+            return RedirectToAction("Login");
+          }
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
 
             return View(bancos);
         }
