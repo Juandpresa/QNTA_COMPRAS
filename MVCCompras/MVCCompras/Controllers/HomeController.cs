@@ -71,6 +71,14 @@ namespace MVCCompras.Controllers
       }
       return View(modelo);
     }
+
+    public ActionResult CerrarSesion()
+    {
+      //Eliminar la sesion actual
+      Session.Contents.RemoveAll();
+      //Redirecciona a la vista de Login
+      return RedirectToAction("Login");
+    }
     public ActionResult Contact()
     {
       ViewBag.Message = "Your contact page.";
