@@ -17,17 +17,26 @@ namespace MVCCompras.Controllers
     
     public ActionResult Index()
     {
+      try
+      {
+        if (Session["idUsuario"] != null)
+        {
+          //Si sesion trae datos permite el acceso a la vista
+          return View();
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("Login");
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
       //Validar que la sesion no este vacia
-      if (Session["idUsuario"] != null)
-      {
-        //Si sesion trae datos permite el acceso a la vista
-        return View();
-      }
-      else
-      {
-        //Si sesion es null redirecciona a la vista de login
-        return RedirectToAction("Login");
-      }
+      
 
     }
 
@@ -43,41 +52,59 @@ namespace MVCCompras.Controllers
     [AllowAnonymous]
     public ActionResult Login(Login modelo)
     {
-      //Verificar que Correo y contraseña no esten vacio
-      if (modelo.Correo != null && modelo.Pass != null)
+      try
       {
-        //Consulta a la base de datos para obtener los datos correspondientes y almacenarlos en el objeto user
-        var user = db.Usuarios.FirstOrDefault(e => e.Correo == modelo.Correo && e.Pass == modelo.Pass);
-        //Verificar que user no sea null
-        if (user != null)
+        //Verificar que Correo y contraseña no esten vacio
+        if (modelo.Correo != null && modelo.Pass != null)
         {
-          //Guardar los datos en variables de sesion
+          //Consulta a la base de datos para obtener los datos correspondientes y almacenarlos en el objeto user
+          var user = db.Usuarios.FirstOrDefault(e => e.Correo == modelo.Correo && e.Pass == modelo.Pass);
+          //Verificar que user no sea null
+          if (user != null)
+          {
+            //Guardar los datos en variables de sesion
 
-          //En sesion idUsuario guardar lo que tenga objeto user en el campo IdUsuario y convertirlo a string   
-          Session["idUsuario"] = user.idUsuario.ToString();
-          //En sesion Correo guardar lo que tenga objeto user en el campo Correo y convertirlo a string
-          Session["Correo"] = user.Correo.ToString();
-          //En sesion idTipoUsuario guardar lo que tenga objeto user en el campo IdTipoUsuario y convertirlo a string
-          Session["idTipoUsuario"] = user.idTipoUsuario.ToString();
-          //Redirecciona a la vista Index
-          return RedirectToAction("Index");
+            //En sesion idUsuario guardar lo que tenga objeto user en el campo IdUsuario y convertirlo a string   
+            Session["idUsuario"] = user.idUsuario.ToString();
+            //En sesion Correo guardar lo que tenga objeto user en el campo Correo y convertirlo a string
+            Session["Correo"] = user.Correo.ToString();
+            //En sesion idTipoUsuario guardar lo que tenga objeto user en el campo IdTipoUsuario y convertirlo a string
+            Session["idTipoUsuario"] = user.idTipoUsuario.ToString();
+            //Redirecciona a la vista Index
+            return RedirectToAction("Index");
 
-        }
-        else
-        {
-          //Si user es null regresar a la vista Login
-          return View("Login");
+          }
+          else
+          {
+            //Si user es null regresar a la vista Login
+            return View("Login");
+          }
         }
       }
+      catch (Exception)
+      {
+
+        throw;
+      }
+      
       return View(modelo);
     }
 
     public ActionResult CerrarSesion()
     {
-      //Eliminar la sesion actual
-      Session.Contents.RemoveAll();
-      //Redirecciona a la vista de Login
-      return RedirectToAction("Login");
+      try
+      {
+        //Eliminar la sesion actual
+        Session.Contents.RemoveAll();
+        //Redirecciona a la vista de Login
+        return RedirectToAction("Login");
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+     
     }
     public ActionResult Contact()
     {
