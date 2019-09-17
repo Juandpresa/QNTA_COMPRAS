@@ -43,6 +43,7 @@ namespace MVCCompras.Controllers
             ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre");
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias");
             ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
+            ViewBag.MonedaID = new SelectList(db.Moneda, "Moneda", "Nombre");
             return View();
         }
 
@@ -51,7 +52,7 @@ namespace MVCCompras.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto")] Solicitud solicitud)
+        public ActionResult Create([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto")] Solicitud solicitud, Moneda moneda)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +60,7 @@ namespace MVCCompras.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.MonedaID = new SelectList(db.Moneda, "Moneda", "Nombre", moneda.MonedaID);
             ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
             ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
