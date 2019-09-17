@@ -1,0 +1,50 @@
+﻿@model MVCCompras.Models.Concepto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Concepto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImporteParcial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImporteParcial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPago.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoPago.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Solicitud.ImporteLetra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Solicitud.ImporteLetra)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ConceptoID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
