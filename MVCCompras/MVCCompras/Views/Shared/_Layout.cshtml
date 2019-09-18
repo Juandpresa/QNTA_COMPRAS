@@ -1,11 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/Bootstrap")
+    @Styles.Render("~/Content/Tables")
     @Styles.Render("~/Content/iconos")
     @Styles.Render("~/Content/estilos")
     @Scripts.Render("~/bundles/modernizr")
@@ -13,131 +14,89 @@
 </head>
 <body>
 
-  @if (Session["idTipoUsuario"].ToString() == "5")
-  {
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <!-- sidebar menu start-->
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Create", "Solicituds")"><i class="icon_document_alt"></i>Solicitud</a>
-          </li>
+    @if (Session["idTipoUsuario"].ToString() == "5")
+    {
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="@Url.Action("Create", "Solicituds")"><i class="icon_document_alt"></i>Solicitud</a>
+                    </li>
 
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+    }
+
+    @if (Session["idTipoUsuario"].ToString() == "1")
+    {
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
+                        @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
+                    </li>
+                    <li class="sub-menu">
+                        <a href="@Url.Action("Create", "Solicituds")"><i class="fa fa-file"></i>Solicitud</a>
+                        @*<span>@Html.ActionLink("Solicitud", "Create", "Solicituds", null, new { @class = "icon_genius" });</span>*@
+                    </li>
+                    <li class="sub-menu">
+                        <a href="@Url.Action("Index", "Bancos")"><i class="fa fa-institution"></i>Bancos</a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="@Url.Action("Index", "Pagadoras")"><i class="fa fa-institution"></i>Pagadoras</a>
+                    </li>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+    }
+
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        @Html.ActionLink("COMPRAS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <ul class="nav pull-right top-menu">
+            <!-- user login dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    @if (Session["Correo"] != null)
+                    {
+                        <span class="username">Bienvenido:  @Session["Correo"].ToString()</span>
+
+                    }
+
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    @*<div class="log-arrow-up"></div>*@
+                    <li>
+                        <a href="@Url.Action("CerrarSesion", "Home")"><i class="icon_key_alt"></i><span>Cerrar Sesión</span></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- user login dropdown end -->
         </ul>
-        <!-- sidebar menu end-->
-      </div>
-    </aside>
-  }
+    </div>
 
-  @if (Session["idTipoUsuario"].ToString() == "1")
-  {
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <!-- sidebar menu start-->
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
-            @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Create", "Solicituds")"><i class="fa fa-file"></i>Solicitud</a>
-            @*<span>@Html.ActionLink("Solicitud", "Create", "Solicituds", null, new { @class = "icon_genius" });</span>*@
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Index", "Bancos")"><i class="fa fa-institution"></i>Bancos</a>
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Index", "Pagadoras")"><i class="fa fa-institution"></i>Pagadoras</a>
-          </li>
-        </ul>
-        <!-- sidebar menu end-->
-      </div>
-    </aside>
-  }
+    @RenderBody()
+    <hr />
+    <footer></footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/js")
+    @Scripts.Render("~/bundles/datatables")
+
+    @RenderSection("scripts", required: false)
 
 
 
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    @Html.ActionLink("COMPRAS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-    <ul class="nav pull-right top-menu">
-      <!-- user login dropdown start-->
-      <li class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-          @if (Session["Correo"] != null)
-          {
-            <span class="username">Bienvenido:  @Session["Correo"].ToString()</span>
-
-          }
-
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu extended logout">
-          @*<div class="log-arrow-up"></div>*@         
-          <li>
-            <a href="@Url.Action("CerrarSesion", "Home")"><i class="icon_key_alt"></i><span>Cerrar Sesión</span></a>
-          </li>
-        </ul>
-      </li>
-      <!-- user login dropdown end -->
-    </ul>
-  </div>
-
-  @RenderBody()
-  <hr />
-  <footer></footer>
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/js")
-
-  @RenderSection("scripts", required: false)
-
-
-  <script>
-    //knob
-    $(function () {
-      $(".knob").knob({
-        'draw': function () {
-          $(this.i).val(this.cv + '%')
-        }
-      })
-    });
-
-    //carousel
-    $(document).ready(function () {
-      $("#owl-slider").owlCarousel({
-        navigation: true,
-        slideSpeed: 300,
-        paginationSpeed: 400,
-        singleItem: true
-
-      });
-    });
-
-    //custom select box
-
-    $(function () {
-      $('select.styled').customSelect();
-    });
-
-    /* ---------- Map ---------- */
-    $(function () {
-      $('#map').vectorMap({
-        map: 'world_mill_en',
-        series: {
-          regions: [{
-            values: gdpData,
-            scale: ['#000', '#000'],
-            normalizeFunction: 'polynomial'
-          }]
-        },
-        backgroundColor: '#eef3f7',
-        onLabelShow: function (e, el, code) {
-          el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-        }
-      });
-    });
-  </script>
 </body>
+
 </html>
