@@ -10,118 +10,175 @@ using MVCCompras.Models;
 
 namespace MVCCompras.Controllers
 {
-    public class PagadorasController : Controller
+  public class PagadorasController : Controller
+  {
+    private ComprasEntities db = new ComprasEntities();
+
+    // GET: Pagadoras
+    public ActionResult Index()
     {
-        private ComprasEntities db = new ComprasEntities();
-
-        // GET: Pagadoras
-        public ActionResult Index()
+      try
+      {
+        if (Session["idUsuario"] != null)
         {
-            return View(db.Pagadora.ToList());
+          //Si sesion trae datos permite el acceso a la vista
+          return View(db.Pagadora.ToList());
         }
-
-        // GET: Pagadoras/Details/5
-        public ActionResult Details(int? id)
+        else
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pagadora pagadora = db.Pagadora.Find(id);
-            if (pagadora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pagadora);
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
         }
+      }
+      catch (Exception)
+      {
 
-        // GET: Pagadoras/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Pagadoras/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PagadoraID,Alias,RazonSocial,EstaActivo")] Pagadora pagadora)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Pagadora.Add(pagadora);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(pagadora);
-        }
-
-        // GET: Pagadoras/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pagadora pagadora = db.Pagadora.Find(id);
-            if (pagadora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pagadora);
-        }
-
-        // POST: Pagadoras/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PagadoraID,Alias,RazonSocial,EstaActivo")] Pagadora pagadora)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(pagadora).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(pagadora);
-        }
-
-        // GET: Pagadoras/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pagadora pagadora = db.Pagadora.Find(id);
-            if (pagadora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pagadora);
-        }
-
-        // POST: Pagadoras/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Pagadora pagadora = db.Pagadora.Find(id);
-            db.Pagadora.Remove(pagadora);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        throw;
+      }
     }
+
+    // GET: Pagadoras/Details/5
+    public ActionResult Details(int? id)
+    {
+      if (id == null)
+      {
+        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+      }
+      Pagadora pagadora = db.Pagadora.Find(id);
+      if (pagadora == null)
+      {
+        return HttpNotFound();
+      }
+      return View(pagadora);
+    }
+
+    // GET: Pagadoras/Create
+    public ActionResult Create()
+    {
+      if (Session["idUsuario"] != null)
+      {
+        return View();
+      }
+      else
+      {
+        //Si sesion es null redirecciona a la vista de login
+        return RedirectToAction("../Home/Login");
+      }
+    }
+
+    // POST: Pagadoras/Create
+    // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+    // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create([Bind(Include = "PagadoraID,Alias,RazonSocial,EstaActivo")] Pagadora pagadora)
+    {
+      if (ModelState.IsValid)
+      {
+        db.Pagadora.Add(pagadora);
+        db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+
+      return View(pagadora);
+    }
+
+    // GET: Pagadoras/Edit/5
+    public ActionResult Edit(int? id)
+    {
+      try
+      {
+        if (Session["idUsuario"] != null)
+        {
+          if (id == null)
+          {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+          }
+          Pagadora pagadora = db.Pagadora.Find(id);
+          if (pagadora == null)
+          {
+            return HttpNotFound();
+          }
+          return View(pagadora);
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+    }
+
+    // POST: Pagadoras/Edit/5
+    // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+    // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit([Bind(Include = "PagadoraID,Alias,RazonSocial,EstaActivo")] Pagadora pagadora)
+    {
+      if (ModelState.IsValid)
+      {
+        db.Entry(pagadora).State = EntityState.Modified;
+        db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      return View(pagadora);
+    }
+
+    // GET: Pagadoras/Delete/5
+    public ActionResult Delete(int? id)
+    {
+      try
+      {
+        if (Session["idUsuario"] != null)
+        {
+          if (id == null)
+          {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+          }
+          Pagadora pagadora = db.Pagadora.Find(id);
+          if (pagadora == null)
+          {
+            return HttpNotFound();
+          }
+          return View(pagadora);
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return RedirectToAction("../Home/Login");
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }      
+    }
+
+    // POST: Pagadoras/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Pagadora pagadora = db.Pagadora.Find(id);
+      db.Pagadora.Remove(pagadora);
+      db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        db.Dispose();
+      }
+      base.Dispose(disposing);
+    }
+  }
 }
