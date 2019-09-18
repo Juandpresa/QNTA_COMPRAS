@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MVCCompras.Models.Usuarios>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Correo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pass)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.APaterno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMaterno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UActivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Token_Recuperacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoUsuario.Perfil)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Correo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.APaterno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AMaterno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UActivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Token_Recuperacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoUsuario.Perfil)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idUsuario }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idUsuario }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idUsuario })
+        </td>
+    </tr>
+}
+
+</table>

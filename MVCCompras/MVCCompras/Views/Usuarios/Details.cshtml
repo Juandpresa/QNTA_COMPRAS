@@ -1,0 +1,82 @@
+﻿@model MVCCompras.Models.Usuarios
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Usuarios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pass)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pass)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.APaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.APaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UActivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UActivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Token_Recuperacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Token_Recuperacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoUsuario.Perfil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoUsuario.Perfil)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idUsuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
