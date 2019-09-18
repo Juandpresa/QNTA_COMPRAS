@@ -4,56 +4,46 @@
   Layout = null;
 }
 
-@using (Html.BeginForm("InicioRecuperar", "Usuarios", FormMethod.Post, new { @class = "login-form", role = "form" }))
-{
-  @Html.AntiForgeryToken()
-  <section id="main-content">
-    <section class=" wrapper">
-      <div class="col-lg-12">
-        <h3 class="page-header"><i class="fa fa-money"></i>Ingresar Nueva Pagadora</h3>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-          <section class="panel">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <div class="pull-left"><h4>Pagadora</h4></div>
-                <div class="clearfix"></div>
-              </div>
-              <div class="panel-body">
-                <div class="padd">
-                  <div class="form quick-post">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewBag.Title COMPRAS</title>
+  @Styles.Render("~/Content/Bootstrap")
+  @Styles.Render("~/Content/iconos")
+  @Styles.Render("~/Content/estilos")
+  @Scripts.Render("~/bundles/modernizr")
 
-                    <div class="form-horizontal">
-                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                      <div class="form-group">
-                        <div class="col-md-10">
-                          @Html.EditorFor(model => model.Correo, new { @class = "form-control" } )
-                          @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
-                        </div>
-                      </div>                        
+</head>
+<body>
 
-                      <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                          <input type="submit" value="Recuperar" class="btn btn-success" />
-                          <div class="btn btn-danger">
-                            @Html.ActionLink("Cancelar", "InicioRecuperar")
-                          </div>
+  <div class="container">
+    @using (Html.BeginForm("InicioRecuperar", "Usuarios", FormMethod.Post, new { @class = "login-form", role = "form" }))
+    {
+      @Html.AntiForgeryToken()
 
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+      <div class="login-wrap">
+        <p class="login-img"><i class="icon_lock_alt"></i></p>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="input-group">
+          <span class="input-group-addon"><i class="icon_profile"></i></span>
+          @Html.TextBoxFor(model => model.Correo, new { @class = "form-control", @placeholder = "correo electronico" })
+          @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
         </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Recuperar</button>
       </div>
-    </section>
-  </section>
 
-}
+    }
+    </div>
+    <hr />
+    <footer></footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/js")
+
+</body>
+</html>
+
 
 

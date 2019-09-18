@@ -20,7 +20,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
   </head>
-  <body class="login-img3-body">
+  <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
 
     </div>
@@ -47,12 +47,9 @@
             @Html.ValidationMessageFor(m => m.Pass, "", new { @class = "text-danger" })
           </div>
           <label class="checkbox">
-            <input type="checkbox" value="remember-me"> Remember me
             <span class="pull-right">@Html.ActionLink("Olvide mi Contraseña", "InicioRecuperar", "Usuarios")</span>
-            @*<span class="pull-right"> <a href="#"> Forgot Password?</a></span>*@
           </label>
           <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
-          @*<button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>*@
         </div>
         @*</form>*@
       }
