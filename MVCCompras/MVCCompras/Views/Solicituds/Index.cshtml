@@ -13,9 +13,8 @@
 </section>
 
 <section id="main-content">
-    <div class="container">
-        <div class="panel">
-            <div class="table-responsive">
+    <div class="panel">
+        <div class="col-lg-12">
                 <table class="table table-striped table-advance table-hover">
                     <tbody>
                         <tr>
@@ -64,20 +63,20 @@
                                 @Html.DisplayFor(modelItem => item.Proveedor.Alias)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ImporteTotal)
+                                @Html.DisplayFor(modelItem => item.ImporteLetra)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CantidadPagos)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ImporteLetra)
+                                @Html.DisplayFor(modelItem => item.ImporteTotal)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.TipoGasto.Nombre)
                             </td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
-                                @Html.ActionLink("Details", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
+                                @*@Html.ActionLink("Details", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })*@
                                 @Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })
                             </td>
                         </tr>
@@ -86,7 +85,7 @@
 
                 </table>
 
-            </div>
+           
         </div>
     </div>
     <div class="col-lg-3">

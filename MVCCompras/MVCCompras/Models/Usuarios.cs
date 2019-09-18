@@ -22,6 +22,7 @@ namespace MVCCompras.Models
         public string APaterno { get; set; }
         public string AMaterno { get; set; }
         public bool UActivo { get; set; }
+        public string Token_Recuperacion { get; set; }
     
         public virtual TipoUsuario TipoUsuario { get; set; }
     }
