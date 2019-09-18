@@ -53,6 +53,13 @@ namespace MVCCompras
       bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                   "~/Scripts/modernizr-*"));
 
+      //sripts para data table
+      bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+        "~/Scripts/dataTables.bootstrap4.js",
+        "~/Scripts/dataTables.bootstrap4.min.js",
+        "~/Scripts/jquery.dataTables.min.js"
+        ));
+
       //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
       //          "~/Scripts/bootstrap.js"));
 
@@ -60,6 +67,10 @@ namespace MVCCompras
       //          "~/Content/bootstrap.css",
       //          "~/Content/site.css"));
 
+      bundles.Add(new StyleBundle("~/Content/Tables").Include(
+        "~/Content/dataTables.bootstrap4.css",
+        "~/Content/dataTables.bootstrap4.min.css"
+        ));
 
       bundles.Add(new StyleBundle("~/Content/Bootstrap").Include(
           "~/Content/css/bootstrap.min.css",
