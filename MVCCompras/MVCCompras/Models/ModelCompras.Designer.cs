@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\Carlos Pagaro\source\repos\MVCCompras\MVCCompras\Models\ModelCompras.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\raymundo.ayala\source\repos\QNTA_COMPRAS\MVCCompras\MVCCompras\Models\ModelCompras.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.
