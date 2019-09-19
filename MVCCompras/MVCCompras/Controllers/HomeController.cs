@@ -77,6 +77,7 @@ namespace MVCCompras.Controllers
           else
           {
             //Si user es null regresar a la vista Login
+            ViewBag.Message = "Correo o Contraseña incorrectos";
             return View("Login");
           }
         }
