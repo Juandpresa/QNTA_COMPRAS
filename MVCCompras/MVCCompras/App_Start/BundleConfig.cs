@@ -40,7 +40,10 @@ namespace MVCCompras
                  "~/Scripts/js/morris.min.js",
                  "~/Scripts/js/sparklines.js",
                  "~/Scripts/js/charts.js",
-                 "~/Scripts/js/jquery.slimscroll.min.js"
+                 "~/Scripts/js/jquery.slimscroll.min.js",
+                 "~/Scripts/moment-with-locales.js",
+                 "~/Scripts/jquery.datetimepicker.full.min.js",
+                 "~/Scripts/sweetalert.min.js"
                  ));
       //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
       //            "~/Scripts/jquery-{version}.js"));
@@ -53,6 +56,13 @@ namespace MVCCompras
       bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                   "~/Scripts/modernizr-*"));
 
+      //sripts para data table
+      bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+        "~/Scripts/dataTables.bootstrap4.js",
+        "~/Scripts/dataTables.bootstrap4.min.js",
+        "~/Scripts/jquery.dataTables.min.js"
+        ));
+
       //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
       //          "~/Scripts/bootstrap.js"));
 
@@ -60,6 +70,10 @@ namespace MVCCompras
       //          "~/Content/bootstrap.css",
       //          "~/Content/site.css"));
 
+      bundles.Add(new StyleBundle("~/Content/Tables").Include(
+        "~/Content/dataTables.bootstrap4.css",
+        "~/Content/dataTables.bootstrap4.min.css"
+        ));
 
       bundles.Add(new StyleBundle("~/Content/Bootstrap").Include(
           "~/Content/css/bootstrap.min.css",
@@ -80,7 +94,9 @@ namespace MVCCompras
          "~/Content/css/style.css",
          "~/Content/css/style-responsive.css",
          "~/Content/css/xcharts.min.css",
-         "~/Content/css/jquery-ui-1.10.4.min.css"));
+         "~/Content/css/jquery-ui-1.10.4.min.css",
+         "~/Content/css/jquery.datetimepicker.css",
+         "~/Content/css/sweetalert.css"));
 
 
 

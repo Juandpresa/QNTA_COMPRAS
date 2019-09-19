@@ -254,6 +254,7 @@
           <Property Name="PagadoraID" Type="int" />
           <Property Name="ObservacionesOtroFormaP" Type="varchar" MaxLength="300" />
           <Property Name="ObsOtroTipoGasto" Type="varchar" MaxLength="300" />
+          <Property Name="Solicitante" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoUsuario">
           <Key>
@@ -887,6 +888,7 @@
           <NavigationProperty Name="DetalleSolicitud" Relationship="Self.FK_Solicitud_DetalleSolicitud" FromRole="Solicitud" ToRole="DetalleSolicitud" />
           <NavigationProperty Name="DistribucionGasto" Relationship="Self.FK_Cliente_DistribucionGasto" FromRole="Solicitud" ToRole="DistribucionGasto" />
           <NavigationProperty Name="Factura" Relationship="Self.FK_Consulta_Factura" FromRole="Solicitud" ToRole="Factura" />
+          <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipoUsuario">
           <Key>
@@ -1490,6 +1492,7 @@
           <EntitySetMapping Name="Solicitud">
             <EntityTypeMapping TypeName="ComprasModel.Solicitud">
               <MappingFragment StoreEntitySet="Solicitud">
+                <ScalarProperty Name="Solicitante" ColumnName="Solicitante" />
                 <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
                 <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
                 <ScalarProperty Name="FormaPagoID" ColumnName="FormaPagoID" />

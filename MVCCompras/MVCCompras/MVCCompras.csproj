@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -138,7 +144,7 @@
     <Compile Include="Controllers\ProveedorsController.cs" />
     <Compile Include="Controllers\SeguimientoesController.cs" />
     <Compile Include="Controllers\SolicitudsController.cs" />
-    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Enumeradores.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -236,8 +242,7 @@
       <DependentUpon>ModelCompras.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ValidacionesLogin.cs" />
-    <Compile Include="Models\ValidacionesPassword.cs" />
-    <Compile Include="Models\ValidacionesRecuperarPassword.cs" />
+    <Compile Include="Models\ValidacionSolicitante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -602,12 +607,17 @@
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\jquery-jvectormap-1.2.2.css" />
     <Content Include="Content\css\jquery-ui-1.10.4.min.css" />
+    <Content Include="Content\css\jquery.datetimepicker.css" />
     <Content Include="Content\css\line-icons.css" />
     <Content Include="Content\css\owl.carousel.css" />
     <Content Include="Content\css\style-responsive.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\sweetalert.css" />
     <Content Include="Content\css\widgets.css" />
     <Content Include="Content\css\xcharts.min.css" />
+    <Content Include="Content\dataTables.bootstrap4.css" />
+    <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\ElegantIcons.svg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -720,11 +730,15 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.full.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -789,6 +803,8 @@
     <Content Include="Scripts\js\sparklines.js" />
     <Content Include="Scripts\js\xcharts.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -808,11 +824,6 @@
     <Content Include="Views\Seguimientoes\Details.cshtml" />
     <Content Include="Views\Seguimientoes\Edit.cshtml" />
     <Content Include="Views\Seguimientoes\Index.cshtml" />
-    <Content Include="Views\Solicituds\Create.cshtml" />
-    <Content Include="Views\Solicituds\Delete.cshtml" />
-    <Content Include="Views\Solicituds\Details.cshtml" />
-    <Content Include="Views\Solicituds\Edit.cshtml" />
-    <Content Include="Views\Solicituds\Index.cshtml" />
     <Content Include="Views\Proveedors\Create.cshtml" />
     <Content Include="Views\Proveedors\Delete.cshtml" />
     <Content Include="Views\Proveedors\Details.cshtml" />
@@ -848,13 +859,11 @@
     <Content Include="Views\FormaPagoes\Details.cshtml" />
     <Content Include="Views\FormaPagoes\Edit.cshtml" />
     <Content Include="Views\FormaPagoes\Index.cshtml" />
-    <Content Include="Views\Usuarios\Create.cshtml" />
-    <Content Include="Views\Usuarios\Delete.cshtml" />
-    <Content Include="Views\Usuarios\Details.cshtml" />
-    <Content Include="Views\Usuarios\Edit.cshtml" />
-    <Content Include="Views\Usuarios\Index.cshtml" />
-    <Content Include="Views\Usuarios\InicioRecuperar.cshtml" />
-    <Content Include="Views\Usuarios\Recuperar.cshtml" />
+    <Content Include="Views\Solicituds\Create.cshtml" />
+    <Content Include="Views\Solicituds\Delete.cshtml" />
+    <Content Include="Views\Solicituds\Details.cshtml" />
+    <Content Include="Views\Solicituds\Edit.cshtml" />
+    <Content Include="Views\Solicituds\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
