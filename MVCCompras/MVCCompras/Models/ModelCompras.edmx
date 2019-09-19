@@ -254,6 +254,7 @@
           <Property Name="PagadoraID" Type="int" />
           <Property Name="ObservacionesOtroFormaP" Type="varchar" MaxLength="300" />
           <Property Name="ObsOtroTipoGasto" Type="varchar" MaxLength="300" />
+          <Property Name="Solicitante" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoUsuario">
           <Key>
@@ -344,18 +345,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FormaPago_Solicitud">
-          <End Role="FormaPago" Type="Self.FormaPago" Multiplicity="1" />
-          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormaPago">
-              <PropertyRef Name="FormaPagoID" />
-            </Principal>
-            <Dependent Role="Solicitud">
-              <PropertyRef Name="FormaPagoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Pagadora_DetalleSolicitud">
           <End Role="Pagadora" Type="Self.Pagadora" Multiplicity="1" />
           <End Role="DetalleSolicitud" Type="Self.DetalleSolicitud" Multiplicity="*" />
@@ -365,30 +354,6 @@
             </Principal>
             <Dependent Role="DetalleSolicitud">
               <PropertyRef Name="PagadoraID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Periocidad_Solicitud">
-          <End Role="Periocidad" Type="Self.Periocidad" Multiplicity="1" />
-          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Periocidad">
-              <PropertyRef Name="PeriocidadID" />
-            </Principal>
-            <Dependent Role="Solicitud">
-              <PropertyRef Name="PeriocidadID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Proveedor_Solicitud">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="ProveedorID" />
-            </Principal>
-            <Dependent Role="Solicitud">
-              <PropertyRef Name="ProveedorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -476,18 +441,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TipoGasto_Solicitud">
-          <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="1" />
-          <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoGasto">
-              <PropertyRef Name="TipoGastoID" />
-            </Principal>
-            <Dependent Role="Solicitud">
-              <PropertyRef Name="TipoGastoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Usuarios_TipoUsuario">
           <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
@@ -547,21 +500,9 @@
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Contacto" EntitySet="Contacto" />
           </AssociationSet>
-          <AssociationSet Name="FK_FormaPago_Solicitud" Association="Self.FK_FormaPago_Solicitud">
-            <End Role="FormaPago" EntitySet="FormaPago" />
-            <End Role="Solicitud" EntitySet="Solicitud" />
-          </AssociationSet>
           <AssociationSet Name="FK_Pagadora_DetalleSolicitud" Association="Self.FK_Pagadora_DetalleSolicitud">
             <End Role="Pagadora" EntitySet="Pagadora" />
             <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Periocidad_Solicitud" Association="Self.FK_Periocidad_Solicitud">
-            <End Role="Periocidad" EntitySet="Periocidad" />
-            <End Role="Solicitud" EntitySet="Solicitud" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Proveedor_Solicitud" Association="Self.FK_Proveedor_Solicitud">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Solicitud" EntitySet="Solicitud" />
           </AssociationSet>
           <AssociationSet Name="FK_ReferenciaBancaria_Banco" Association="Self.FK_ReferenciaBancaria_Banco">
             <End Role="Bancos" EntitySet="Bancos" />
@@ -590,10 +531,6 @@
           <AssociationSet Name="FK_Solicitud_XML" Association="Self.FK_Solicitud_XML">
             <End Role="Solicitud" EntitySet="Solicitud" />
             <End Role="ArchivoXML" EntitySet="ArchivoXML" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TipoGasto_Solicitud" Association="Self.FK_TipoGasto_Solicitud">
-            <End Role="TipoGasto" EntitySet="TipoGasto" />
-            <End Role="Solicitud" EntitySet="Solicitud" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuarios_TipoUsuario" Association="Self.FK_Usuarios_TipoUsuario">
             <End Role="TipoUsuario" EntitySet="TipoUsuario" />
@@ -887,6 +824,7 @@
           <NavigationProperty Name="DetalleSolicitud" Relationship="Self.FK_Solicitud_DetalleSolicitud" FromRole="Solicitud" ToRole="DetalleSolicitud" />
           <NavigationProperty Name="DistribucionGasto" Relationship="Self.FK_Cliente_DistribucionGasto" FromRole="Solicitud" ToRole="DistribucionGasto" />
           <NavigationProperty Name="Factura" Relationship="Self.FK_Consulta_Factura" FromRole="Solicitud" ToRole="Factura" />
+          <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipoUsuario">
           <Key>
@@ -1490,6 +1428,7 @@
           <EntitySetMapping Name="Solicitud">
             <EntityTypeMapping TypeName="ComprasModel.Solicitud">
               <MappingFragment StoreEntitySet="Solicitud">
+                <ScalarProperty Name="Solicitante" ColumnName="Solicitante" />
                 <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
                 <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
                 <ScalarProperty Name="FormaPagoID" ColumnName="FormaPagoID" />

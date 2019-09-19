@@ -41,6 +41,7 @@ namespace MVCCompras.Models
         public Nullable<int> PagadoraID { get; set; }
         public string ObservacionesOtroFormaP { get; set; }
         public string ObsOtroTipoGasto { get; set; }
+        public string Solicitante { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Concepto> Concepto { get; set; }

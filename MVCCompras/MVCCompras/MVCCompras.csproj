@@ -144,7 +144,7 @@
     <Compile Include="Controllers\ProveedorsController.cs" />
     <Compile Include="Controllers\SeguimientoesController.cs" />
     <Compile Include="Controllers\SolicitudsController.cs" />
-    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Enumeradores.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,8 +242,7 @@
       <DependentUpon>ModelCompras.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ValidacionesLogin.cs" />
-    <Compile Include="Models\ValidacionesPassword.cs" />
-    <Compile Include="Models\ValidacionesRecuperarPassword.cs" />
+    <Compile Include="Models\ValidacionSolicitante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -825,11 +824,6 @@
     <Content Include="Views\Seguimientoes\Details.cshtml" />
     <Content Include="Views\Seguimientoes\Edit.cshtml" />
     <Content Include="Views\Seguimientoes\Index.cshtml" />
-    <Content Include="Views\Solicituds\Create.cshtml" />
-    <Content Include="Views\Solicituds\Delete.cshtml" />
-    <Content Include="Views\Solicituds\Details.cshtml" />
-    <Content Include="Views\Solicituds\Edit.cshtml" />
-    <Content Include="Views\Solicituds\Index.cshtml" />
     <Content Include="Views\Proveedors\Create.cshtml" />
     <Content Include="Views\Proveedors\Delete.cshtml" />
     <Content Include="Views\Proveedors\Details.cshtml" />
@@ -865,13 +859,11 @@
     <Content Include="Views\FormaPagoes\Details.cshtml" />
     <Content Include="Views\FormaPagoes\Edit.cshtml" />
     <Content Include="Views\FormaPagoes\Index.cshtml" />
-    <Content Include="Views\Usuarios\Create.cshtml" />
-    <Content Include="Views\Usuarios\Delete.cshtml" />
-    <Content Include="Views\Usuarios\Details.cshtml" />
-    <Content Include="Views\Usuarios\Edit.cshtml" />
-    <Content Include="Views\Usuarios\Index.cshtml" />
-    <Content Include="Views\Usuarios\InicioRecuperar.cshtml" />
-    <Content Include="Views\Usuarios\Recuperar.cshtml" />
+    <Content Include="Views\Solicituds\Create.cshtml" />
+    <Content Include="Views\Solicituds\Delete.cshtml" />
+    <Content Include="Views\Solicituds\Details.cshtml" />
+    <Content Include="Views\Solicituds\Edit.cshtml" />
+    <Content Include="Views\Solicituds\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
