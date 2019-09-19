@@ -40,7 +40,10 @@ namespace MVCCompras
                  "~/Scripts/js/morris.min.js",
                  "~/Scripts/js/sparklines.js",
                  "~/Scripts/js/charts.js",
-                 "~/Scripts/js/jquery.slimscroll.min.js"
+                 "~/Scripts/js/jquery.slimscroll.min.js",
+                 "~/Scripts/moment-with-locales.js",
+                 "~/Scripts/jquery.datetimepicker.full.min.js",
+                 "~/Scripts/sweetalert.min.js"
                  ));
       //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
       //            "~/Scripts/jquery-{version}.js"));
@@ -91,7 +94,9 @@ namespace MVCCompras
          "~/Content/css/style.css",
          "~/Content/css/style-responsive.css",
          "~/Content/css/xcharts.min.css",
-         "~/Content/css/jquery-ui-1.10.4.min.css"));
+         "~/Content/css/jquery-ui-1.10.4.min.css",
+         "~/Content/css/jquery.datetimepicker.css",
+         "~/Content/css/sweetalert.css"));
 
 
 

@@ -136,6 +136,7 @@ namespace MVCCompras.Controllers
     [HttpGet]
     public ActionResult InicioRecuperar()
     {
+      ViewBag.Message = "hola";
       return View();
     }
 
@@ -179,12 +180,15 @@ namespace MVCCompras.Controllers
       model.token = token;
       if (model.token == null || model.token.Trim().Equals(""))
       {
+        ViewBag.Message = "Token ha Expirado";
+        //TempData["var"] = "Token ha Expirado";
         return View("../Home/Login");
       }
       var user = db.Usuarios.Where(e => e.Token_Recuperacion == model.token).FirstOrDefault();
       if (user == null)
       {
-        ViewBag.Error = "Token ha Expirado";
+        TempData["var"] = "Token ha Expirado";
+        //ViewBag.Error = "Token ha Expirado";
         return View("../Home/Login");
       }
       

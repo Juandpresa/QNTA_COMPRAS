@@ -18,29 +18,47 @@
 
 </head>
 <body>
+  @if (ViewBag.Message != null)
+  {
+    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+  }
+    <div class="container">
+      @using (Html.BeginForm("InicioRecuperar", "Usuarios", FormMethod.Post, new { @class = "login-form", role = "form" }))
+      {
+        @Html.AntiForgeryToken()
 
-  <div class="container">
-    @using (Html.BeginForm("InicioRecuperar", "Usuarios", FormMethod.Post, new { @class = "login-form", role = "form" }))
-    {
-      @Html.AntiForgeryToken()
-
-      <div class="login-wrap">
-        <p class="login-img"><i class="icon_lock_alt"></i></p>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_profile"></i></span>
-          @Html.TextBoxFor(model => model.Correo, new { @class = "form-control", @placeholder = "correo electronico" })
-          @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+        <div class="login-wrap">
+          <p class="login-img"><i class="icon_lock_alt"></i></p>
+          @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+          <div class="input-group">
+            <span class="input-group-addon"><i class="icon_profile"></i></span>
+            @Html.TextBoxFor(model => model.Correo, new { @class = "form-control", @placeholder = "correo electronico" })
+            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+          </div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Recuperar</button>
         </div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Recuperar</button>
-      </div>
 
-    }
+        <script>
+          $(document).ready(function () {
+            if ($("#mensaje").text() == "hola") {
+              var msg = $("#mensaje").html();
+              swal("Exitoso!!", msg, "success");
+            }
+          });
+        </script>
+      }
     </div>
-    <hr />
-    <footer></footer>
+
+  
+
+
+  @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/js")
+  }
+
+
 
 </body>
 </html>
