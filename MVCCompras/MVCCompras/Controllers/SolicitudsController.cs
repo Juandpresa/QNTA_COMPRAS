@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MVCCompras.Models;
 using PagedList;
+using System.IO;
+using System.Data.Entity.Validation;
 
 namespace MVCCompras.Controllers
 {
@@ -20,7 +22,7 @@ namespace MVCCompras.Controllers
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
       ViewBag.CurrentSort = sortOrder;
-      ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "usuario_desc" : "";
+      ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Solicitante_desc" : "";
       ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
       if (searchString != null)
@@ -35,14 +37,14 @@ namespace MVCCompras.Controllers
       ViewBag.CurrentFilter = searchString;
 
       var estatus = from s in db.Solicitud
-                     select s;
+                    select s;
       if (!String.IsNullOrEmpty(searchString))
       {
-        estatus = estatus.Where(s => s.Observacion.Contains(searchString)|| s.Observacion.Contains(searchString));
+        estatus = estatus.Where(s => s.Solicitante.Contains(searchString) || s.Observacion.Contains(searchString));
       }
       switch (sortOrder)
       {
-        case "usuario_desc":
+        case "Solicitante_desc":
           estatus = estatus.OrderByDescending(s => s.Concepto);
           break;
         case "Date":
@@ -89,7 +91,6 @@ namespace MVCCompras.Controllers
             ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre");
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias");
             ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
-            ViewBag.MonedaID = new SelectList(db.Moneda, "Moneda", "Nombre");
             return View();
         }
 
@@ -98,15 +99,16 @@ namespace MVCCompras.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto")] Solicitud solicitud, Moneda moneda)
+        public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud)
         {
             if (ModelState.IsValid)
             {
+                solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
                 db.Solicitud.Add(solicitud);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MonedaID = new SelectList(db.Moneda, "Moneda", "Nombre", moneda.MonedaID);
+
             ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
             ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -138,7 +140,7 @@ namespace MVCCompras.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto")] Solicitud solicitud)
+        public ActionResult Edit([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud)
         {
             if (ModelState.IsValid)
             {
