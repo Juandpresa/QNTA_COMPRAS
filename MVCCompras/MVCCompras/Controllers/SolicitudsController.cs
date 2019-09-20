@@ -111,11 +111,11 @@ namespace MVCCompras.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
+        public ActionResult Create([Bind(Include = "MonedaID,PagadoraID,BancoID,CuentaID,ClabeID,TipoPagoID,ConceptoID,CentroCostosID,ClienteID,SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
         {
             if (ModelState.IsValid)
             {
-              solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
+                solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
                 db.Solicitud.Add(solicitud);
                 db.SaveChanges();
                 return RedirectToAction("Index");
