@@ -99,7 +99,6 @@ namespace MVCCompras.Controllers
             ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE");
             ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
             ViewBag.ConceptoID = new SelectList(db.Concepto,"ConceptoID","Nombre");
-            ViewBag.ConceptoID = new SelectList(db.Concepto, "ImporteID", "Importe");
             ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID","Nombre");
             ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
             ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
@@ -112,30 +111,31 @@ namespace MVCCompras.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
+        public ActionResult Create([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
         {
             if (ModelState.IsValid)
             {
-                solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
+              solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
                 db.Solicitud.Add(solicitud);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+
             ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
             ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
             ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-            ViewBag.Pagadora= new SelectList(db.Pagadora, "PagadoraID", "Alias",solicitud.PagadoraID);
-            ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre",referencia.MonedaID);
-            ViewBag.BancoID = new SelectList(db.Bancos, "BancoID", "Alias");
-            ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta",referencia.ReferenciaBancariaID);
-            ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE",referencia.ReferenciaBancariaID);
-            ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre",solicitud.Concepto);
-            ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre",solicitud.Concepto);
-            ViewBag.ConceptoID = new SelectList(db.Concepto, "ImporteID", "Importe",solicitud.Concepto);
-            ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre",solicitud.TipoGasto);
-            ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
+            ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+            ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
+            ViewBag.BancoID = new SelectList(db.Bancos, "BancoID", "Alias", referencia.BancoID);
+            ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
+            ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
+            ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
+            ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
+            ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+            ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
+
 
 
 
