@@ -1,56 +1,78 @@
 ﻿@model IEnumerable<MVCCompras.Models.Bancos>
 
 @{
-    ViewBag.Title = "Index";
+  ViewBag.Title = "Index";
 }
-<section id="main-content">
-    <section class=" wrapper">
-        <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-money"></i>Catálogo de Bancos</h3>
-        </div>
-    </section>
-</section>
+@if (ViewBag.Message != null)
+{
+  <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+}
 
 <section id="main-content">
-    <div class="panel">
-        <div class="col-lg-12 ">
-            <table class="table table-bordered table-striped table-advance table-hover ">
-                <tbody>
-                    <tr>
-                        <th><i class="fa fa-institution"></i> Alias Banco</th>
-                        <th><i class="fa fa-user"></i>  Nombre Banco</th>
-                        <th><i class="fa fa-check-square-o"></i>  Activo</th>
-                        <th><i class="fa fa-cogs"></i>  Acciones</th>
-                    </tr>
-
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Alias)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EstaActivo)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.BancoId }, new { @class = "btn  btn-warning" }) |
-                                @*@Html.ActionLink("Details", "Details", new { id = item.BancoId }, new { @class = "btn  btn-info" }) |*@
-                                @Html.ActionLink("Delete", "Delete", new { id = item.BancoId }, new { @class = "btn  btn-danger" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="col-lg-3">
-            <div class="btn btn-success">
-                @Html.ActionLink("Ingresar Nuevo", "Create")
-            </div>
-        </div>
+  <section class=" wrapper">
+    <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-money"></i>Catálogo de Bancos</h3>
     </div>
-
-  
+  </section>
 </section>
+
+<section id="main-content">
+  <div class="panel">
+    <div class="col-lg-12 ">
+      <table class="table table-bordered table-striped table-advance table-hover ">
+        <tbody>
+          <tr>
+            <th><i class="fa fa-institution"></i> Alias Banco</th>
+            <th><i class="fa fa-user"></i>  Nombre Banco</th>
+            <th><i class="fa fa-check-square-o"></i>  Activo</th>
+            <th><i class="fa fa-cogs"></i>  Acciones</th>
+          </tr>
+
+          @foreach (var item in Model)
+          {
+            <tr>
+              <td>
+                @Html.DisplayFor(modelItem => item.Alias)
+              </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+              </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.EstaActivo)
+              </td>
+              <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BancoId }, new { @class = "btn  btn-warning" }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.BancoId }, new { @class = "btn  btn-info" }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.BancoId }, new { @class = "btn  btn-danger" })
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-3">
+      <div class="btn btn-success">
+        @Html.ActionLink("Ingresar Nuevo", "Create")
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  $(document).ready(function () {
+    if ($("#mensaje").text() == "Banco Agregado") {
+      var msg = $("#mensaje").html();
+      swal("Exitoso!!", msg, "success");
+    }
+    if ($("#mensaje").html().length > 0) {
+      var msg = $("#mensaje").html();
+      swal("Exitoso!", msg, "success");
+    }
+  });
+</script>
+
+
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+  }*@
+
