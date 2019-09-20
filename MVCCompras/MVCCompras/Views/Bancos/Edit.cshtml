@@ -8,7 +8,7 @@
   <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Bancos", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
   @Html.AntiForgeryToken()
   <section id="main-content">
@@ -80,10 +80,10 @@
   <script>
 	$(document).ready(function()
 	{
-		if ($("#mensaje").lenhth >0)
+    if ($("#mensaje").text() == "Modificado")
 		{
 			var msg = $("#mensaje").html();
-			swal("Exitoso!", msg, "seccess");
+			swal("Exitoso!", msg, "success");
 		}
 	});
   </script>

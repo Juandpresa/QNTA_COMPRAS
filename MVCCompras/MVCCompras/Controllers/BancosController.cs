@@ -19,10 +19,20 @@ namespace MVCCompras.Controllers
     {
       try
       {
+        //Si sesion trae datos permite el acceso a la vista
         if (Session["idUsuario"] != null)
         {
-          //Si sesion trae datos permite el acceso a la vista
-          return View(db.Bancos.ToList());
+          if (TempData["var"] == null)
+          {            
+            return View(db.Bancos.ToList());
+          }
+          else
+          {
+            ViewBag.Message = TempData["var"].ToString();
+            return View(db.Bancos.ToList());
+          }      
+
+
         }
         else
         {
@@ -83,7 +93,8 @@ namespace MVCCompras.Controllers
           {
             db.Bancos.Add(bancos);
             db.SaveChanges();
-            //ViewBag.Message = "Bebida Agregada";
+            //ViewBag.Message = "Banco Agregado";
+            TempData["var"] = "Banco Agregado";
             return RedirectToAction("Index");
 
           }
@@ -149,9 +160,8 @@ namespace MVCCompras.Controllers
           {
             db.Entry(bancos).State = EntityState.Modified;
             db.SaveChanges();
-            ViewBag.Message = "Modificado";
-            //return RedirectToAction("Index");
-            return View(bancos);
+            TempData["var"] = "Banco Modificado";
+            return RedirectToAction("Index");
           }
         }
         else
@@ -209,6 +219,7 @@ namespace MVCCompras.Controllers
       Bancos bancos = db.Bancos.Find(id);
       db.Bancos.Remove(bancos);
       db.SaveChanges();
+      TempData["var"] = "Banco Eliminado";
       return RedirectToAction("Index");
     }
 

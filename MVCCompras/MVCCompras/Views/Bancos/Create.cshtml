@@ -3,6 +3,11 @@
 @{
   ViewBag.Title = "Create";
 }
+@if (ViewBag.Message != null)
+{
+  <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+}
+
 @using (Html.BeginForm())
 {
   @Html.AntiForgeryToken()
@@ -70,6 +75,15 @@
       </div>
     </section>
   </section>
+
+  <script>
+		$(document).ready(function () {
+      if ($("#mensaje").text() == "Hola") {
+        var msg = $("#mensaje").html();
+        swal("Exitoso!!", msg, "success");
+      }
+		});
+  </script>
 
 }
 @section Scripts {
