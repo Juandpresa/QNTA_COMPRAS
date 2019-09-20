@@ -83,7 +83,9 @@ namespace MVCCompras.Controllers
           {
             db.Bancos.Add(bancos);
             db.SaveChanges();
+            //ViewBag.Message = "Bebida Agregada";
             return RedirectToAction("Index");
+
           }
         }
         else
@@ -108,7 +110,16 @@ namespace MVCCompras.Controllers
       {
         if (Session["idUsuario"] != null)
         {
-          return View();
+          if (id == null)
+          {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+          }
+          Bancos bancos = db.Bancos.Find(id);
+          if (bancos == null)
+          {
+            return HttpNotFound();
+          }
+          return View(bancos);
         }
         else
         {
@@ -138,7 +149,9 @@ namespace MVCCompras.Controllers
           {
             db.Entry(bancos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.Message = "Modificado";
+            //return RedirectToAction("Index");
+            return View(bancos);
           }
         }
         else

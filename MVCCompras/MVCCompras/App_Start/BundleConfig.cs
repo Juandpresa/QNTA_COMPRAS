@@ -42,8 +42,7 @@ namespace MVCCompras
                  "~/Scripts/js/charts.js",
                  "~/Scripts/js/jquery.slimscroll.min.js",
                  "~/Scripts/moment-with-locales.js",
-                 "~/Scripts/jquery.datetimepicker.full.min.js",
-                 "~/Scripts/sweetalert.min.js"
+                 "~/Scripts/jquery.datetimepicker.full.min.js"
                  ));
       //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
       //            "~/Scripts/jquery-{version}.js"));
@@ -98,7 +97,8 @@ namespace MVCCompras
          "~/Content/css/jquery.datetimepicker.css",
          "~/Content/css/sweetalert.css"));
 
-
+      bundles.Add(new ScriptBundle("~/bundles/swwet").Include(
+            "~/Scripts/sweetalert.min.js"));
 
     }
   }
