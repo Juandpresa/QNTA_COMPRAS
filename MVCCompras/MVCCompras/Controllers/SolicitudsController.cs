@@ -87,6 +87,7 @@ namespace MVCCompras.Controllers
     // GET: Solicituds/Create
     public ActionResult Create()
     {
+      ViewBag.Message = "Hola";
       //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre");      
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta");
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE");      
@@ -115,8 +116,9 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Include = "MonedaID,PagadoraID,BancoID,CuentaID,ClabeID,TipoPagoID,ConceptoID,CentroCostosID,ClienteID,SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
+    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
     {
+      //solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
       if (ModelState.IsValid)
       {
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -124,20 +126,20 @@ namespace MVCCompras.Controllers
         ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
 
         ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-        ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+        //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
 
-        solicitud.TipoGastoID = 1;
+        //solicitud.TipoGastoID = 1;
         //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
         solicitud.PeriocidadID = 1;
-        solicitud.CantidadPagos = 3;
-        solicitud.ImporteTotal = 2365;
-        solicitud.ImporteLetra = "zzzz";
+        solicitud.CantidadPagos = 1;
+        //solicitud.ImporteTotal = 2365;
+        //solicitud.ImporteLetra = "zzzz";
         solicitud.FechaRegistro = DateTime.Now;
         solicitud.FechaInicioPagos = DateTime.Now;
         solicitud.FechaModificacion = DateTime.Now;
         solicitud.CuentaIDModificacion = "asdf125dfg";        
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-        solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
+        solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
 
 
         //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
