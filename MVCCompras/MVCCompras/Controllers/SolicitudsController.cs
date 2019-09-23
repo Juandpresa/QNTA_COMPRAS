@@ -118,13 +118,13 @@ namespace MVCCompras.Controllers
       {
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
         ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
-        //ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-        solicitud.TipoGastoID = 1;
+        ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+        //solicitud.TipoGastoID = 1;
         //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
         solicitud.PeriocidadID = 1;
-        solicitud.CantidadPagos = 3;
-        solicitud.ImporteTotal = 2365;
-        solicitud.ImporteLetra = "zzzz";
+        solicitud.CantidadPagos = 1;
+        //solicitud.ImporteTotal = 2365;
+        //solicitud.ImporteLetra = "zzzz";
         solicitud.FechaRegistro = DateTime.Now;
         solicitud.FechaInicioPagos = DateTime.Now;
         solicitud.FechaModificacion = DateTime.Now;
