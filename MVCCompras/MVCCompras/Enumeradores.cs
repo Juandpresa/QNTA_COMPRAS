@@ -26,8 +26,8 @@ namespace MVCCompras
     Angeles_Leon,
     [Display(Name = "Eduardo Gatica")]
     Eduardo_Gatica,
-    Juand,
-    berna
+    [Display(Name = "Adan Leon")]
+    Adan_Leon
   }
   public static class EnumExtensions
   {
