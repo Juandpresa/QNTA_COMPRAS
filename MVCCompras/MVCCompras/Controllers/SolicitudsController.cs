@@ -268,6 +268,21 @@ namespace MVCCompras.Controllers
       base.Dispose(disposing);
     }
 
+    public JsonResult DatosProveedor(int idProv, ReferenciaBancaria refe)
+    {
+      string cuenta = "";
+      string clabe = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var referencia = db.ReferenciaBancaria.FirstOrDefault(e => e.ProveedorID == idProv);
+      if (referencia != null)
+      {
+        cuenta = referencia.Cuenta.ToString();
+        clabe = referencia.Clabe.ToString();
+      }
+      return Json(cuenta, JsonRequestBehavior.AllowGet);
+     
+    }
+
     #region HELPERS
     private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass)
     {
