@@ -16,6 +16,7 @@ namespace MVCCompras.Controllers
 {
   public class SolicitudsController : Controller
   {
+    Conversion c = new Conversion();
     string urlDominio = "http://localhost:52772/";
     private ComprasEntities db = new ComprasEntities();
 
@@ -24,8 +25,7 @@ namespace MVCCompras.Controllers
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
       ViewBag.CurrentSort = sortOrder;
-      ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Solicitante_desc" : "";
-      ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+      ViewBag.DateSortParm = sortOrder == "Date" ? "date_asc" : "Date";
 
       if (searchString != null)
       {
@@ -46,13 +46,13 @@ namespace MVCCompras.Controllers
       }
       switch (sortOrder)
       {
-        case "Solicitante_desc":
-          estatus = estatus.OrderByDescending(s => s.Concepto);
+        case "Solicitante_asc":
+          estatus = estatus.OrderByDescending(s => s.FechaRegistro);
           break;
         case "Date":
-          estatus = estatus.OrderBy(s => s.FechaRegistro);
+          estatus = estatus.OrderByDescending(s => s.FechaRegistro.Day);
           break;
-        case "date_desc":
+        case "date_asc":
           estatus = estatus.OrderByDescending(s => s.FechaRegistro);
           break;
         default:  // Name ascending 
@@ -110,6 +110,7 @@ namespace MVCCompras.Controllers
       ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
 
+
       return View();
     }
 
@@ -120,6 +121,7 @@ namespace MVCCompras.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr)
     {
+      string pass = "";
       //string correo = Session["Correo"].ToString();
       if (ModelState.IsValid)
       {
@@ -135,7 +137,7 @@ namespace MVCCompras.Controllers
         solicitud.PeriocidadID = 1;
         solicitud.CantidadPagos = 1;
         //solicitud.ImporteTotal = 2365;
-        //solicitud.ImporteLetra = "zzzz";
+        //solicitud.ImporteLetra = c.enletras(solicitud.ImporteTotal.ToString());
         solicitud.FechaRegistro = DateTime.Now;
         solicitud.FechaInicioPagos = DateTime.Now;
         solicitud.FechaModificacion = DateTime.Now;
@@ -154,11 +156,17 @@ namespace MVCCompras.Controllers
         //db.ReferenciaBancaria.Add(referencia);
         db.SaveChanges();
         string correoOrigen = Session["Correo"].ToString();
+        var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
+        if (emailO != null)
+        {
+           pass = emailO.Pass.ToString();
+        }
         var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
         if (user != null)
         {
           string correoDestino = user.Correo.ToString();
-          EnviarCorreo(correoOrigen, correoDestino);
+          
+          EnviarCorreo(correoOrigen, correoDestino, pass);
         }
         
         return RedirectToAction("Index");
@@ -261,11 +269,11 @@ namespace MVCCompras.Controllers
     }
 
     #region HELPERS
-    private void EnviarCorreo(string EmailOrigen, string EmailDestino)
+    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass)
     {
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
-      string pass = "/04Demetr.";
+      //string pass = "/04Demetr.";
       string url = urlDominio + "/Home/Login";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<p>DATOS DE LA SOLICITUD:</p><br><a href='" + url + "'>Click para Acceder</a>");

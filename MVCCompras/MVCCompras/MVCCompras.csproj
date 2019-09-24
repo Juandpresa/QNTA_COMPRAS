@@ -145,6 +145,7 @@
     <Compile Include="Controllers\SeguimientoesController.cs" />
     <Compile Include="Controllers\SolicitudsController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Conversion.cs" />
     <Compile Include="Enumeradores.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
