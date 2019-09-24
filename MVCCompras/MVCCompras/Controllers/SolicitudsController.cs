@@ -21,6 +21,7 @@ namespace MVCCompras.Controllers
 
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
+     
       ViewBag.CurrentSort = sortOrder;
       ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Solicitante_desc" : "";
       ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
@@ -85,7 +86,7 @@ namespace MVCCompras.Controllers
     }
 
     // GET: Solicituds/Create
-    public ActionResult Create()
+    public ActionResult Create(General general)
     {
       //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre");      
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta");
@@ -107,7 +108,7 @@ namespace MVCCompras.Controllers
       ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
 
-      return View();
+      return View(general);
     }
 
     // POST: Solicituds/Create
