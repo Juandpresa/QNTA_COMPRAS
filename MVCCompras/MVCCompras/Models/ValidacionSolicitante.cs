@@ -9,7 +9,7 @@ namespace MVCCompras.Models
   [MetadataType(typeof(SolicitudMetaData))]
   public partial class Solicitud
   {
-    public USolicitante solicitantes { get; set; }
+    public USolicitante Solicitantes { get; set; }
   }
   public class SolicitudMetaData
   {

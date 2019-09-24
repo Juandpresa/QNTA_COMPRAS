@@ -10,14 +10,24 @@ namespace MVCCompras
   public enum USolicitante
   {
     Recepcion,
-    [Display(Name = "Veronica Gonzalez")]VGonzalez,
-    [Display(Name = "Arely Palacios")] APalacios,
-    [Display(Name = "Margarita Contreras")] MContreras,
-    [Display(Name = "Daniel Davalos")] DDavalos,
-    [Display(Name = "Diana Portillo")] DPortillo,
-    [Display(Name = "Ulises Sorchini")] USorchini,
-    [Display(Name = "Angeles León")] ALeon,
-    [Display(Name = "Eduardo Gatica")] EGatica
+    [Display(Name = "Veronica Gonzalez")]
+    Veronica_Gonzalez,
+    [Display(Name = "Arely Palacios")]
+    Arely_Palacios,
+    [Display(Name = "Margarita Contreras")]
+    Margarita_Contreras,
+    [Display(Name = "Daniel Davalos")]
+    Daniel_Davalos,
+    [Display(Name = "Diana Portillo")]
+    Diana_Portillo,
+    [Display(Name = "Ulises Sorchini")]
+    Ulises_Sorchini,
+    [Display(Name = "Angeles León")]
+    Angeles_Leon,
+    [Display(Name = "Eduardo Gatica")]
+    Eduardo_Gatica,
+    Juand,
+    berna
   }
   public static class EnumExtensions
   {
@@ -31,7 +41,8 @@ namespace MVCCompras
       }
       else
       {
-        var attribute = (DisplayAttribute)fieldInfo.GetCustomAttribute(typeof(DisplayAttribute));
+        var attribute = (DisplayAttribute)
+          fieldInfo.GetCustomAttribute(typeof(DisplayAttribute));
         return attribute.Name;
       }
     }

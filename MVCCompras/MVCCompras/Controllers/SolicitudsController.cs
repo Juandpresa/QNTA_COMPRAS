@@ -10,11 +10,13 @@ using MVCCompras.Models;
 using PagedList;
 using System.IO;
 using System.Data.Entity.Validation;
+using System.Net.Mail;
 
 namespace MVCCompras.Controllers
 {
   public class SolicitudsController : Controller
   {
+    string urlDominio = "http://localhost:52772/";
     private ComprasEntities db = new ComprasEntities();
 
     // GET: Solicituds
@@ -88,6 +90,7 @@ namespace MVCCompras.Controllers
     // GET: Solicituds/Create
     public ActionResult Create(General general)
     {
+      ViewBag.Message = "Hola";
       //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre");      
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta");
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE");      
@@ -116,8 +119,9 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Include = "MonedaID,PagadoraID,BancoID,CuentaID,ClabeID,TipoPagoID,ConceptoID,CentroCostosID,ClienteID,SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia)
+    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr)
     {
+      //string correo = Session["Correo"].ToString();
       if (ModelState.IsValid)
       {
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -125,20 +129,20 @@ namespace MVCCompras.Controllers
         ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
 
         ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-        ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+        //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
 
-        solicitud.TipoGastoID = 1;
+        //solicitud.TipoGastoID = 1;
         //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
         solicitud.PeriocidadID = 1;
-        solicitud.CantidadPagos = 3;
-        solicitud.ImporteTotal = 2365;
-        solicitud.ImporteLetra = "zzzz";
+        solicitud.CantidadPagos = 1;
+        //solicitud.ImporteTotal = 2365;
+        //solicitud.ImporteLetra = "zzzz";
         solicitud.FechaRegistro = DateTime.Now;
         solicitud.FechaInicioPagos = DateTime.Now;
         solicitud.FechaModificacion = DateTime.Now;
         solicitud.CuentaIDModificacion = "asdf125dfg";        
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-        solicitud.Solicitante = solicitud.solicitantes.GetDescripcion().ToString();
+        solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
 
 
         //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
@@ -150,6 +154,14 @@ namespace MVCCompras.Controllers
         db.Solicitud.Add(solicitud);
         //db.ReferenciaBancaria.Add(referencia);
         db.SaveChanges();
+        string correoOrigen = Session["Correo"].ToString();
+        var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+        if (user != null)
+        {
+          string correoDestino = user.Correo.ToString();
+          EnviarCorreo(correoOrigen, correoDestino);
+        }
+        
         return RedirectToAction("Index");
       }
 
@@ -248,5 +260,40 @@ namespace MVCCompras.Controllers
       }
       base.Dispose(disposing);
     }
+
+    #region HELPERS
+    private void EnviarCorreo(string EmailOrigen, string EmailDestino)
+    {
+      //string EmailOrigen = "demesrmadrid@gmail.com";
+      //string EmailDestino = "demesrmadrid@gmail.com";
+      string pass = "/04Demetr.";
+      string url = urlDominio + "/Home/Login";
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
+        "<p>DATOS DE LA SOLICITUD:</p><br><a href='" + url + "'>Click para Acceder</a>");
+
+      msj.IsBodyHtml = true;
+
+      //SmtpClient cliente = new SmtpClient("smtp.gmail.com");
+      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
+      cliente.EnableSsl = false;
+      cliente.UseDefaultCredentials = false;
+      //cliente.Host = "smtp.gmail.com";
+      //cliente.Host = "mail.qnta.mx";
+      cliente.Port = 587;
+      cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
+      try
+      {
+        cliente.Send(msj);
+
+        cliente.Dispose();
+      }
+      catch (Exception ex)
+      {
+
+        throw;
+      }
+      
+    }
+    #endregion
   }
 }

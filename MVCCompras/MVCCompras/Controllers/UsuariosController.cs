@@ -239,26 +239,57 @@ namespace MVCCompras.Controllers
 
     private void EnviarCorreo(string EmailDestino, string token)
     {
-      string EmailOrigen = "demesrmadrid@gmail.com";
+      string EmailOrigen = "jpresa@qnta.mx";
       //string EmailDestino = "demesrmadrid@gmail.com";
-      string pass = "MISTERPOPO45";
-      string url = urlDominio+"/Usuarios/Recuperar/?token="+token;
+      string pass = "/04Demetr.";
+      string url = urlDominio + "/Usuarios/Recuperar/?token=" + token;
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Recuperacion de Contraseña",
         "<p>Correo para recuperacion de comtraseña</p><br><a href='" + url + "'>Click para recuperar</a>");
 
       msj.IsBodyHtml = true;
 
-      SmtpClient cliente = new SmtpClient("smtp.gmail.com");
-      cliente.EnableSsl = true;
+      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
+      cliente.EnableSsl = false;
       cliente.UseDefaultCredentials = false;
       //cliente.Host = "smtp.gmail.com";
       cliente.Port = 587;
       cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
 
-      cliente.Send(msj);
+      try
+      {
+        cliente.Send(msj);
 
-      cliente.Dispose();
+        cliente.Dispose();
+      }
+      catch (Exception ex)
+      {
+
+        throw;
+      }
     }
+
+    //private void EnviarCorreo(string EmailDestino, string token)
+    //{
+    //  string EmailOrigen = "demesrmadrid@gmail.com";
+    //  //string EmailDestino = "demesrmadrid@gmail.com";
+    //  string pass = "MISTERPOPO45";
+    //  string url = urlDominio+"/Usuarios/Recuperar/?token="+token;
+    //  MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Recuperacion de Contraseña",
+    //    "<p>Correo para recuperacion de comtraseña</p><br><a href='" + url + "'>Click para recuperar</a>");
+
+    //  msj.IsBodyHtml = true;
+
+    //  SmtpClient cliente = new SmtpClient("smtp.gmail.com");
+    //  cliente.EnableSsl = true;
+    //  cliente.UseDefaultCredentials = false;
+    //  //cliente.Host = "smtp.gmail.com";
+    //  cliente.Port = 587;
+    //  cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
+
+    //  cliente.Send(msj);
+
+    //  cliente.Dispose();
+    //}
     #endregion
   }
 }
