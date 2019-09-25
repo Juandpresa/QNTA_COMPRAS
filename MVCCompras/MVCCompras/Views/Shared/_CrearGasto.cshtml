@@ -1,0 +1,167 @@
+﻿@model MVCCompras.Models.DistribucionGasto
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="modal fade" id="ModalGasto" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4>Agregar Gasto</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ClienteId, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CentroCostosID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.CentroCostosID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.CentroCostosID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Porc, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Porc, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Porc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Importe, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Importe, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Importe, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    @Html.Hidden("NumGasto", 0)
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="#" id="btnCancelGasto"
+                                               class="btn btn-danger"
+                                               data-dismiss="modal"
+                                               role="button">
+                                                Cancelar
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="#" id="btnOkGasto"
+                                               class="btn btn-success"
+                                               role="button">Guardar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnCancelGasto").click(function () {
+            $(".concepto").val("");
+        });
+
+        $("#btnOkGasto").click(function () {
+            AgregarGasto();
+
+        });
+    });
+</script>
+
+
+<script>
+    function AgregarGasto() {
+        var esvacio = false;
+        $(".gasto").each(function () {
+            if ($(this).val() == "") {
+                esvacio = true;
+            }
+
+        });
+
+        if ((esvacio) || (!$.isNumeric($("#Importe").val()))) {
+            swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
+        }
+        else {
+            //Agregamos concepto
+            var cliente = $("#ClienteID").text();
+            var ccosto = $("#CentroCostosID").val();
+            var porc = $("#Porc").val();
+            var importe = $("#Importe").val();
+            var nuevogasto = 0;
+            if (nuevogasto >= 0 || importe != 0) {
+                //Agregamos el concepto
+                var numgasto = parseInt($("#NumGasto").val()) + 1;
+                $("#NumConcepto").val(numgasto);
+                //Agregamos el concepto a la tabla
+                $("#tblGasto").append(
+                    "<tr>" +
+                    "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='clientid" + numgasto + "'" +
+                    " id='clientid" + numgasto + "'" +
+                    " readonly" +
+                    " value='" + cliente + "'/>" +
+                    "</td>" +
+                    "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='ccostid" + numgasto + "'" +
+                    " id='ccostid" + numgasto + "'" +
+                    " readonly" +
+                    " value='" + ccosto + "'/>" +
+                    "</td>" + "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='porcid" + numgasto + "'" +
+                    " id='porcid" + numgasto + "'" +
+                    " readonly" +
+                    " value='" + porc + "'/>" +
+                    "</td>" + "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='importeid" + numgasto + "'" +
+                    " id='importeid" + numgasto + "'" +
+                    " readonly" +
+                    " value='" + importe + "'/>" +
+                    "</td>" +
+                    "</tr>"
+                );
+                $(".concepto").val("");
+                $("#Importe").val(nuevogasto);
+
+            }
+            else {
+                swal("Atención!", "Gasto incompleto", "warning");
+            }
+        }
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
