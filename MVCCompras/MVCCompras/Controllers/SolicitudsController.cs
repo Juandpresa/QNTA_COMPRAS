@@ -106,7 +106,7 @@ namespace MVCCompras.Controllers
 
 
       ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre");
-      ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
+      //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
       ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
 
@@ -119,7 +119,7 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante,ProveedorID,FormaPagoID,TipoGastoID,PagadoraID")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr)
+    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr)
     {
       string pass = "";
       //string correo = Session["Correo"].ToString();
@@ -191,7 +191,7 @@ namespace MVCCompras.Controllers
 
 
 
-      return View(solicitud);
+      return View();
     }
 
     // GET: Solicituds/Edit/5

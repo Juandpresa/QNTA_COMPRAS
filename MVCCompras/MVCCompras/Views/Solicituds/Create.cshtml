@@ -128,11 +128,14 @@
                                             </div>
 
                                             <div class="form-group">
-                                                @Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
-                                                    @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
-                                                </div>
+                                                @*@Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
+                                              <div class="col-md-10">
+                                                @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
+                                              <label class="control-label col-md-2">Banco</label>
+                                              <input type="text" class="col-md-10" id="BancoID" readonly="readonly"/>
+                                              @*</div>*@
                                             </div>
 
                                             <div class="form-group">
@@ -340,13 +343,14 @@
                 url: '../Solicituds/DatoBanco',
                 data: { idProv: id },
                 datatype: 'json',
-                success: function (data) {
-                    //quito los options que pudiera tener previamente el dropdowlist
-                    $("#BancoID").html("");
-                    //recorro cada item que devuelve el controlador DatoBanco
-                    $.each(data, function (index, value) {
-                        $('#BancoID').append($('<option>').text(data).attr(value, index));
-                    });
+              success: function (data) {
+                $('#BancoID').val(data);
+                    ////quito los options que pudiera tener previamente el dropdowlist
+                    //$("#BancoID").html("");
+                    ////recorro cada item que devuelve el controlador DatoBanco
+                    //$.each(data, function (index, value) {
+                    //    $('#BancoID').append($('<option>').text(data).attr(value, index));
+                    //});
 
                 }
             });
