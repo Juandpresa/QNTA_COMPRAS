@@ -268,39 +268,27 @@ namespace MVCCompras.Controllers
       base.Dispose(disposing);
     }
 
-    #region HELPERS
-    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass)
+    public JsonResult GuardarConceptoTemporal(string tipoConceptoId, string descripcion, string importe, string id)
     {
-      //string EmailOrigen = "demesrmadrid@gmail.com";
-      //string EmailDestino = "demesrmadrid@gmail.com";
-      //string pass = "/04Demetr.";
-      string url = urlDominio + "/Home/Login";
-      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
-        "<p>DATOS DE LA SOLICITUD:</p><br><a href='" + url + "'>Click para Acceder</a>");
 
-      msj.IsBodyHtml = true;
 
-      //SmtpClient cliente = new SmtpClient("smtp.gmail.com");
-      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
-      cliente.EnableSsl = false;
-      cliente.UseDefaultCredentials = false;
-      //cliente.Host = "smtp.gmail.com";
-      //cliente.Host = "mail.qnta.mx";
-      cliente.Port = 587;
-      cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
-      try
+      int lTipoPagoID = int.Parse(tipoConceptoId);
+      decimal lImporte = decimal.Parse(importe);
+      List<Concepto> lstConceptos = new List<Concepto>();
+      if (Session["Conceptos"] != null) lstConceptos.AddRange((List<Concepto>)Session["Conceptos"]);
+      Concepto lConcepto = new Concepto()
       {
-        cliente.Send(msj);
+        TipoPago = new TipoPago() { TipoPagoID = lTipoPagoID },
+        Nombre = descripcion,
+        ImporteParcial = lImporte,
+        ConceptoID = int.Parse(id)
 
-        cliente.Dispose();
-      }
-      catch (Exception ex)
-      {
+      };
+      lstConceptos.Add(lConcepto);
+      Session["Conceptos"] = lstConceptos;
 
-        throw;
-      }
-      
+      return Json(lstConceptos.Sum(c => c.ImporteParcial));
+
     }
-    #endregion
   }
 }

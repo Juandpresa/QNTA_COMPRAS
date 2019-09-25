@@ -75,9 +75,12 @@
 
         $("#btnOkConcepto").click(function () {
             AgregarConcepto();
+            
         });
     });
 </script>
+
+
 <script>
     function AgregarConcepto() {
         var esvacio = false;
@@ -88,15 +91,16 @@
 
         });
 
-        //if ((esvacio) || (!$.isNumeric($("#Importe").val()))) {
-        //    swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
-        //}
-        //else {
+        if ((esvacio) || (!$.isNumeric($("#ImporteID").val()))) {
+            swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
+        }
+        else {
             //Agregamos concepto
-            var descrip = $("#Des").html();
-            var concepto = $("#Con").html();
-            var importe = $("#Importe").val();
-            if (importe!=0) {
+            var concepto = $("#TipoPagoID").text();
+            var descrip = $("#ConceptoID").val();
+            var importe = $("#ImporteID").val();
+            var nuevoconcepto = 0;
+            if (nuevoconcepto >= 0 || importe != 0) {
                 //Agregamos el concepto
                 var numconcepto = parseInt($("#NumConcepto").val()) + 1;
                 $("#NumConcepto").val(numconcepto);
@@ -105,34 +109,34 @@
                     "<tr>" +
                     "<td>" +
                     "<input type='text' style='border:0;background:transparent;' " +
-                    " name='descid" + numconcepto + "'" +
-                    " id='descid" + numconcepto + "'" +
+                    " name='concepid" + numconcepto + "'" +
+                    " id='concepid" + numconcepto + "'" +
                     " readonly" +
                     " value='" + concepto + "'/>" +
                     "</td>" +
                     "<td>" +
                     "<input type='text' style='border:0;background:transparent;' " +
-                    " name='descipid" + descrip + "'" +
-                    " id='descripid" + descrip + "'" +
+                    " name='descid" + numconcepto + "'" +
+                    " id='descid" + numconcepto + "'" +
                     " readonly" +
                     " value='" + descrip + "'/>" +
                     "</td>" + "<td>" +
                     "<input type='text' style='border:0;background:transparent;' " +
-                    " name='importeid" + importe + "'" +
-                    " id='importeid" + importe + "'" +
+                    " name='importeid" + numconcepto + "'" +
+                    " id='importeid" + numconcepto + "'" +
                     " readonly" +
                     " value='" + importe + "'/>" +
                     "</td>" +
                     "</tr>"
                 );
                 $(".concepto").val("");
-                $("#Importe").html(nuevoconcepto);
+                $("#Importe").val(nuevoconcepto);
 
-        //    }
-        //    else {
-        //        swal("Atención!", "Concepto incompleto", "warning");
-        //    }
-        //}
+            }
+            else {
+                swal("Atención!", "Concepto incompleto", "warning");
+            }
+        }
     }
 </script>
 
