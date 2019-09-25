@@ -85,7 +85,7 @@
                       <div class="form-group">
                         @Html.LabelFor(model => model.ImporteTotal, "Importe Total", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                          @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly",
+                          @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly",
 ValueType = true
 }
 })
@@ -95,7 +95,7 @@ ValueType = true
                       <div class="form-group">
                         @Html.LabelFor(model => model.ImporteLetra, "Importe Letra", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                          @Html.EditorFor(model => model.ImporteLetra, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly"}
+                          @Html.EditorFor(model => model.ImporteLetra, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"}
                       })
                           @Html.ValidationMessageFor(model => model.ImporteLetra, "", new { @class = "text-danger" })
                         </div>
@@ -130,7 +130,7 @@ ValueType = true
                       <div class="form-group">
                         @Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                          @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                          @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
                           @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
                         </div>
                       </div>
@@ -138,7 +138,7 @@ ValueType = true
                       <div class="form-group">
                         @Html.LabelFor(model => model.Proveedor, "No. Cuenta", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                          @Html.TextBox("CuentaID", null, htmlAttributes: new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                          @Html.TextBox("CuentaID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
                           @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
                         </div>
                       </div>
@@ -146,7 +146,7 @@ ValueType = true
                       <div class="form-group">
                         @Html.LabelFor(model => model.Proveedor, "CLABE", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                          @Html.TextBox("ClabeID", null, htmlAttributes: new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                          @Html.TextBox("ClabeID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
                           @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
                         </div>
                       </div>
@@ -172,27 +172,27 @@ ValueType = true
                     <div class="form-horizontal">
                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                       <div class="form-group">
-                        @Html.LabelFor(model => model.Concepto, "Concepto", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                          @Html.DropDownList("TipoPagoID", null, htmlAttributes: new { @class = "form-control" })
-                          @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
+                        <div class="col-md-12">
+                          <a href="#ModalConcepto" class="btn btn-primary"
+                             id="btnAddConcepto" data-toggle="modal"
+                             role="button">Agregar Concepto</a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table id="tblConcepto" class="table table-responsive table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Concepto</th>
+                                <th>Descripción</th>
+                                <th>Importe</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
                         </div>
                       </div>
 
-                      <div class="form-group">
-                        @Html.LabelFor(model => model.Concepto, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                          @Html.TextBox("ConceptoID", null, htmlAttributes: new { @class = "form-control" })
-                          @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
-                        </div>
-                      </div>
-                      <div class="form-group" oninput="Importe.value = ImporteTotal.value">
-                        @Html.LabelFor(model => model.Concepto, "Importe", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                          @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", ValueType = true })
-                          @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
-                        </div>
-                      </div>
 
                       <div class="form-group">
                         @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -201,6 +201,11 @@ ValueType = true
                           @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
                         </div>
                       </div>
+
+
+
+
+
 
 
                     </div>
@@ -275,30 +280,28 @@ ValueType = true
 
     </section>
   </section>
+  @Html.Partial("_CrearConcepto")
 }
 
 <script>
   $(document).ready(function () {
+    var total = 0;
     $('#ImporteID').change(function () {
       var nume = $('#ImporteID').val();
-      $('#ImporteTotal').val(nume);
+      total = parseFloat(total) + parseFloat(nume);
+      $('#ImporteTotal').val(total);
       var n = $('#ImporteTotal').val();
       var m = $('#MonedaID').val();
-      var m2 = "";
       if (m == 1) {
-        m2 = "PESOS"
         $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
       }
       else {
-        m2 = "DOLARES"
         $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
       }
     });
 
     $('#ProveedorID').change(function () {
-      var a = 1, b = 2;
       var id = $(this).val();
-      swal("Exitoso!!", id, "success");
       $.ajax({
         url: '../Solicituds/DatoCuenta',
         data: { idProv: id },
@@ -320,7 +323,6 @@ ValueType = true
         data: { idProv: id },
         datatype: 'json',
         success: function (data) {
-          $('#Observacion').val(data);
           //quito los options que pudiera tener previamente el dropdowlist
           $("#BancoID").html("");
           //recorro cada item que devuelve el controlador DatoBanco
