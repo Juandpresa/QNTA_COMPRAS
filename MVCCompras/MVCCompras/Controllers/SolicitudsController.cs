@@ -106,7 +106,7 @@ namespace MVCCompras.Controllers
 
 
       ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre");
-      ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
+      //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
       ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
 
@@ -141,7 +141,7 @@ namespace MVCCompras.Controllers
         solicitud.FechaRegistro = DateTime.Now;
         solicitud.FechaInicioPagos = DateTime.Now;
         solicitud.FechaModificacion = DateTime.Now;
-        solicitud.CuentaIDModificacion = "asdf125dfg";        
+        solicitud.CuentaIDModificacion = "asdf125dfg";
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
         solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
 
@@ -159,16 +159,16 @@ namespace MVCCompras.Controllers
         var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
         if (emailO != null)
         {
-           pass = emailO.Pass.ToString();
+          pass = emailO.Pass.ToString();
         }
         var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
         if (user != null)
         {
           string correoDestino = user.Correo.ToString();
-          
+
           EnviarCorreo(correoOrigen, correoDestino, pass);
         }
-        
+
         return RedirectToAction("Index");
       }
 
@@ -268,27 +268,82 @@ namespace MVCCompras.Controllers
       base.Dispose(disposing);
     }
 
-    public JsonResult GuardarConceptoTemporal(string tipoConceptoId, string descripcion, string importe, string id)
+    public JsonResult DatoBanco(int idProv, ReferenciaBancaria refe)
+    {
+      string banco = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var query = (from b in db.Bancos
+                   join r in db.ReferenciaBancaria on b.BancoId equals r.BancoID
+                   where r.ProveedorID == idProv
+                   select new { b.Alias });
+
+      foreach (var item in query)
+      {
+        banco = item.Alias.ToString();
+      }
+
+      return Json(banco, JsonRequestBehavior.AllowGet);
+    }
+
+    public JsonResult DatoCuenta(int idProv, ReferenciaBancaria refe)
+    {
+      string cuenta = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var referencia = db.ReferenciaBancaria.FirstOrDefault(e => e.ProveedorID == idProv);
+      if (referencia != null)
+      {
+        cuenta = referencia.Cuenta.ToString();
+        //clabe = referencia.Clabe.ToString();
+      }
+      return Json(cuenta, JsonRequestBehavior.AllowGet);
+    }
+    public JsonResult DatoClabe(int idProv, ReferenciaBancaria refe)
     {
 
-
-      int lTipoPagoID = int.Parse(tipoConceptoId);
-      decimal lImporte = decimal.Parse(importe);
-      List<Concepto> lstConceptos = new List<Concepto>();
-      if (Session["Conceptos"] != null) lstConceptos.AddRange((List<Concepto>)Session["Conceptos"]);
-      Concepto lConcepto = new Concepto()
+      string clabe = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var referencia = db.ReferenciaBancaria.FirstOrDefault(e => e.ProveedorID == idProv);
+      if (referencia != null)
       {
-        TipoPago = new TipoPago() { TipoPagoID = lTipoPagoID },
-        Nombre = descripcion,
-        ImporteParcial = lImporte,
-        ConceptoID = int.Parse(id)
+        //cuenta = referencia.Cuenta.ToString();
+        clabe = referencia.Clabe.ToString();
+      }
+      return Json(clabe, JsonRequestBehavior.AllowGet);
+    }
 
-      };
-      lstConceptos.Add(lConcepto);
-      Session["Conceptos"] = lstConceptos;
+    #region HELPERS
+    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass)
+    {
+      //string EmailOrigen = "demesrmadrid@gmail.com";
+      //string EmailDestino = "demesrmadrid@gmail.com";
+      //string pass = "/04Demetr.";
+      string url = urlDominio + "/Home/Login";
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
+        "<p>DATOS DE LA SOLICITUD:</p><br><a href='" + url + "'>Click para Acceder</a>");
 
-      return Json(lstConceptos.Sum(c => c.ImporteParcial));
+      msj.IsBodyHtml = true;
+
+      //SmtpClient cliente = new SmtpClient("smtp.gmail.com");
+      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
+      cliente.EnableSsl = false;
+      cliente.UseDefaultCredentials = false;
+      //cliente.Host = "smtp.gmail.com";
+      //cliente.Host = "mail.qnta.mx";
+      cliente.Port = 587;
+      cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
+      try
+      {
+        cliente.Send(msj);
+
+        cliente.Dispose();
+      }
+      catch (Exception ex)
+      {
+
+        throw;
+      }
 
     }
+    #endregion
   }
 }
