@@ -886,6 +886,7 @@
     <Content Include="Views\Usuarios\InicioRecuperar.cshtml" />
     <Content Include="Views\Usuarios\Recuperar.cshtml" />
     <Content Include="Views\Shared\_CrearConcepto.cshtml" />
+    <Content Include="Views\Shared\_CrearGasto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
