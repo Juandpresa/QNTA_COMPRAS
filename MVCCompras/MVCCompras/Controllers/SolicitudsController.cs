@@ -106,7 +106,7 @@ namespace MVCCompras.Controllers
 
 
       ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre");
-      ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
+      //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
       ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
 
@@ -268,19 +268,47 @@ namespace MVCCompras.Controllers
       base.Dispose(disposing);
     }
 
-    public JsonResult DatosProveedor(int idProv, ReferenciaBancaria refe)
+    public JsonResult DatoBanco(int idProv, ReferenciaBancaria refe)
+    {
+    string banco = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var query = (from b in db.Bancos
+                  join r in db.ReferenciaBancaria on b.BancoId equals r.BancoID
+                  where r.ProveedorID == idProv
+                  select new { b.Alias });
+
+      foreach (var item in query)
+      {
+        banco = item.Alias.ToString();
+      }
+     
+      return Json(banco, JsonRequestBehavior.AllowGet);
+    }
+
+    public JsonResult DatoCuenta(int idProv, ReferenciaBancaria refe)
     {
       string cuenta = "";
-      string clabe = "";
       //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
       var referencia = db.ReferenciaBancaria.FirstOrDefault(e => e.ProveedorID == idProv);
       if (referencia != null)
       {
         cuenta = referencia.Cuenta.ToString();
-        clabe = referencia.Clabe.ToString();
+        //clabe = referencia.Clabe.ToString();
       }
       return Json(cuenta, JsonRequestBehavior.AllowGet);
-     
+    }
+    public JsonResult DatoClabe(int idProv, ReferenciaBancaria refe)
+    {
+
+      string clabe = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var referencia = db.ReferenciaBancaria.FirstOrDefault(e => e.ProveedorID == idProv);
+      if (referencia != null)
+      {
+        //cuenta = referencia.Cuenta.ToString();
+        clabe = referencia.Clabe.ToString();
+      }
+      return Json(clabe, JsonRequestBehavior.AllowGet);
     }
 
     #region HELPERS
