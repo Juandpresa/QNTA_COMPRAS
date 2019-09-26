@@ -97,7 +97,8 @@
         }
         else {
             //Agregamos concepto
-            var concepto = $("#TipoPagoID").text();
+          var concepto = $("#TipoPagoID").find('option:selected').text();
+          var idTipoPago = $("#TipoPagoID").val();
             var descrip = $("#ConceptoID").val();
             var importe = $("#ImporteID").val();
             var nuevoconcepto = 0;
@@ -127,8 +128,14 @@
                     " id='importeid" + numconcepto + "'" +
                     " readonly" +
                     " value='" + importe + "'/>" +
-                    "</td>" +
-                    "</tr>"
+                  "</td>" + "<td>" +
+                  "<input type='text' style='border:0;background:transparent;' " +
+                  " name='idTipoPago" + numconcepto + "'" +
+                  " id='idTipoPago" + numconcepto + "'" +
+                  " readonly" +
+                  " value='" + idTipoPago + "'/>" +
+                  "</td>" +
+                   "</tr>"
                 );
                 $(".concepto").val("");
                 $("#Importe").val(nuevoconcepto);

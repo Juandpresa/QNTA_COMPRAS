@@ -166,6 +166,7 @@ namespace MVCCompras.Controllers
         int idSol = db.Solicitud.Max(item => item.SolicitudID);
         //guardar los conceptos
         int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+        string[] conceptos = new string[NumConcepto];
 
         for (int item = 1; item <= NumConcepto; item++)
         {
@@ -173,14 +174,12 @@ namespace MVCCompras.Controllers
           Concepto NewConcepto = new Concepto();
           //Agregamos registro x registro al la bd
           NewConcepto.SolicitudId = solicitud.SolicitudID;
-          NewConcepto.TipoPagoID = int.Parse(CrearConcepto["concepid" + item]);
+          NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
           NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
-          //NewConcepto.TipoPagoID = 2; 
-          //NewConcepto.Nombre = "Descripcion";
-
           NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
 
           db.Concepto.Add(NewConcepto);
+          conceptos[item-1] = NewConcepto.Nombre;
         }
         db.SaveChanges();
 
@@ -195,7 +194,7 @@ namespace MVCCompras.Controllers
         {
           string correoDestino = user.Correo.ToString();
 
-          EnviarCorreo(correoOrigen, correoDestino, pass,idSol,solicitud.ImporteTotal,solicitud.Solicitante);
+          EnviarCorreo(correoOrigen, correoDestino, pass,idSol,solicitud.ImporteTotal,solicitud.Solicitante,conceptos);
         }
 
         return RedirectToAction("Index");
@@ -341,7 +340,7 @@ namespace MVCCompras.Controllers
     }
 
     #region HELPERS
-    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante)
+    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante, string conceptos)
     {
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
