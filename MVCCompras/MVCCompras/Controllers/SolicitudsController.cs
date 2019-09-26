@@ -325,7 +325,11 @@ namespace MVCCompras.Controllers
       //string pass = "/04Demetr.";
       string url = urlDominio + "/Home/Login";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
-        "<p>DATOS DE LA SOLICITUD:</p><br><p>No. Solicitud: '"+idsol+"'</p><br><p>Importe Total de Compra: $'"+impT+"'</p><br><p>Solicitado por: '"+solicitante+"'</p><br><br><a href='" + url + "'>Click para Acceder</a>");
+        "<body style=font-family:arial align=center><h1><b>DATOS DE LA SOLICITUD:</b></h1>" +
+        "<p><b>No. Solicitud:</b> " + idsol+"</p>" +
+        "<p><b>Importe Total de Compra: $</b>" + impT+"</p>" +
+        "<br><p><b>Solicitado por:</b> " + solicitante+"</p><br><br>" +
+        "<a href='" + url + "'>Click para Acceder</a><body>");
 
       msj.IsBodyHtml = true;
 
