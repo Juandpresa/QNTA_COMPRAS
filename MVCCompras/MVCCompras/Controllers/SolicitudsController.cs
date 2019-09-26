@@ -356,9 +356,9 @@ namespace MVCCompras.Controllers
         "< style > h2{ font - family: Verdana, Arial, Helvetica}table { font-family: Verdana, Arial, Helvetica;width: 60%;} td, th {border: 1px solid #ffffff;text-align: left;text-align: left;border: 1px solid black;}</style>" +
         "<body style=font-family:arial align=center> " +
         "<h2><b>DATOS DE LA SOLICITUD:</b></h2>" +
-        "<table align=center>"+
+        "<table align=center>" +
         "< tr >< td >< b > No.Solicitud:</ b > </ td >< td >" + idsol + " </ td ></ tr >" +
-        "< tr >< th >< b > Conceptos:</ b > </ th >< td >< ul ></ ul ></ td ></ tr >"+
+        "< tr >< th >< b > Conceptos:</ b > </ th >< td >< ul >" + conceptos[0] +"</ ul ></ td ></ tr >"+
         "< tr >< td >< b > Importe Total de Compra:</ b > </ td >< td >" + impT + "</ td ></ tr >" +
         "< tr >< td >< b > Solicitado por:</ b > </ td >< td > " + solicitante + " </ td ></ tr ></ table >");
 
