@@ -354,10 +354,10 @@ namespace MVCCompras.Controllers
       string url = urlDominio + "/Home/Login";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD:</b></h>" +
-        "<h2 align=center><b> No.Solicitud: </b></h2>" + "<h2 align=center>" + idsol + "</h2>" +
-        "<h2 align=center><b> Conceptos: </b>></h2>" + "<h2 align=center>" + conceptos[0] + "</h2>" +
-        "<h2 align=center><b> Importe Total de Compra: $</b></h2 align=center>" + "<h2>" +impT + "</h2>" +
-        "<h2 align=center><b> Solicitado por: </b> </h2>" + "<h2 align=center>" + solicitante+"</h2>");
+        "<h2 align=center>No.Solicitud: </h2>" + idsol + "</h2>" +
+        "<h2 align=center>Conceptos: </h2>"+ conceptos[0] + "</h2>" +
+        "<h2 align=center>Importe Total de Compra: $" +impT + "</h2>" +
+        "<h2 align=center>Solicitado por: " + solicitante+"</h2>");
 
       msj.IsBodyHtml = true;
 
