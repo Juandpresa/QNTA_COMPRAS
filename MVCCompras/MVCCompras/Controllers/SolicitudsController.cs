@@ -124,7 +124,7 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr)
+    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto)
     {
       string pass = "";
       //string correo = Session["Correo"].ToString();
@@ -157,10 +157,33 @@ namespace MVCCompras.Controllers
         //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
         //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
         //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
+       
         db.Solicitud.Add(solicitud);
+        
         //db.ReferenciaBancaria.Add(referencia);
-        db.SaveChanges();
+        
+        //db.SaveChanges();
         int idSol = db.Solicitud.Max(item => item.SolicitudID);
+        //guardar los conceptos
+        int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+
+        for (int item = 1; item <= NumConcepto; item++)
+        {
+          //Crear un objeto que permita guardar el cargamento 
+          Concepto NewConcepto = new Concepto();
+          //Agregamos registro x registro al la bd
+          NewConcepto.SolicitudId = solicitud.SolicitudID;
+          NewConcepto.TipoPagoID = int.Parse(CrearConcepto["concepid" + item]);
+          NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
+          //NewConcepto.TipoPagoID = 2; 
+          //NewConcepto.Nombre = "Descripcion";
+
+          NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+
+          db.Concepto.Add(NewConcepto);
+        }
+        db.SaveChanges();
+
         string correoOrigen = Session["Correo"].ToString();
         var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
         if (emailO != null)
