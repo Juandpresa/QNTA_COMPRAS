@@ -355,10 +355,10 @@ namespace MVCCompras.Controllers
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<body style=font-family:arial;font-size: 12px align=center> " +
         "<h2><b>DATOS DE LA SOLICITUD:</b></h2>" +
-        "<p>< b > No.Solicitud:</ b ></p>" + idsol +
-        "<p>< b > Conceptos:</ b ></p>" + conceptos[0] +
-        "<p>< b > Importe Total de Compra:</ b ></p>" + impT +
-        "<p>< b > Solicitado por:</ b > </p> " + solicitante);
+        "<h4><b> No.Solicitud:</b>" + idsol + "</h4>" +
+        "<h4><b> Conceptos:</b>" + conceptos[0] + "</h4>" +
+        "<h4><b> Importe Total de Compra:</b>" + impT + "</h4>" +
+        "<h4><b> Solicitado por:</b> </p> " + solicitante+"</h4>");
 
       msj.IsBodyHtml = true;
 
