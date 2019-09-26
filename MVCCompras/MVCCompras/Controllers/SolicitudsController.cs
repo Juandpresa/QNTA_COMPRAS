@@ -99,10 +99,13 @@ namespace MVCCompras.Controllers
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta");
       //ViewBag.ReferenciaBancariaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE");      
       //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre");
-      //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
+
+      ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
 
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
+
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
+      ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
 
 
       ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias");
@@ -135,7 +138,10 @@ namespace MVCCompras.Controllers
         //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
 
         ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-        //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+
+        //VERIFICAR DATOS !!//RECIEN AGREGADO
+        ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+        ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
 
         //solicitud.TipoGastoID = 1;
         //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
@@ -348,11 +354,14 @@ namespace MVCCompras.Controllers
       //string pass = "/04Demetr.";
       string url = urlDominio + "/Home/Login";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
-        "<body style=font-family:arial align=center><h1><b>DATOS DE LA SOLICITUD:</b></h1>" +
-        "<p><b>No. Solicitud:</b> " + idsol+"</p>" +
-        "<p><b>Importe Total de Compra: $</b>" + impT+"</p>" +
-        "<br><p><b>Solicitado por:</b> " + solicitante+"</p><br><br>" +
-        "<a href='" + url + "'>Click para Acceder</a><body>");
+        "< style > h2{ font - family: Verdana, Arial, Helvetica}table { font-family: Verdana, Arial, Helvetica;width: 60%;} td, th {border: 1px solid #ffffff;text-align: left;text-align: left;border: 1px solid black;}</style>" +
+        "<body style=font-family:arial align=center> " +
+        "<h2><b>DATOS DE LA SOLICITUD:</b></h2>" +
+        "<table align=center>"+
+        "< tr >< td >< b > No.Solicitud:</ b > </ td >< td >" + idsol + " </ td ></ tr >" +
+        "< tr >< th >< b > Conceptos:</ b > </ th >< td >< ul ></ ul ></ td ></ tr >"+
+        "< tr >< td >< b > Importe Total de Compra:</ b > </ td >< td >" + impT + "</ td ></ tr >" +
+        "< tr >< td >< b > Solicitado por:</ b > </ td >< td > " + solicitante + " </ td ></ tr ></ table >");
 
       msj.IsBodyHtml = true;
 
