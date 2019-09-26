@@ -42,15 +42,13 @@
 
                       <div class="form-group">
                         @Html.LabelFor(model => model.PagadoraID, "Empresa Pagadora", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                           @Html.DropDownList("PagadoraID", null, htmlAttributes: new { @class = "form-control" })
                           @Html.ValidationMessageFor(model => model.PagadoraID, "", new { @class = "text-danger" })
                         </div>
-                      </div>
-
-                      <div class="form-group">
+                      
                         @Html.LabelFor(model => model.ProveedorID, "Beneficiario", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                           @Html.DropDownList("ProveedorID", null, htmlAttributes: new { @class = "form-control" })
                           @Html.ValidationMessageFor(model => model.ProveedorID, "", new { @class = "text-danger" })
                         </div>
@@ -77,18 +75,13 @@
                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                       <div class="form-group">
                         @Html.LabelFor(model => model.Proveedor, "Moneda", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                           @Html.DropDownList("MonedaID", null, htmlAttributes: new { @class = "form-control" })
                           @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
                         </div>
-                      </div>
-                      <div class="form-group">
                         @Html.LabelFor(model => model.ImporteTotal, "Importe Total", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                          @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly",
-ValueType = true
-}
-})
+                        <div class="col-md-4">
+                          @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly",ValueType = true}})
                           @Html.ValidationMessageFor(model => model.ImporteTotal, "", new { @class = "text-danger" })
                         </div>
                       </div>
@@ -107,7 +100,7 @@ ValueType = true
             </div>
           </section>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-11">
           <section class="panel">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -121,20 +114,19 @@ ValueType = true
                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                       <div class="form-group">
                         @Html.LabelFor(model => model.FormaPagoID, "Forma de Pago", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-2">
                           @Html.DropDownList("FormaPagoID", null, htmlAttributes: new { @class = "form-control" })
                           @Html.ValidationMessageFor(model => model.FormaPagoID, "", new { @class = "text-danger" })
                         </div>
-                      </div>
-
-                      <div class="form-group">
+            
                         @*@Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
                           <div class="col-md-10">
                             @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
                             @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
                             @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
-                        <label class="control-label col-md-2">Banco</label>
-                        <input type="text" class="col-md-10" id="BancoID" readonly="readonly" />
+                        
+                          <label class="control-label col-sm-2">Banco</label>
+                        <input type="text" class="col-sm-2" id="BancoID" readonly="readonly" />
                         @*</div>*@
                       </div>
 
@@ -162,7 +154,7 @@ ValueType = true
           </section>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-11">
           <section class="panel">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -193,7 +185,7 @@ ValueType = true
 
 
                           <div class="form-group">
-                              @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
+                              @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "col-sm-2" })
                               <div class="col-md-10">
                                   @Html.EditorFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
                                   @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
@@ -216,7 +208,7 @@ ValueType = true
           </section>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-11">
           <section class="panel">
             <div class="panel panel-default">
               <div class="panel-heading">
