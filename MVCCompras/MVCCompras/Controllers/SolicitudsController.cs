@@ -16,6 +16,11 @@ namespace MVCCompras.Controllers
 {
   public class SolicitudsController : Controller
   {
+    public ActionResult GetPagadora(string PagadoraID)
+    {
+      Pagadora pagadora = db.Pagadora.Find(int.Parse(PagadoraID));
+      return Content(pagadora.ToString());
+    }
     Conversion c = new Conversion();
     string urlDominio = "http://localhost:52772/";
     private ComprasEntities db = new ComprasEntities();
