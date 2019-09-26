@@ -160,6 +160,7 @@ namespace MVCCompras.Controllers
         db.Solicitud.Add(solicitud);
         //db.ReferenciaBancaria.Add(referencia);
         db.SaveChanges();
+        int idSol = db.Solicitud.Max(item => item.SolicitudID);
         string correoOrigen = Session["Correo"].ToString();
         var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
         if (emailO != null)
@@ -171,7 +172,7 @@ namespace MVCCompras.Controllers
         {
           string correoDestino = user.Correo.ToString();
 
-          EnviarCorreo(correoOrigen, correoDestino, pass);
+          EnviarCorreo(correoOrigen, correoDestino, pass,idSol,solicitud.ImporteTotal,solicitud.Solicitante);
         }
 
         return RedirectToAction("Index");
@@ -196,7 +197,7 @@ namespace MVCCompras.Controllers
 
 
 
-      return View(solicitud);
+      return View();
     }
 
     // GET: Solicituds/Edit/5
@@ -317,14 +318,14 @@ namespace MVCCompras.Controllers
     }
 
     #region HELPERS
-    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass)
+    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante)
     {
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
       //string pass = "/04Demetr.";
       string url = urlDominio + "/Home/Login";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
-        "<p>DATOS DE LA SOLICITUD:</p><br><a href='" + url + "'>Click para Acceder</a>");
+        "<p>DATOS DE LA SOLICITUD:</p><br><p>No. Solicitud: '"+idsol+"'</p><br><p>Importe Total de Compra: $'"+impT+"'</p><br><p>Solicitado por: '"+solicitante+"'</p><br><br><a href='" + url + "'>Click para Acceder</a>");
 
       msj.IsBodyHtml = true;
 
