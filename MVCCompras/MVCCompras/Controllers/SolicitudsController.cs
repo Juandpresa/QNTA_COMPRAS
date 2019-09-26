@@ -194,7 +194,7 @@ namespace MVCCompras.Controllers
         {
           string correoDestino = user.Correo.ToString();
 
-          EnviarCorreo(correoOrigen, correoDestino, pass,idSol,solicitud.ImporteTotal,solicitud.Solicitante,conceptos);
+          EnviarCorreo(correoOrigen, correoDestino, pass, idSol, solicitud.ImporteTotal, solicitud.Solicitante, conceptos);
         }
 
         return RedirectToAction("Index");
@@ -340,7 +340,7 @@ namespace MVCCompras.Controllers
     }
 
     #region HELPERS
-    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante, string conceptos)
+    private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante, string[] conceptos)
     {
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
