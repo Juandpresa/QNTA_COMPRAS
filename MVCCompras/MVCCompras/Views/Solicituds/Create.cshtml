@@ -1,752 +1,757 @@
 ﻿@model MVCCompras.Models.Solicitud
 
 @{
-    ViewBag.Title = "Create";
+  ViewBag.Title = "Create";
 }
 @if (ViewBag.Message != null)
 {
-    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+  <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 
 @using (Html.BeginForm("Create", "Solicituds", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+  @Html.AntiForgeryToken()
 
 
-    <section id="main-content">
-        <section class=" wrapper">
-            <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-file"></i> Solicitud de Compra</h3>
+  <section id="main-content">
+    <section class=" wrapper">
+      <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-file"></i> Solicitud de Compra</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <section class="panel">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="pull-left"><h4>Especificaciones</h4></div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
+                <div class="padd">
+                  <div class="form quick-post">
+                    <div class="form-horizontal">
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.Solicitantes, "Usuario Solicitante", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.EnumDropDownListFor(model => model.Solicitantes, "Selecciona Solicitante", new { @class = "form-control" })
+                          @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.PagadoraID, "Empresa Pagadora", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.DropDownList("PagadoraID", null, htmlAttributes: new { @class = "form-control" })
+                          @Html.ValidationMessageFor(model => model.PagadoraID, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.ProveedorID, "Beneficiario", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.DropDownList("ProveedorID", null, htmlAttributes: new { @class = "form-control" })
+                          @Html.ValidationMessageFor(model => model.ProveedorID, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="pull-left"><h4>Especificaciones</h4></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="padd">
-                                    <div class="form quick-post">
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Solicitantes, "Usuario Solicitante", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.EnumDropDownListFor(model => model.Solicitantes, "Selecciona Solicitante", new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.PagadoraID, "Empresa Pagadora", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownList("PagadoraID", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.PagadoraID, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.ProveedorID, "Beneficiario", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownList("ProveedorID", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.ProveedorID, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+          </section>
+        </div>
+        <div class="col-lg-6">
+          <section class="panel">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="pull-left"><h4>Importe a Pagar</h4></div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
+                <div class="padd">
+                  <div class="form quick-post">
+                    <div class="form-horizontal">
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.Proveedor, "Moneda", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.DropDownList("MonedaID", null, htmlAttributes: new { @class = "form-control" })
+                          @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
                         </div>
-                    </section>
-                </div>
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="pull-left"><h4>Importe a Pagar</h4></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="padd">
-                                    <div class="form quick-post">
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Proveedor, "Moneda", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownList("MonedaID", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.ImporteTotal, "Importe Total", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly",
-                          ValueType = true
-                          }
-                          })
-                                                    @Html.ValidationMessageFor(model => model.ImporteTotal, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.ImporteLetra, "Importe Letra", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.EditorFor(model => model.ImporteLetra, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"}
-                                                })
-                                                    @Html.ValidationMessageFor(model => model.ImporteLetra, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                      </div>
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.ImporteTotal, "Importe Total", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly",
+ValueType = true
+}
+})
+                          @Html.ValidationMessageFor(model => model.ImporteTotal, "", new { @class = "text-danger" })
                         </div>
-                    </section>
-                </div>
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="pull-left"><h4>Formato de Pago</h4></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="padd">
-                                    <div class="form quick-post">
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.FormaPagoID, "Forma de Pago", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownList("FormaPagoID", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.FormaPagoID, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @*@Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <div class="col-md-10">
-                                                      @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
-                                                      @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                                                      @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
-                                                <label class="control-label col-md-2">Banco</label>
-                                                <input type="text" class="col-md-10" id="BancoID" readonly="readonly" />
-                                                @*</div>*@
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Proveedor, "No. Cuenta", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBox("CuentaID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                                                    @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Proveedor, "CLABE", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBox("ClabeID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                                                    @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                      </div>
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.ImporteLetra, "Importe Letra", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.EditorFor(model => model.ImporteLetra, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"}
+                      })
+                          @Html.ValidationMessageFor(model => model.ImporteLetra, "", new { @class = "text-danger" })
                         </div>
-                    </section>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="pull-left"><h4>Conceptos</h4></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="padd">
-                                    <div class="form quick-post">
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table id="tblConcepto" class="table table-responsive table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Concepto</th>
-                                                                <th>Descripción</th>
-                                                                <th>Importe</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody></tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.EditorFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <a href="#ModalConcepto" class="btn btn-primary"
-                                                       id="btnAddConcepto" data-toggle="modal"
-                                                       role="button">Agregar Concepto</a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="pull-left"><h4>Distrubución de Gastos</h4></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="padd">
-                                    <div class="form quick-post">
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.TipoGastoID, "Tipo de Gasto", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownList("TipoGastoID", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.TipoGastoID, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table id="tblGasto" class="table table-responsive table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Cliente</th>
-                                                                <th>Centro de Costos</th>
-                                                                <th>%</th>
-                                                                <th>Importe</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody></tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <a href="#ModalGasto" class="btn btn-primary"
-                                                       id="btnAddGasto" data-toggle="modal"
-                                                       role="button">Agregar Gasto</a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
+              </div>
             </div>
+          </section>
+        </div>
+        <div class="col-lg-6">
+          <section class="panel">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="pull-left"><h4>Formato de Pago</h4></div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
+                <div class="padd">
+                  <div class="form quick-post">
+                    <div class="form-horizontal">
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.FormaPagoID, "Forma de Pago", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.DropDownList("FormaPagoID", null, htmlAttributes: new { @class = "form-control" })
+                          @Html.ValidationMessageFor(model => model.FormaPagoID, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
 
-        </section>
+                      <div class="form-group">
+                        @*@Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
+                          <div class="col-md-10">
+                            @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
+                            @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
+                        <label class="control-label col-md-2">Banco</label>
+                        <input type="text" class="col-md-10" id="BancoID" readonly="readonly" />
+                        @*</div>*@
+                      </div>
 
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.Proveedor, "No. Cuenta", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.TextBox("CuentaID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                          @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
 
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.Proveedor, "CLABE", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.TextBox("ClabeID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                          @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
 
-
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </section>
         </div>
 
-        <div class="form-group">
-            <div class="btn btn-danger">
-                @Html.ActionLink("Cancelar", "Index")
+        <div class="col-lg-6">
+          <section class="panel">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="pull-left"><h4>Conceptos</h4></div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
+                <div class="padd">
+                  <div class="form quick-post">
+                    <div class="form-horizontal">
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                      <div class="form-group">
+                        <div class="col-md-12">
+                          <a href="#ModalConcepto" class="btn btn-primary"
+                             id="btnAddConcepto" data-toggle="modal"
+                             role="button">Agregar Concepto</a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table id="tblConcepto" class="table table-responsive table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Concepto</th>
+                                <th>Descripción</th>
+                                <th>Importe</th>
+                                <th style="visibility: hidden">tPago</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.EditorFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
+                          @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </section>
         </div>
 
+        <div class="col-lg-6">
+          <section class="panel">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="pull-left"><h4>Distrubución de Gastos</h4></div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
+                <div class="padd">
+                  <div class="form quick-post">
+                    <div class="form-horizontal">
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                      <div class="form-group">
+                        <div class="col-md-12">
+                          <a href="#ModalGasto" class="btn btn-primary"
+                             id="btnAddGasto" data-toggle="modal"
+                             role="button">Agregar Gasto</a>
+                        </div>
+                      </div>
 
+
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.TipoGastoID, "Tipo de Gasto", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                          @Html.DropDownList("TipoGastoID", null, htmlAttributes: new { @class = "form-control" })
+                          @Html.ValidationMessageFor(model => model.TipoGastoID, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
+
+
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table id="tblGasto" class="table table-responsive table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Cliente</th>
+                                <th>Centro de Costos</th>
+                                <th>%</th>
+                                <th>Importe</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </section>
+        </div>
+
+      </div>
 
     </section>
-    @Html.Partial("_CrearConcepto")
-    @Html.Partial("_CrearGasto")
+
+
+
+
+    <div class="form-group">
+      <div class="col-md-12">
+        <input type="submit" value="Create" class="btn btn-success" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="btn btn-danger">
+        @Html.ActionLink("Cancelar", "Index")
+      </div>
+    </div>
+
+
+
+  </section>
+  @Html.Partial("_CrearConcepto")
+  @Html.Partial("_CrearGasto")
 }
 
 <script>
-    $(document).ready(function () {
-        var total = 0;
-        $('#ImporteID').change(function () {
-            var nume = $('#ImporteID').val();
-            total = parseFloat(total) + parseFloat(nume);
-            $('#ImporteTotal').val(total);
-            var n = $('#ImporteTotal').val();
-            var m = $('#MonedaID').val();
-            if (m == 1) {
-                $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
-            }
-            else {
-                $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
-            }
-        });
+  $(document).ready(function () {
+    var total = 0;
+    $('#ImporteID').change(function () {
+      var nume = $('#ImporteID').val();
+      total = parseFloat(total) + parseFloat(nume);
+      $('#ImporteTotal').val(total);
+      var n = $('#ImporteTotal').val();
+      var m = $('#MonedaID').val();
+      if (m == 1) {
+        $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+      }
+      else {
+        $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+      }
+    });
 
-        $('#ProveedorID').change(function () {
-            var id = $(this).val();
-            $.ajax({
-                url: '../Solicituds/DatoCuenta',
-                data: { idProv: id },
-                datatype: 'json',
-                success: function (data) {
-                    $('#CuentaID').val(data);
-                }
-            });
-            $.ajax({
-                url: '../Solicituds/DatoClabe',
-                data: { idProv: id },
-                datatype: 'json',
-                success: function (data) {
-                    $('#ClabeID').val(data);
-                }
-            });
-            $.ajax({
-                url: '../Solicituds/DatoBanco',
-                data: { idProv: id },
-                datatype: 'json',
-                success: function (data) {
-                    $('#BancoID').val(data);
-                    ////quito los options que pudiera tener previamente el dropdowlist
-                    //$("#BancoID").html("");
-                    ////recorro cada item que devuelve el controlador DatoBanco
-                    //$.each(data, function (index, value) {
-                    //    $('#BancoID').append($('<option>').text(data).attr(value, index));
-                    //});
 
-                }
-            });
-        });
-    })
+    $('#ProveedorID').change(function () {
+      var id = $(this).val();
+      $.ajax({
+        url: '../Solicituds/DatoCuenta',
+        data: { idProv: id },
+        datatype: 'json',
+        success: function (data) {
+          $('#CuentaID').val(data);
+        }
+      });
+      $.ajax({
+        url: '../Solicituds/DatoClabe',
+        data: { idProv: id },
+        datatype: 'json',
+        success: function (data) {
+          $('#ClabeID').val(data);
+        }
+      });
+      $.ajax({
+        url: '../Solicituds/DatoBanco',
+        data: { idProv: id },
+        datatype: 'json',
+        success: function (data) {
+          $('#BancoID').val(data);
+          ////quito los options que pudiera tener previamente el dropdowlist
+          //$("#BancoID").html("");
+          ////recorro cada item que devuelve el controlador DatoBanco
+          //$.each(data, function (index, value) {
+          //    $('#BancoID').append($('<option>').text(data).attr(value, index));
+          //});
+
+        }
+      });
+    });
+  })
 </script>
 
 <script>
-    var numeroALetras = (function () {
+  var numeroALetras = (function () {
 
-        function Unidades(num) {
+    function Unidades(num) {
 
-            switch (num) {
-                case 1:
-                    return 'UN';
-                case 2:
-                    return 'DOS';
-                case 3:
-                    return 'TRES';
-                case 4:
-                    return 'CUATRO';
-                case 5:
-                    return 'CINCO';
-                case 6:
-                    return 'SEIS';
-                case 7:
-                    return 'SIETE';
-                case 8:
-                    return 'OCHO';
-                case 9:
-                    return 'NUEVE';
-            }
+      switch (num) {
+        case 1:
+          return 'UN';
+        case 2:
+          return 'DOS';
+        case 3:
+          return 'TRES';
+        case 4:
+          return 'CUATRO';
+        case 5:
+          return 'CINCO';
+        case 6:
+          return 'SEIS';
+        case 7:
+          return 'SIETE';
+        case 8:
+          return 'OCHO';
+        case 9:
+          return 'NUEVE';
+      }
 
-            return '';
-        } //Unidades()
+      return '';
+    } //Unidades()
 
-        function Decenas(num) {
+    function Decenas(num) {
 
-            let decena = Math.floor(num / 10);
-            let unidad = num - (decena * 10);
+      let decena = Math.floor(num / 10);
+      let unidad = num - (decena * 10);
 
-            switch (decena) {
-                case 1:
-                    switch (unidad) {
-                        case 0:
-                            return 'DIEZ';
-                        case 1:
-                            return 'ONCE';
-                        case 2:
-                            return 'DOCE';
-                        case 3:
-                            return 'TRECE';
-                        case 4:
-                            return 'CATORCE';
-                        case 5:
-                            return 'QUINCE';
-                        default:
-                            return 'DIECI' + Unidades(unidad);
-                    }
-                case 2:
-                    switch (unidad) {
-                        case 0:
-                            return 'VEINTE';
-                        default:
-                            return 'VEINTI' + Unidades(unidad);
-                    }
-                case 3:
-                    return DecenasY('TREINTA', unidad);
-                case 4:
-                    return DecenasY('CUARENTA', unidad);
-                case 5:
-                    return DecenasY('CINCUENTA', unidad);
-                case 6:
-                    return DecenasY('SESENTA', unidad);
-                case 7:
-                    return DecenasY('SETENTA', unidad);
-                case 8:
-                    return DecenasY('OCHENTA', unidad);
-                case 9:
-                    return DecenasY('NOVENTA', unidad);
-                case 0:
-                    return Unidades(unidad);
-            }
-        } //Unidades()
+      switch (decena) {
+        case 1:
+          switch (unidad) {
+            case 0:
+              return 'DIEZ';
+            case 1:
+              return 'ONCE';
+            case 2:
+              return 'DOCE';
+            case 3:
+              return 'TRECE';
+            case 4:
+              return 'CATORCE';
+            case 5:
+              return 'QUINCE';
+            default:
+              return 'DIECI' + Unidades(unidad);
+          }
+        case 2:
+          switch (unidad) {
+            case 0:
+              return 'VEINTE';
+            default:
+              return 'VEINTI' + Unidades(unidad);
+          }
+        case 3:
+          return DecenasY('TREINTA', unidad);
+        case 4:
+          return DecenasY('CUARENTA', unidad);
+        case 5:
+          return DecenasY('CINCUENTA', unidad);
+        case 6:
+          return DecenasY('SESENTA', unidad);
+        case 7:
+          return DecenasY('SETENTA', unidad);
+        case 8:
+          return DecenasY('OCHENTA', unidad);
+        case 9:
+          return DecenasY('NOVENTA', unidad);
+        case 0:
+          return Unidades(unidad);
+      }
+    } //Unidades()
 
-        function DecenasY(strSin, numUnidades) {
-            if (numUnidades > 0)
-                return strSin + ' Y ' + Unidades(numUnidades)
+    function DecenasY(strSin, numUnidades) {
+      if (numUnidades > 0)
+        return strSin + ' Y ' + Unidades(numUnidades)
 
-            return strSin;
-        } //DecenasY()
+      return strSin;
+    } //DecenasY()
 
-        function Centenas(num) {
-            let centenas = Math.floor(num / 100);
-            let decenas = num - (centenas * 100);
+    function Centenas(num) {
+      let centenas = Math.floor(num / 100);
+      let decenas = num - (centenas * 100);
 
-            switch (centenas) {
-                case 1:
-                    if (decenas > 0)
-                        return 'CIENTO ' + Decenas(decenas);
-                    return 'CIEN';
-                case 2:
-                    return 'DOSCIENTOS ' + Decenas(decenas);
-                case 3:
-                    return 'TRESCIENTOS ' + Decenas(decenas);
-                case 4:
-                    return 'CUATROCIENTOS ' + Decenas(decenas);
-                case 5:
-                    return 'QUINIENTOS ' + Decenas(decenas);
-                case 6:
-                    return 'SEISCIENTOS ' + Decenas(decenas);
-                case 7:
-                    return 'SETECIENTOS ' + Decenas(decenas);
-                case 8:
-                    return 'OCHOCIENTOS ' + Decenas(decenas);
-                case 9:
-                    return 'NOVECIENTOS ' + Decenas(decenas);
-            }
+      switch (centenas) {
+        case 1:
+          if (decenas > 0)
+            return 'CIENTO ' + Decenas(decenas);
+          return 'CIEN';
+        case 2:
+          return 'DOSCIENTOS ' + Decenas(decenas);
+        case 3:
+          return 'TRESCIENTOS ' + Decenas(decenas);
+        case 4:
+          return 'CUATROCIENTOS ' + Decenas(decenas);
+        case 5:
+          return 'QUINIENTOS ' + Decenas(decenas);
+        case 6:
+          return 'SEISCIENTOS ' + Decenas(decenas);
+        case 7:
+          return 'SETECIENTOS ' + Decenas(decenas);
+        case 8:
+          return 'OCHOCIENTOS ' + Decenas(decenas);
+        case 9:
+          return 'NOVECIENTOS ' + Decenas(decenas);
+      }
 
-            return Decenas(decenas);
-        } //Centenas()
+      return Decenas(decenas);
+    } //Centenas()
 
-        function Seccion(num, divisor, strSingular, strPlural) {
-            let cientos = Math.floor(num / divisor)
-            let resto = num - (cientos * divisor)
+    function Seccion(num, divisor, strSingular, strPlural) {
+      let cientos = Math.floor(num / divisor)
+      let resto = num - (cientos * divisor)
 
-            let letras = '';
+      let letras = '';
 
-            if (cientos > 0)
-                if (cientos > 1)
-                    letras = Centenas(cientos) + ' ' + strPlural;
-                else
-                    letras = strSingular;
+      if (cientos > 0)
+        if (cientos > 1)
+          letras = Centenas(cientos) + ' ' + strPlural;
+        else
+          letras = strSingular;
 
-            if (resto > 0)
-                letras += '';
+      if (resto > 0)
+        letras += '';
 
-            return letras;
-        } //Seccion()
+      return letras;
+    } //Seccion()
 
-        function Miles(num) {
-            let divisor = 1000;
-            let cientos = Math.floor(num / divisor)
-            let resto = num - (cientos * divisor)
+    function Miles(num) {
+      let divisor = 1000;
+      let cientos = Math.floor(num / divisor)
+      let resto = num - (cientos * divisor)
 
-            let strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
-            let strCentenas = Centenas(resto);
+      let strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
+      let strCentenas = Centenas(resto);
 
-            if (strMiles == '')
-                return strCentenas;
+      if (strMiles == '')
+        return strCentenas;
 
-            return strMiles + ' ' + strCentenas;
-        } //Miles()
+      return strMiles + ' ' + strCentenas;
+    } //Miles()
 
-        function Millones(num) {
-            let divisor = 1000000;
-            let cientos = Math.floor(num / divisor)
-            let resto = num - (cientos * divisor)
+    function Millones(num) {
+      let divisor = 1000000;
+      let cientos = Math.floor(num / divisor)
+      let resto = num - (cientos * divisor)
 
-            let strMillones = Seccion(num, divisor, 'UN MILLON DE', 'MILLONES DE');
-            let strMiles = Miles(resto);
+      let strMillones = Seccion(num, divisor, 'UN MILLON DE', 'MILLONES DE');
+      let strMiles = Miles(resto);
 
-            if (strMillones == '')
-                return strMiles;
+      if (strMillones == '')
+        return strMiles;
 
-            return strMillones + ' ' + strMiles;
-        } //Millones()
+      return strMillones + ' ' + strMiles;
+    } //Millones()
 
-        return function NumeroALetras(num, currency) {
-            currency = currency || {};
-            let data = {
-                numero: num,
-                enteros: Math.floor(num),
-                centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
-                letrasCentavos: '',
-                letrasMonedaPlural: currency.plural || 'PESOS', //'PESOS', 'Dólares', 'Bolívares', 'etcs'
-                letrasMonedaSingular: currency.singular || 'PESO', //'PESO', 'Dólar', 'Bolivar', 'etc'
-                letrasMonedaCentavoPlural: currency.centPlural || 'CENTAVOS',
-                letrasMonedaCentavoSingular: currency.centSingular || 'CENTAVO'
-            };
+    return function NumeroALetras(num, currency) {
+      currency = currency || {};
+      let data = {
+        numero: num,
+        enteros: Math.floor(num),
+        centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
+        letrasCentavos: '',
+        letrasMonedaPlural: currency.plural || 'PESOS', //'PESOS', 'Dólares', 'Bolívares', 'etcs'
+        letrasMonedaSingular: currency.singular || 'PESO', //'PESO', 'Dólar', 'Bolivar', 'etc'
+        letrasMonedaCentavoPlural: currency.centPlural || 'CENTAVOS',
+        letrasMonedaCentavoSingular: currency.centSingular || 'CENTAVO'
+      };
 
-            if (data.centavos > 0) {
-                data.letrasCentavos = 'CON ' + (function () {
-                    if (data.centavos == 1)
-                        return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular;
-                    else
-                        return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
-                })();
-            };
+      if (data.centavos > 0) {
+        data.letrasCentavos = 'CON ' + (function () {
+          if (data.centavos == 1)
+            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular;
+          else
+            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
+        })();
+      };
 
-            if (data.enteros == 0)
-                return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
-            if (data.enteros == 1)
-                return Millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
-            else
-                return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
-        };
+      if (data.enteros == 0)
+        return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+      if (data.enteros == 1)
+        return Millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
+      else
+        return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+    };
 
-    })();
+  })();
 </script>
 
 <script>
-    var numeroALetras2 = (function () {
+  var numeroALetras2 = (function () {
 
-        function Unidades(num) {
+    function Unidades(num) {
 
-            switch (num) {
-                case 1:
-                    return 'UN';
-                case 2:
-                    return 'DOS';
-                case 3:
-                    return 'TRES';
-                case 4:
-                    return 'CUATRO';
-                case 5:
-                    return 'CINCO';
-                case 6:
-                    return 'SEIS';
-                case 7:
-                    return 'SIETE';
-                case 8:
-                    return 'OCHO';
-                case 9:
-                    return 'NUEVE';
-            }
+      switch (num) {
+        case 1:
+          return 'UN';
+        case 2:
+          return 'DOS';
+        case 3:
+          return 'TRES';
+        case 4:
+          return 'CUATRO';
+        case 5:
+          return 'CINCO';
+        case 6:
+          return 'SEIS';
+        case 7:
+          return 'SIETE';
+        case 8:
+          return 'OCHO';
+        case 9:
+          return 'NUEVE';
+      }
 
-            return '';
-        } //Unidades()
+      return '';
+    } //Unidades()
 
-        function Decenas(num) {
+    function Decenas(num) {
 
-            let decena = Math.floor(num / 10);
-            let unidad = num - (decena * 10);
+      let decena = Math.floor(num / 10);
+      let unidad = num - (decena * 10);
 
-            switch (decena) {
-                case 1:
-                    switch (unidad) {
-                        case 0:
-                            return 'DIEZ';
-                        case 1:
-                            return 'ONCE';
-                        case 2:
-                            return 'DOCE';
-                        case 3:
-                            return 'TRECE';
-                        case 4:
-                            return 'CATORCE';
-                        case 5:
-                            return 'QUINCE';
-                        default:
-                            return 'DIECI' + Unidades(unidad);
-                    }
-                case 2:
-                    switch (unidad) {
-                        case 0:
-                            return 'VEINTE';
-                        default:
-                            return 'VEINTI' + Unidades(unidad);
-                    }
-                case 3:
-                    return DecenasY('TREINTA', unidad);
-                case 4:
-                    return DecenasY('CUARENTA', unidad);
-                case 5:
-                    return DecenasY('CINCUENTA', unidad);
-                case 6:
-                    return DecenasY('SESENTA', unidad);
-                case 7:
-                    return DecenasY('SETENTA', unidad);
-                case 8:
-                    return DecenasY('OCHENTA', unidad);
-                case 9:
-                    return DecenasY('NOVENTA', unidad);
-                case 0:
-                    return Unidades(unidad);
-            }
-        } //Unidades()
+      switch (decena) {
+        case 1:
+          switch (unidad) {
+            case 0:
+              return 'DIEZ';
+            case 1:
+              return 'ONCE';
+            case 2:
+              return 'DOCE';
+            case 3:
+              return 'TRECE';
+            case 4:
+              return 'CATORCE';
+            case 5:
+              return 'QUINCE';
+            default:
+              return 'DIECI' + Unidades(unidad);
+          }
+        case 2:
+          switch (unidad) {
+            case 0:
+              return 'VEINTE';
+            default:
+              return 'VEINTI' + Unidades(unidad);
+          }
+        case 3:
+          return DecenasY('TREINTA', unidad);
+        case 4:
+          return DecenasY('CUARENTA', unidad);
+        case 5:
+          return DecenasY('CINCUENTA', unidad);
+        case 6:
+          return DecenasY('SESENTA', unidad);
+        case 7:
+          return DecenasY('SETENTA', unidad);
+        case 8:
+          return DecenasY('OCHENTA', unidad);
+        case 9:
+          return DecenasY('NOVENTA', unidad);
+        case 0:
+          return Unidades(unidad);
+      }
+    } //Unidades()
 
-        function DecenasY(strSin, numUnidades) {
-            if (numUnidades > 0)
-                return strSin + ' Y ' + Unidades(numUnidades)
+    function DecenasY(strSin, numUnidades) {
+      if (numUnidades > 0)
+        return strSin + ' Y ' + Unidades(numUnidades)
 
-            return strSin;
-        } //DecenasY()
+      return strSin;
+    } //DecenasY()
 
-        function Centenas(num) {
-            let centenas = Math.floor(num / 100);
-            let decenas = num - (centenas * 100);
+    function Centenas(num) {
+      let centenas = Math.floor(num / 100);
+      let decenas = num - (centenas * 100);
 
-            switch (centenas) {
-                case 1:
-                    if (decenas > 0)
-                        return 'CIENTO ' + Decenas(decenas);
-                    return 'CIEN';
-                case 2:
-                    return 'DOSCIENTOS ' + Decenas(decenas);
-                case 3:
-                    return 'TRESCIENTOS ' + Decenas(decenas);
-                case 4:
-                    return 'CUATROCIENTOS ' + Decenas(decenas);
-                case 5:
-                    return 'QUINIENTOS ' + Decenas(decenas);
-                case 6:
-                    return 'SEISCIENTOS ' + Decenas(decenas);
-                case 7:
-                    return 'SETECIENTOS ' + Decenas(decenas);
-                case 8:
-                    return 'OCHOCIENTOS ' + Decenas(decenas);
-                case 9:
-                    return 'NOVECIENTOS ' + Decenas(decenas);
-            }
+      switch (centenas) {
+        case 1:
+          if (decenas > 0)
+            return 'CIENTO ' + Decenas(decenas);
+          return 'CIEN';
+        case 2:
+          return 'DOSCIENTOS ' + Decenas(decenas);
+        case 3:
+          return 'TRESCIENTOS ' + Decenas(decenas);
+        case 4:
+          return 'CUATROCIENTOS ' + Decenas(decenas);
+        case 5:
+          return 'QUINIENTOS ' + Decenas(decenas);
+        case 6:
+          return 'SEISCIENTOS ' + Decenas(decenas);
+        case 7:
+          return 'SETECIENTOS ' + Decenas(decenas);
+        case 8:
+          return 'OCHOCIENTOS ' + Decenas(decenas);
+        case 9:
+          return 'NOVECIENTOS ' + Decenas(decenas);
+      }
 
-            return Decenas(decenas);
-        } //Centenas()
+      return Decenas(decenas);
+    } //Centenas()
 
-        function Seccion(num, divisor, strSingular, strPlural) {
-            let cientos = Math.floor(num / divisor)
-            let resto = num - (cientos * divisor)
+    function Seccion(num, divisor, strSingular, strPlural) {
+      let cientos = Math.floor(num / divisor)
+      let resto = num - (cientos * divisor)
 
-            let letras = '';
+      let letras = '';
 
-            if (cientos > 0)
-                if (cientos > 1)
-                    letras = Centenas(cientos) + ' ' + strPlural;
-                else
-                    letras = strSingular;
+      if (cientos > 0)
+        if (cientos > 1)
+          letras = Centenas(cientos) + ' ' + strPlural;
+        else
+          letras = strSingular;
 
-            if (resto > 0)
-                letras += '';
+      if (resto > 0)
+        letras += '';
 
-            return letras;
-        } //Seccion()
+      return letras;
+    } //Seccion()
 
-        function Miles(num) {
-            let divisor = 1000;
-            let cientos = Math.floor(num / divisor)
-            let resto = num - (cientos * divisor)
+    function Miles(num) {
+      let divisor = 1000;
+      let cientos = Math.floor(num / divisor)
+      let resto = num - (cientos * divisor)
 
-            let strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
-            let strCentenas = Centenas(resto);
+      let strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
+      let strCentenas = Centenas(resto);
 
-            if (strMiles == '')
-                return strCentenas;
+      if (strMiles == '')
+        return strCentenas;
 
-            return strMiles + ' ' + strCentenas;
-        } //Miles()
+      return strMiles + ' ' + strCentenas;
+    } //Miles()
 
-        function Millones(num) {
-            let divisor = 1000000;
-            let cientos = Math.floor(num / divisor)
-            let resto = num - (cientos * divisor)
+    function Millones(num) {
+      let divisor = 1000000;
+      let cientos = Math.floor(num / divisor)
+      let resto = num - (cientos * divisor)
 
-            let strMillones = Seccion(num, divisor, 'UN MILLON DE', 'MILLONES DE');
-            let strMiles = Miles(resto);
+      let strMillones = Seccion(num, divisor, 'UN MILLON DE', 'MILLONES DE');
+      let strMiles = Miles(resto);
 
-            if (strMillones == '')
-                return strMiles;
+      if (strMillones == '')
+        return strMiles;
 
-            return strMillones + ' ' + strMiles;
-        } //Millones()
+      return strMillones + ' ' + strMiles;
+    } //Millones()
 
-        return function NumeroALetras(num, currency) {
-            currency = currency || {};
-            let data = {
-                numero: num,
-                enteros: Math.floor(num),
-                centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
-                letrasCentavos: '',
-                letrasMonedaPlural: currency.plural || 'DOLARES', //'PESOS', 'Dólares', 'Bolívares', 'etcs'
-                letrasMonedaSingular: currency.singular || 'DOLAR', //'PESO', 'Dólar', 'Bolivar', 'etc'
-                letrasMonedaCentavoPlural: currency.centPlural || 'CENTAVOS',
-                letrasMonedaCentavoSingular: currency.centSingular || 'CENTAVO'
-            };
+    return function NumeroALetras(num, currency) {
+      currency = currency || {};
+      let data = {
+        numero: num,
+        enteros: Math.floor(num),
+        centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
+        letrasCentavos: '',
+        letrasMonedaPlural: currency.plural || 'DOLARES', //'PESOS', 'Dólares', 'Bolívares', 'etcs'
+        letrasMonedaSingular: currency.singular || 'DOLAR', //'PESO', 'Dólar', 'Bolivar', 'etc'
+        letrasMonedaCentavoPlural: currency.centPlural || 'CENTAVOS',
+        letrasMonedaCentavoSingular: currency.centSingular || 'CENTAVO'
+      };
 
-            if (data.centavos > 0) {
-                data.letrasCentavos = 'CON ' + (function () {
-                    if (data.centavos == 1)
-                        return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular;
-                    else
-                        return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
-                })();
-            };
+      if (data.centavos > 0) {
+        data.letrasCentavos = 'CON ' + (function () {
+          if (data.centavos == 1)
+            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular;
+          else
+            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
+        })();
+      };
 
-            if (data.enteros == 0)
-                return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
-            if (data.enteros == 1)
-                return Millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
-            else
-                return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
-        };
+      if (data.enteros == 0)
+        return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+      if (data.enteros == 1)
+        return Millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
+      else
+        return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+    };
 
-    })();
+  })();
 </script>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+  @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+  @Scripts.Render("~/bundles/jqueryval")
 }
