@@ -67,7 +67,7 @@
                 @foreach (var item in Model)
                 {
                     <tbody>
-                        <tr>
+                        <tr>@*SE AGRGARON CLASES VIRTUALES AL MODELO DE SOLICITUD, PAGADORA, MONEDA Y ESTATUS*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.FechaRegistro)
                             </td>
@@ -75,22 +75,22 @@
                                 @Html.DisplayFor(modelItem => item.Solicitante)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PagadoraID)
+                                @Html.DisplayFor(modelItem => item.Pagadora.Alias)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Proveedor.Alias)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ImporteLetra)
+                                @Html.DisplayFor(modelItem => item.Concepto)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.CantidadPagos)
+                                @Html.DisplayFor(modelItem => item.Moneda.Nombre)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ImporteTotal)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TipoGasto.Nombre)
+                                @Html.DisplayFor(modelItem => item.Estatus.Nombre)
                             </td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })

@@ -228,6 +228,8 @@ namespace MVCCompras.Controllers
       return View();
     }
 
+    
+    
     // GET: Solicituds/Edit/5
     public ActionResult Edit(int? id)
     {
@@ -236,6 +238,18 @@ namespace MVCCompras.Controllers
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
       Solicitud solicitud = db.Solicitud.Find(id);
+      //VIEWBAGS PARA SOLICITAR DDL
+      ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
+      ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
+      ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
+      ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
+      ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias");
+      ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias");
+      ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre");
+      ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre");
+      ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
+      ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
+
       if (solicitud == null)
       {
         return HttpNotFound();
