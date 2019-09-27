@@ -29,45 +29,111 @@ namespace MVCCompras.Controllers
 
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
-      ViewBag.CurrentSort = sortOrder;
-      ViewBag.DateSortParm = sortOrder == "Date" ? "date_asc" : "Date";
-
-      if (searchString != null)
-      {
-        page = 1;
-      }
-      else
-      {
-        searchString = currentFilter;
-      }
-
-      ViewBag.CurrentFilter = searchString;
-
+      //TempData["var"] = "Hola";
       var estatus = from s in db.Solicitud
                     select s;
-      if (!String.IsNullOrEmpty(searchString))
-      {
-        estatus = estatus.Where(s => s.Solicitante.Contains(searchString) || s.Observacion.Contains(searchString));
-      }
-      switch (sortOrder)
-      {
-        case "Solicitante_asc":
-          estatus = estatus.OrderByDescending(s => s.FechaRegistro);
-          break;
-        case "Date":
-          estatus = estatus.OrderByDescending(s => s.FechaRegistro.Day);
-          break;
-        case "date_asc":
-          estatus = estatus.OrderByDescending(s => s.FechaRegistro);
-          break;
-        default:  // Name ascending 
-          estatus = estatus.OrderBy(s => s.FechaRegistro);
-          break;
-      }
-
       int pageSize = 8;
       int pageNumber = (page ?? 1);
-      return View(estatus.ToPagedList(pageNumber, pageSize));
+      try
+      {
+        //Si sesion trae datos permite el acceso a la vista
+        if (Session["idUsuario"] != null)
+        {
+          if (TempData["var"] == null)
+          {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_asc" : "Date";
+
+            if (searchString != null)
+            {
+              page = 1;
+            }
+            else
+            {
+              searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+              estatus = estatus.Where(s => s.Solicitante.Contains(searchString) || s.Observacion.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+              case "Solicitante_asc":
+                estatus = estatus.OrderByDescending(s => s.FechaRegistro);
+                break;
+              case "Date":
+                estatus = estatus.OrderByDescending(s => s.FechaRegistro.Day);
+                break;
+              case "date_asc":
+                estatus = estatus.OrderByDescending(s => s.FechaRegistro);
+                break;
+              default:  // Name ascending 
+                estatus = estatus.OrderBy(s => s.FechaRegistro);
+                break;
+            }
+
+         
+            return View(estatus.ToPagedList(pageNumber, pageSize));
+          }
+          else
+          {
+            ViewBag.Message = TempData["var"].ToString();
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_asc" : "Date";
+
+            if (searchString != null)
+            {
+              page = 1;
+            }
+            else
+            {
+              searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+              estatus = estatus.Where(s => s.Solicitante.Contains(searchString) || s.Observacion.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+              case "Solicitante_asc":
+                estatus = estatus.OrderByDescending(s => s.FechaRegistro);
+                break;
+              case "Date":
+                estatus = estatus.OrderByDescending(s => s.FechaRegistro.Day);
+                break;
+              case "date_asc":
+                estatus = estatus.OrderByDescending(s => s.FechaRegistro);
+                break;
+              default:  // Name ascending 
+                estatus = estatus.OrderBy(s => s.FechaRegistro);
+                break;
+            }
+            return View(estatus.ToPagedList(pageNumber, pageSize));
+          }
+
+
+        }
+        else
+        {
+          //Si sesion es null redirecciona a la vista de login
+          return View(RedirectToAction("../Home/Login"));
+        }
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+
+
+
     }
 
     //public ActionResult Index()
@@ -170,7 +236,7 @@ namespace MVCCompras.Controllers
 
           //db.ReferenciaBancaria.Add(referencia);
 
-          //db.SaveChanges();
+          db.SaveChanges();
           int idSol = db.Solicitud.Max(item => item.SolicitudID);
           //guardar los conceptos
           int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
@@ -204,7 +270,7 @@ namespace MVCCompras.Controllers
 
             EnviarCorreo(correoOrigen, correoDestino, pass, idSol, solicitud.ImporteTotal, solicitud.Solicitante, conceptos);
           }
-
+          TempData["var"] = "Solicitud Creada";
           return RedirectToAction("Index");
         }
         catch (Exception)
