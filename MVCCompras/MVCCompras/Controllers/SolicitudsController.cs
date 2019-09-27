@@ -348,6 +348,8 @@ namespace MVCCompras.Controllers
     #region HELPERS
     private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante, string[] conceptos)
     {
+      string result = string.Join(",", conceptos);
+      //string result = String.Concat(""+conceptos);
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
       //string pass = "/04Demetr.";
@@ -355,9 +357,9 @@ namespace MVCCompras.Controllers
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD:</b></h>" +
         "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
-        "<h2 align=center>Conceptos: "+ conceptos[0] + "</h2>" +
+        "<h2 align=center>Conceptos: "+ result + "</h2>" +
         "<h2 align=center>Importe Total de Compra: $" +impT + "</h2>" +
-        "<h2 align=center>Solicitado por: " + solicitante+"</h2>");
+        "<h2 align=center>Solicitado por: " + solicitante+ "</h2><br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
 
       msj.IsBodyHtml = true;
 
