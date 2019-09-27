@@ -15,8 +15,8 @@ namespace MVCCompras.Models
   public class SolicitudMetaData
   {
     //public int SolicitudID { get; set; }
-
-    
+    [Required]
+    [Display(Name = "Proveedor")]
     public int ProveedorID { get; set; }
 
     
@@ -26,14 +26,17 @@ namespace MVCCompras.Models
     public int TipoGastoID { get; set; }
     //public int PeriocidadID { get; set; }
     //public int CantidadPagos { get; set; }
-    
+
+    [Required]
+    [Display(Name = "Importe Total")]
     public decimal ImporteTotal { get; set; }
 
-    [Required(ErrorMessage = "Requerido")]
+    [Required]
+    [Display(Name = "Importe Letra")]
     public string ImporteLetra { get; set; }
 
-    [Required(ErrorMessage = "Requerido")]
-    public string Observacion { get; set; }
+
+    //public string Observacion { get; set; }
     //public System.DateTime FechaRegistro { get; set; }
     //public System.DateTime FechaInicioPagos { get; set; }
     //public System.DateTime FechaModificacion { get; set; }
