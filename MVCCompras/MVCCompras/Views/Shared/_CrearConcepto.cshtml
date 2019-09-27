@@ -22,7 +22,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.TipoPagoID, "Concepto", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.DropDownList("TipoPagoID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.DropDownList("TipoPagoID", null, "Selecciona", htmlAttributes: new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.TipoPagoID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Nombre, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.TextBox("ConceptoID", null, htmlAttributes: new { @class = "form-control", })
+                                        @Html.TextBox("ConceptoID", null, htmlAttributes: new { @class = "form-control", @placeholder = "Descripcion" })
                                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@
                                 <div class="form-group" oninput="Importe.value = ImporteTotal.value">
                                     @Html.LabelFor(model => model.ImporteParcial, "Importe", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", ValueType = true })
+                                        @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", ValueType = true, @placeholder = "Solo Numeros" })
                                         @Html.ValidationMessageFor(model => model.ImporteParcial, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -77,7 +77,28 @@
         $("#btnOkConcepto").click(function () {
             AgregarConcepto();
 
-        });
+      });
+
+      $("#ImporteID").keydown(function (event) {
+        if (event.shiftKey) {
+          event.preventDefault();
+        }
+
+        if (event.keyCode == 46 || event.keyCode == 8) {
+        }
+        else {
+          if (event.keyCode < 95) {
+            if (event.keyCode < 48 || event.keyCode > 57) {
+              event.preventDefault();
+            }
+          }
+          else {
+            if (event.keyCode < 96 || event.keyCode > 105) {
+              event.preventDefault();
+            }
+          }
+        }
+      });
     });
 </script>
 
@@ -92,7 +113,7 @@
 
         });
 
-        if ((esvacio) || (!$.isNumeric($("#ImporteID").val()))) {
+      if ((esvacio) || (!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
             swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
         }
         else {
