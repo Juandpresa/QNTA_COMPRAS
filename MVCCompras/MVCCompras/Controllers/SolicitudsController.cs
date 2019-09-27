@@ -133,80 +133,86 @@ namespace MVCCompras.Controllers
       //string correo = Session["Correo"].ToString();
       if (ModelState.IsValid)
       {
-        ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
-        ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
-        //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
-
-        ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-
-        //VERIFICAR DATOS !!//RECIEN AGREGADO
-        //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
-        //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
-
-        //solicitud.TipoGastoID = 1;
-        //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
-        solicitud.PeriocidadID = 1;
-        solicitud.CantidadPagos = 1;
-        //solicitud.ImporteTotal = 2365;
-        //solicitud.ImporteLetra = "aaaa";
-        solicitud.FechaRegistro = DateTime.Now;
-        solicitud.FechaInicioPagos = DateTime.Now;
-        solicitud.FechaModificacion = DateTime.Now;
-        solicitud.CuentaIDModificacion = "asdf125dfg";
-        ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-        solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
-
-
-        //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
-        //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias", referencia.BancoID);
-        //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
-        //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
-        //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
-        //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
-       
-        db.Solicitud.Add(solicitud);
-        
-        //db.ReferenciaBancaria.Add(referencia);
-        
-        //db.SaveChanges();
-        int idSol = db.Solicitud.Max(item => item.SolicitudID);
-        //guardar los conceptos
-        int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
-        string[] conceptos = new string[NumConcepto];
-
-        for (int item = 1; item <= NumConcepto; item++)
+        try
         {
-          //Crear un objeto que permita guardar el cargamento 
-          Concepto NewConcepto = new Concepto();
-          //Agregamos registro x registro al la bd
-          NewConcepto.SolicitudId = solicitud.SolicitudID;
-          NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
-          NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
-          NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+          ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
+          ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
+          //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
 
-          db.Concepto.Add(NewConcepto);
-          conceptos[item-1] = NewConcepto.Nombre;
+          ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+
+          //VERIFICAR DATOS !!//RECIEN AGREGADO
+          //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+          //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
+
+          //solicitud.TipoGastoID = 1;
+          //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
+          solicitud.PeriocidadID = 1;
+          solicitud.CantidadPagos = 1;
+          //solicitud.ImporteTotal = 2365;
+          //solicitud.ImporteLetra = "aaaa";
+          solicitud.FechaRegistro = DateTime.Now;
+          solicitud.FechaInicioPagos = DateTime.Now;
+          solicitud.FechaModificacion = DateTime.Now;
+          solicitud.CuentaIDModificacion = "asdf125dfg";
+          ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+          solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
+
+
+          //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
+          //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias", referencia.BancoID);
+          //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
+          //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
+          //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
+          //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
+
+          db.Solicitud.Add(solicitud);
+
+          //db.ReferenciaBancaria.Add(referencia);
+
+          //db.SaveChanges();
+          int idSol = db.Solicitud.Max(item => item.SolicitudID);
+          //guardar los conceptos
+          int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+          string[] conceptos = new string[NumConcepto];
+
+          for (int item = 1; item <= NumConcepto; item++)
+          {
+            //Crear un objeto que permita guardar el cargamento 
+            Concepto NewConcepto = new Concepto();
+            //Agregamos registro x registro al la bd
+            NewConcepto.SolicitudId = solicitud.SolicitudID;
+            NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
+            NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
+            NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+
+            db.Concepto.Add(NewConcepto);
+            conceptos[item - 1] = NewConcepto.Nombre;
+          }
+          db.SaveChanges();
+
+          string correoOrigen = Session["Correo"].ToString();
+          var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
+          if (emailO != null)
+          {
+            pass = emailO.Pass.ToString();
+          }
+          var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+          if (user != null)
+          {
+            string correoDestino = user.Correo.ToString();
+
+            EnviarCorreo(correoOrigen, correoDestino, pass, idSol, solicitud.ImporteTotal, solicitud.Solicitante, conceptos);
+          }
+
+          return RedirectToAction("Index");
         }
-        db.SaveChanges();
-
-        string correoOrigen = Session["Correo"].ToString();
-        var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
-        if (emailO != null)
+        catch (Exception)
         {
-          pass = emailO.Pass.ToString();
-        }
-        var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
-        if (user != null)
-        {
-          string correoDestino = user.Correo.ToString();
 
-          EnviarCorreo(correoOrigen, correoDestino, pass, idSol, solicitud.ImporteTotal, solicitud.Solicitante, conceptos);
+          throw;
         }
-
-        return RedirectToAction("Index");
       }
-
-
       //ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
       //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
       //ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -373,9 +379,9 @@ namespace MVCCompras.Controllers
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD:</b></h>" +
         "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
-        "<h2 align=center>Conceptos: "+ result + "</h2>" +
-        "<h2 align=center>Importe Total de Compra: $" +impT + "</h2>" +
-        "<h2 align=center>Solicitado por: " + solicitante+ "</h2><br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
+        "<h2 align=center>Conceptos: " + result + "</h2>" +
+        "<h2 align=center>Importe Total de Compra: $" + impT + "</h2>" +
+        "<h2 align=center>Solicitado por: " + solicitante + "</h2><br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
 
       msj.IsBodyHtml = true;
 
