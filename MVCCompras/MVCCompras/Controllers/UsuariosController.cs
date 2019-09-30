@@ -136,7 +136,6 @@ namespace MVCCompras.Controllers
     [HttpGet]
     public ActionResult InicioRecuperar()
     {
-      ViewBag.Message = "hola";
       return View();
     }
 
@@ -152,7 +151,7 @@ namespace MVCCompras.Controllers
 
         string token = CifradoSHA256(Guid.NewGuid().ToString());
 
-        var user = db.Usuarios.Where(e => e.Correo == model.Correo).FirstOrDefault();
+        var user = db.Usuarios.Where(d => d.Correo == model.Correo).FirstOrDefault();
         if (user != null)
         {
           user.Token_Recuperacion = token;
@@ -162,12 +161,14 @@ namespace MVCCompras.Controllers
           //enviar mensaje
           EnviarCorreo(user.Correo, token);
         }
+        ViewBag.Message = "Correo enviado";
         return View();
       }
-      catch (Exception ex)
+      catch (Exception)
       {
+        ViewBag.Message = "Correo no encontrado";
+        return View();
 
-        throw new Exception(ex.Message);
       }
       
     }
@@ -176,23 +177,31 @@ namespace MVCCompras.Controllers
     public ActionResult Recuperar(string token)
     {
       ValidacionesPassword model = new ValidacionesPassword();
+      try
+      {
+        model.token = token;
+        if (model.token == null || model.token.Trim().Equals(""))
+        {
+          //ViewBag.Message = "Token ha Expirado";
+          TempData["var"] = "Token ha Expirado";
+          return RedirectToAction("../Home/Login");
+        }
+        var user = db.Usuarios.Where(e => e.Token_Recuperacion == model.token).FirstOrDefault();
+        if (user == null)
+        {
+          TempData["var"] = "Token ha Expirado";
+          //ViewBag.Error = "Token ha Expirado";
+          return RedirectToAction("../Home/Login");
+        }
 
-      model.token = token;
-      if (model.token == null || model.token.Trim().Equals(""))
-      {
-        ViewBag.Message = "Token ha Expirado";
-        //TempData["var"] = "Token ha Expirado";
-        return View("../Home/Login");
+        return View(model);
       }
-      var user = db.Usuarios.Where(e => e.Token_Recuperacion == model.token).FirstOrDefault();
-      if (user == null)
+      catch (Exception)
       {
-        TempData["var"] = "Token ha Expirado";
-        //ViewBag.Error = "Token ha Expirado";
-        return View("../Home/Login");
+        TempData["var"] = "Se ha producido un error";
+        return RedirectToAction("../Home/Login");
       }
       
-      return View(model);
     }
 
     [HttpPost]
@@ -215,10 +224,10 @@ namespace MVCCompras.Controllers
           db.SaveChanges(); 
         }
       }
-      catch (Exception ex)
+      catch (Exception)
       {
-
-        throw new Exception(ex.Message);
+        TempData["var"] = "Se ha producido un error";
+        return RedirectToAction("../Home/Login");
       }
       ViewBag.Message = "Contraseña modificada";
       return View("../Home/Login");
@@ -243,8 +252,8 @@ namespace MVCCompras.Controllers
       //string EmailDestino = "demesrmadrid@gmail.com";
       string pass = "/04Demetr.";
       string url = urlDominio + "/Usuarios/Recuperar/?token=" + token;
-      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Recuperacion de Contraseña",
-        "<p>Correo para recuperacion de comtraseña</p><br><a href='" + url + "'>Click para recuperar</a>");
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Recuperación de Contraseña",
+        "<p>Correo para recuperación de contraseña</p><br><a href='" + url + "'>Click para recuperar</a>");
 
       msj.IsBodyHtml = true;
 

@@ -5,9 +5,7 @@
 }
 @if (ViewBag.Message != null)
 {
-  <span id="mensaje" style="display:none;">
-  @ViewBag.Message
-  </span>
+  <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 
 <!DOCTYPE html>
@@ -18,9 +16,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@ViewBag.Title COMPRAS</title>
   @Styles.Render("~/Content/Bootstrap")
+  @Styles.Render("~/Content/Tables")
   @Styles.Render("~/Content/iconos")
   @Styles.Render("~/Content/estilos")
   @Scripts.Render("~/bundles/modernizr")
+  @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
@@ -51,19 +51,29 @@
         <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
       </div>
 
-      @*<script>
-        $(document).ready(function () {
-          if ($("#mensaje").html().length > 0) {
-            var msg = $("#mensaje").html();
-            swal("Atencion!", msg, "warning");
-          }
-        });
-      </script>*@
     }
   </div>
-  
+  <script>
+    $(document).ready(function () {
+      if ($("#mensaje").text() == "Se ha producido un error") {
+        var msg = $("#mensaje").html();
+        swal("Error!!", msg, "error");
+      }
+      if ($("#mensaje").text() == "Contraseña modificada") {
+        var msg = $("#mensaje").html();
+        swal("Exitoso!!", msg, "success");
+      }
+      if ($("#mensaje").html().length > 0) {
+        var msg = $("#mensaje").html();
+        swal("Atencion!", msg, "warning");
+      }
+    });
+  </script>
   <hr />
   <footer></footer>
+  @Scripts.Render("~/Content/js")
+  @Scripts.Render("~/bundles/datatables")
+
 
   @*@Scripts.Render("~/bundles/jquery")*@
   @*@Scripts.Render("~/bundles/js")*@

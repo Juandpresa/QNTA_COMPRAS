@@ -122,8 +122,8 @@ namespace MVCCompras.Controllers
         }
         else
         {
-          //Si sesion es null redirecciona a la vista de login
-          return View(RedirectToAction("../Home/Login"));
+          //return RedirectToActionPermanent("../Home/Login");
+          return View(estatus.ToPagedList(pageNumber, pageSize));
         }
       }
       catch (Exception)
@@ -133,7 +133,7 @@ namespace MVCCompras.Controllers
       }
 
 
-
+      
     }
 
     //public ActionResult Index()

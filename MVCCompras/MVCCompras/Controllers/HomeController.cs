@@ -42,9 +42,24 @@ namespace MVCCompras.Controllers
 
     public ActionResult Login()
     {
-      ViewBag.Message = "Your application description page.";
+      try
+      {
+        //Si sesion trae datos permite el acceso a la vista
+        if (TempData["var"] == null)
+          {
+            return View();
+          }
+          else
+          {
+            ViewBag.Message = TempData["var"].ToString();
+            return View();
+          }        
+      }
+      catch (Exception)
+      {
 
-      return View();
+        throw;
+      }
     }
 
     //Metodo POST
@@ -77,15 +92,16 @@ namespace MVCCompras.Controllers
           else
           {
             //Si user es null regresar a la vista Login
-            ViewBag.Message = "Correo o Contraseña incorrectos";
+            //ViewBag.Message = "Correo o Contraseña incorrectos";
             return View("Login");
           }
         }
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-
-        throw;
+        string error = ex.Message;
+        ViewBag.Message = "Usuario o contraseña incorrectos";
+        return View();
       }
       
       return View(modelo);
@@ -102,8 +118,8 @@ namespace MVCCompras.Controllers
       }
       catch (Exception)
       {
-
-        throw;
+        ViewBag.Message = "Se ha producido un error";
+        return RedirectToAction("Login");
       }
      
     }
