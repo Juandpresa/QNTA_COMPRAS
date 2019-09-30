@@ -37,7 +37,7 @@ namespace MVCCompras.Models
     [Display(Name = "Importe Letra")]
     public string ImporteLetra { get; set; }
 
-    
+
     public string Observacion { get; set; }
     //public System.DateTime FechaRegistro { get; set; }
     //public System.DateTime FechaInicioPagos { get; set; }

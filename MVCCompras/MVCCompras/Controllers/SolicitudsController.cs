@@ -193,12 +193,22 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto)
+    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, HttpPostedFileBase factu)
     {
       string pass = "";
       //string correo = Session["Correo"].ToString();
       if (ModelState.IsValid)
       {
+        //Validamos que el usuario selecciono un archivo
+        if (factu != null)
+        {
+          //validamos que sea un archivo pdf o xml
+          if (Path.GetExtension(factu.FileName).ToLower() == ".pdf" || Path.GetExtension(factu.FileName).ToLower() == ".xml")
+          {
+            //guarda el archivo
+            fac.Nombre = GuardarFactura(factu);
+          }
+        }
         try
         {
           ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -316,8 +326,19 @@ namespace MVCCompras.Controllers
       return View();
     }
 
-    
-    
+    private string GuardarFactura(HttpPostedFileBase factura)
+    {
+      string baseurl = Server.MapPath("~/Archivos/Facturas");
+      string path = Path.Combine(baseurl, Path.GetFileName(factura.FileName));
+
+      if (!Directory.Exists(baseurl))
+      {
+        Directory.CreateDirectory(baseurl);
+      }
+      factura.SaveAs(path);
+      return "/Archivos/Facturas/" + factura.FileName;
+    }
+
     // GET: Solicituds/Edit/5
     public ActionResult Edit(int? id)
     {
@@ -455,7 +476,7 @@ namespace MVCCompras.Controllers
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
       //string pass = "/04Demetr.";
-      string url = urlDominio + "/Home/Login";
+      string url = urlDominio + "/Home/Login/";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD:</b></h>" +
         "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
