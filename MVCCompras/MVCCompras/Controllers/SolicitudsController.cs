@@ -195,84 +195,95 @@ namespace MVCCompras.Controllers
               if (file.ContentLength > 0)
               {
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Archivos/Facturas"), fileName);
-                string ruta = "/Archivos/Facturas/" + fileName;
                 //validamos que sea un archivo pdf o xml
                 if (Path.GetExtension(fileName).ToLower() == ".pdf" || Path.GetExtension(fileName).ToLower() == ".xml")
                 {
-                  ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
-                  ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
-                  //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
-
-                  ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-
-                  //VERIFICAR DATOS !!//RECIEN AGREGADO
-                  //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
-                  //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
-
-                  //solicitud.TipoGastoID = 1;
-                  //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
-                  solicitud.PeriocidadID = 1;
-                  solicitud.CantidadPagos = 1;
-                  //solicitud.ImporteTotal = 2365;
-                  //solicitud.ImporteLetra = "aaaa";
-                  solicitud.FechaRegistro = DateTime.Now;
-                  solicitud.FechaInicioPagos = DateTime.Now;
-                  solicitud.FechaModificacion = DateTime.Now;
-                  solicitud.CuentaIDModificacion = "asdf125dfg";
-                  ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-                  solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
-
-
-                  //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
-                  //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias", referencia.BancoID);
-                  //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
-                  //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
-                  //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
-                  //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
-
-                  db.Solicitud.Add(solicitud);
-
-                  //db.ReferenciaBancaria.Add(referencia);
-
-                  db.SaveChanges();
-                  idSol = db.Solicitud.Max(item => item.SolicitudID);
-                  //guardar los conceptos
-                  int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
-                  conceptos = new string[NumConcepto];
-
-                  for (int item = 1; item <= NumConcepto; item++)
-                  {
-                    //Crear un objeto que permita guardar el cargamento 
-                    Concepto NewConcepto = new Concepto();
-                    //Agregamos registro x registro al la bd
-                    NewConcepto.SolicitudId = solicitud.SolicitudID;
-                    NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
-                    NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
-                    NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
-
-                    db.Concepto.Add(NewConcepto);
-                    conceptos[item - 1] = NewConcepto.Nombre;
-                  }
-                  db.SaveChanges();
-                  //guarda el archivo
-                  fac.Archivo = ruta;
-                  fac.Nombre = fileName;
-                  fac.FechaAlmacenamiento = DateTime.Now;
-                  fac.SeCargoFactura = true;
-                  fac.SolicitudID = idSol;
-                  file.SaveAs(path);
-                  db.Factura.Add(fac);
-                  db.SaveChanges();
+                 
                 }
                 else
                 {
-                  ViewBag.Message = "Solo se aceptan archivos con extension (.pdf) o (.xml)";
+                  ViewBag.Message = "Alguno de los archivos no tiene extension (.pdf) o (.xml)";
                   viewbags();
                   return View();
                 }
               }
             }
+
+            ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
+            ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
+            //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
+
+            ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+
+            //VERIFICAR DATOS !!//RECIEN AGREGADO
+            //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
+            //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
+
+            //solicitud.TipoGastoID = 1;
+            //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
+            solicitud.PeriocidadID = 1;
+            solicitud.CantidadPagos = 1;
+            //solicitud.ImporteTotal = 2365;
+            //solicitud.ImporteLetra = "aaaa";
+            solicitud.FechaRegistro = DateTime.Now;
+            solicitud.FechaInicioPagos = DateTime.Now;
+            solicitud.FechaModificacion = DateTime.Now;
+            solicitud.CuentaIDModificacion = "asdf125dfg";
+            ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+            solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
+
+
+            //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
+            //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias", referencia.BancoID);
+            //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
+            //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
+            //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
+            //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
+
+            db.Solicitud.Add(solicitud);
+
+            //db.ReferenciaBancaria.Add(referencia);
+
+            db.SaveChanges();
+            idSol = db.Solicitud.Max(item => item.SolicitudID);
+            //guardar los conceptos
+            int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+            conceptos = new string[NumConcepto];
+
+            for (int item = 1; item <= NumConcepto; item++)
+            {
+              //Crear un objeto que permita guardar el cargamento 
+              Concepto NewConcepto = new Concepto();
+              //Agregamos registro x registro al la bd
+              NewConcepto.SolicitudId = solicitud.SolicitudID;
+              NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
+              NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
+              NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+
+              db.Concepto.Add(NewConcepto);
+              conceptos[item - 1] = NewConcepto.Nombre;
+            }
+            db.SaveChanges();
+            //guarda el archivo
+            foreach (var file2 in Factura)
+            {
+              if (file2.ContentLength > 0)
+              {
+                var fileName2 = Path.GetFileName(file2.FileName);
+                var path = Path.Combine(Server.MapPath("~/Archivos/Facturas"), fileName2);
+                string ruta = "/Archivos/Facturas/" + fileName2;
+
+                fac.Archivo = ruta;
+                fac.Nombre = fileName2;
+                fac.FechaAlmacenamiento = DateTime.Now;
+                fac.SeCargoFactura = true;
+                fac.SolicitudID = idSol;
+                file2.SaveAs(path);
+                db.Factura.Add(fac);
+                db.SaveChanges();
+              }
+            }
+            
           }
 
           string correoOrigen = Session["Correo"].ToString();
