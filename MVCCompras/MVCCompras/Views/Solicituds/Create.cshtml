@@ -273,7 +273,7 @@
                     <div class="form-horizontal">
                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                      
+
                       <div class="form-group">
                         @Html.LabelFor(model => model.Factura, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-6">
@@ -282,7 +282,7 @@
                           @Html.ValidationMessageFor(model => model.Factura, "", new { @class = "text-danger" })
                         </div>
                       </div>
-                      
+
 
 
                     </div>
@@ -335,7 +335,6 @@
       }
     });
 
-
     $('#ProveedorID').change(function () {
       var id = $(this).val();
       $.ajax({
@@ -360,17 +359,14 @@
         datatype: 'json',
         success: function (data) {
           $('#BancoID').val(data);
-          ////quito los options que pudiera tener previamente el dropdowlist
-          //$("#BancoID").html("");
-          ////recorro cada item que devuelve el controlador DatoBanco
-          //$.each(data, function (index, value) {
-          //    $('#BancoID').append($('<option>').text(data).attr(value, index));
-          //});
-
         }
       });
     });
 
+    if ($("#mensaje").html().length > 0) {
+      var msg = $("#mensaje").html();
+      swal("Atención!", msg, "warning");
+    }
 
   })
 </script>
