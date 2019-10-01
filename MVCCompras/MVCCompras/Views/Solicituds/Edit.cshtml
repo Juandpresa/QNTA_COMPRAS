@@ -286,12 +286,12 @@
 
 
     </section>
-    @Html.Partial("_CrearConcepto")
+    @*@Html.Partial("_CrearConcepto")*@
     @*@Html.Partial("_CrearGasto")*@
 }
 
 <script>
-    $(document).ready(function () {
+  $(document).ready(function () {
         var total = 0;
         $('#ImporteID').change(function () {
             var nume = $('#ImporteID').val();
@@ -306,7 +306,6 @@
                 $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
             }
         });
-
 
         $('#ProveedorID').change(function () {
             var id = $(this).val();
@@ -332,16 +331,10 @@
                 datatype: 'json',
                 success: function (data) {
                     $('#BancoID').val(data);
-                    ////quito los options que pudiera tener previamente el dropdowlist
-                    //$("#BancoID").html("");
-                    ////recorro cada item que devuelve el controlador DatoBanco
-                    //$.each(data, function (index, value) {
-                    //    $('#BancoID').append($('<option>').text(data).attr(value, index));
-                    //});
-
                 }
             });
-        });
+      });
+     
     })
 </script>
 
