@@ -194,6 +194,7 @@ namespace MVCCompras.Controllers
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, HttpPostedFileBase factu)
+
     {
       string pass = "";
       //string correo = Session["Correo"].ToString();
