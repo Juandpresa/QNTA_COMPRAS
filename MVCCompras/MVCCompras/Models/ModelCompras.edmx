@@ -210,7 +210,7 @@
           <Property Name="FacturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SolicitudID" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="Archivo" Type="varbinary(max)" />
+          <Property Name="Archivo" Type="varchar(max)" />
           <Property Name="FechaAlmacenamiento" Type="datetime" Nullable="false" />
           <Property Name="SeCargoFactura" Type="bit" />
         </EntityType>
@@ -769,7 +769,7 @@
           <Property Name="FacturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SolicitudID" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Archivo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Archivo" Type="String" />
           <Property Name="FechaAlmacenamiento" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SeCargoFactura" Type="Boolean" />
           <NavigationProperty Name="Solicitud" Relationship="Self.FK_Consulta_Factura" FromRole="Factura" ToRole="Solicitud" />

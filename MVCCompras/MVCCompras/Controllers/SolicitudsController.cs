@@ -193,7 +193,7 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, HttpPostedFileBase Factura)
+    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, HttpPostedFileBase Factura)
     {
       string pass = "";
       //string correo = Session["Correo"].ToString();
@@ -206,7 +206,7 @@ namespace MVCCompras.Controllers
           if (Path.GetExtension(Factura.FileName).ToLower() == ".pdf" || Path.GetExtension(Factura.FileName).ToLower() == ".xml")
           {
             //guarda el archivo
-            fac.Nombre = GuardarFactura(Factura);
+            fac.Archivo = GuardarFactura(Factura);
           }
         }
         try

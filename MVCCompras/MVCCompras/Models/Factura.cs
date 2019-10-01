@@ -17,7 +17,7 @@ namespace MVCCompras.Models
         public int FacturaID { get; set; }
         public int SolicitudID { get; set; }
         public string Nombre { get; set; }
-        public byte[] Archivo { get; set; }
+        public string Archivo { get; set; }
         public System.DateTime FechaAlmacenamiento { get; set; }
         public Nullable<bool> SeCargoFactura { get; set; }
     
