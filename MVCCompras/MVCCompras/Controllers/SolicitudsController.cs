@@ -190,6 +190,8 @@ namespace MVCCompras.Controllers
           {
             //guarda el archivo
             fac.Archivo = GuardarFactura(Factura);
+            db.Factura.Add(fac);
+            db.SaveChanges();
           }
           else
           {
