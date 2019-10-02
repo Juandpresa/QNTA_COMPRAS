@@ -481,6 +481,7 @@ namespace MVCCompras.Controllers
       }
       return Json(cuenta, JsonRequestBehavior.AllowGet);
     }
+
     public JsonResult DatoClabe(int idProv, ReferenciaBancaria refe)
     {
 
