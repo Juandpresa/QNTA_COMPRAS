@@ -358,6 +358,7 @@ namespace MVCCompras.Controllers
       ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
       ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+      ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
       return View(solicitud);
     }
 
@@ -458,6 +459,19 @@ namespace MVCCompras.Controllers
         clabe = referencia.Clabe.ToString();
       }
       return Json(clabe, JsonRequestBehavior.AllowGet);
+    }
+    public JsonResult DatoSol(int idProv, ReferenciaBancaria refe)
+    {
+
+      string solis = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var solicitan = db.Solicitud.FirstOrDefault(e => e.SolicitudID == idProv);
+      if (solicitan != null)
+      {
+        //cuenta = referencia.Cuenta.ToString();
+        solis = solicitan.Solicitante.ToString();
+      }
+      return Json(solis, JsonRequestBehavior.AllowGet);
     }
 
     public void viewbags()
