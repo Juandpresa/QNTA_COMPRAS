@@ -198,7 +198,7 @@ namespace MVCCompras.Controllers
                 //validamos que sea un archivo pdf o xml
                 if (Path.GetExtension(fileName).ToLower() == ".pdf" || Path.GetExtension(fileName).ToLower() == ".xml")
                 {
-                 
+
                 }
                 else
                 {
@@ -283,7 +283,7 @@ namespace MVCCompras.Controllers
                 db.SaveChanges();
               }
             }
-            
+
           }
 
           string correoOrigen = Session["Correo"].ToString();
@@ -329,6 +329,43 @@ namespace MVCCompras.Controllers
       return View();
     }
 
+    //OBTENER CONCEPTOS
+    public ActionResult GetConceptos(string SolicitudId)
+    { //Expresiones LAMBDA
+      int intIdSolicitud = int.Parse(SolicitudId);
+      int Posicion = 1;
+      var Concepto = db.Concepto.Where(c => c.SolicitudId == intIdSolicitud).ToList();
+      string tablainicial = "<table class='table table-striped'>";
+      string tablafinal = "</table>";
+      string encabezado = "<tr><th>Concepto</th><th>Descripción</th><th>Peso</th><th>Importe</th></tr>";
+      foreach (var item in Concepto)
+      {
+       
+        encabezado += "<tr>" +
+            "<td style='width:10px;'>" +
+            "<input type='text' readonly id='IdConcepto" +
+            Posicion + "' name='TipoPagoID" + Posicion + "' " +
+            "value='" + item.TipoPago + "'/>" +
+            "</td>" +
+            "<td>" + item.ConceptoID + "</td>" +
+            "<td>" + item.ImporteParcial + "</td></tr>";
+        Posicion++;
+      }
+
+      tablafinal += "<input type='hidden' id='NumConcepto' name='NumConcepto'" +
+          " value='" + Posicion + "'>";
+      tablainicial += encabezado + tablafinal;
+      return Content(tablainicial, "text/html");
+
+    }
+
+
+
+
+
+
+
+
     // GET: Solicituds/Edit/5
     public ActionResult Edit(int? id)
     {
@@ -337,7 +374,6 @@ namespace MVCCompras.Controllers
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
       Solicitud solicitud = db.Solicitud.Find(id);
-      
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");

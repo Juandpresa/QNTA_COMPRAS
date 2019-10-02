@@ -1,5 +1,7 @@
 ﻿@model MVCCompras.Models.Solicitud
 
+@using  MVCCompras.Models
+
 @{
     ViewBag.Title = "Edit";
 }
@@ -184,6 +186,12 @@
                                                 </div>
                                             </div>
 
+                                            <div id="divConcepto" class="col-md-8">
+                                                <div id="tablaConcepto">
+
+                                                </div>
+                                            </div>
+
 
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "col-sm-2" })
@@ -289,7 +297,15 @@
     @*@Html.Partial("_CrearConcepto")*@
     @*@Html.Partial("_CrearGasto")*@
 }
+    <script>
+            var IdConcepto = $("#SolicitudId").val();
+        var url = "../Solicituds/GetConcepto";
+            $.get(url, { IdSolicitu: IdSolicitud }, function (data) {
+                $("#tablaConcepto").html(data);
+            });
 
+        });
+    </script>
 <script>
   $(document).ready(function () {
         var total = 0;
@@ -305,7 +321,9 @@
             else {
                 $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
             }
-        });
+      });
+
+
 
         $('#ProveedorID').change(function () {
             var id = $(this).val();
