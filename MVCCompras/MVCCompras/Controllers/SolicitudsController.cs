@@ -337,9 +337,6 @@ namespace MVCCompras.Controllers
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
       Solicitud solicitud = db.Solicitud.Find(id);
-      //VALIDAR QUE VALORES
-      Concepto conceptos = db.Concepto.Find(id);
-
       
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
