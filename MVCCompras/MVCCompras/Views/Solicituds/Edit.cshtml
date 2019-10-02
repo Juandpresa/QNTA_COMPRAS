@@ -11,7 +11,6 @@
 {
   @Html.AntiForgeryToken()
 
-
   <section id="main-content">
     <section class=" wrapper">
       <div class="col-lg-12">
@@ -119,10 +118,10 @@
                         </div>
 
                         @*@Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
-                          <div class="col-md-10">
-                            @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
-                            @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                            @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
+                        <div class="col-md-10">
+                          @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
+                          @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                          @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
 
                         <label class="control-label col-sm-2">Banco</label>
                         <input type="text" class="col-sm-2" id="BancoID" readonly="readonly" />
@@ -281,6 +280,7 @@
       </div>
     </div>
 
+    @Html.HiddenFor(model => model.SolicitudID )
 
 
   </section>
@@ -288,53 +288,25 @@
   @*@Html.Partial("_CrearGasto")*@
 }
 
-  <script>
-    $(document).ready(function () {
-      var total = 0;
-      $('#ImporteID').change(function () {
-        var nume = $('#ImporteID').val();
-        total = parseFloat(total) + parseFloat(nume);
-        $('#ImporteTotal').val(total);
-        var n = $('#ImporteTotal').val();
-        var m = $('#MonedaID').val();
-        if (m == 1) {
-          $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
-        }
-        else {
-          $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
-        }
-      });
+<script>
+  $(document).ready(function () {
+    var total = 0;
+    $('#ImporteID').change(function () {
+      var nume = $('#ImporteID').val();
+      total = parseFloat(total) + parseFloat(nume);
+      $('#ImporteTotal').val(total);
+      var n = $('#ImporteTotal').val();
+      var m = $('#MonedaID').val();
+      if (m == 1) {
+        $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+      }
+      else {
+        $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+      }
+    });
 
-      $('#ProveedorID').change(function () {
-        var id = $(this).val();
-        $.ajax({
-          url: '../../Solicituds/DatoCuenta',
-          data: { idProv: id },
-          datatype: 'json',
-          success: function (data) {
-            $('#CuentaID').val(data);
-          }
-        });
-        $.ajax({
-          url: '../../Solicituds/DatoClabe',
-          data: { idProv: id },
-          datatype: 'json',
-          success: function (data) {
-            $('#ClabeID').val(data);
-          }
-        });
-        $.ajax({
-          url: '../../Solicituds/DatoBanco',
-          data: { idProv: id },
-          datatype: 'json',
-          success: function (data) {
-            $('#BancoID').val(data);
-          }
-        });
-      });
-
-
-      var id = $('#ProveedorID').val();
+    $('#ProveedorID').change(function () {
+      var id = $(this).val();
       $.ajax({
         url: '../../Solicituds/DatoCuenta',
         data: { idProv: id },
@@ -359,23 +331,62 @@
           $('#BancoID').val(data);
         }
       });
+    });
 
-      var moneda = $('#ImporteLetra').val();
-      
-      if (moneda.indexOf('MXN') != -1) {
-        $('select[id="MonedaID"]').find('option[value="1"]').text("PESOS");
-      }
-      else {
-        $('select[id="MonedaID"]').find('option[value="2"]').text("DOLARES");  
-      }
 
-      if ($("#mensaje").html().length > 0) {
-        var msg = $("#mensaje").html();
-        swal("Atención!", msg, "warning");
+    var id = $('#ProveedorID').val();
+    $.ajax({
+      url: '../../Solicituds/DatoCuenta',
+      data: { idProv: id },
+      datatype: 'json',
+      success: function (data) {
+        $('#CuentaID').val(data);
       }
+    });
+    $.ajax({
+      url: '../../Solicituds/DatoClabe',
+      data: { idProv: id },
+      datatype: 'json',
+      success: function (data) {
+        $('#ClabeID').val(data);
+      }
+    });
+    $.ajax({
+      url: '../../Solicituds/DatoBanco',
+      data: { idProv: id },
+      datatype: 'json',
+      success: function (data) {
+        $('#BancoID').val(data);
+      }
+    });
+    var solte = $('#SolicitudID').val();
+    swal("", solte, "success");
+    $.ajax({
+      url: '../../Solicituds/DatoSol',
+      data: { idProv: solte },
+      datatype: 'json',
+      success: function (data) {
+        $('select[id="Solicitantes"]').find('option[value="0"]').text(data);
+        //$('#Solicitantes').text(data);
+      }
+    });
 
-    })
-  </script>
+    var moneda = $('#ImporteLetra').val();
+
+    if (moneda.indexOf('MXN') != -1) {
+      $('select[id="MonedaID"]').find('option[value="1"]').text("PESOS");
+    }
+    else {
+      $('select[id="MonedaID"]').find('option[value="2"]').text("DOLARES");
+    }
+
+    if ($("#mensaje").html().length > 0) {
+      var msg = $("#mensaje").html();
+      swal("Atención!", msg, "warning");
+    }
+
+  })
+</script>
 
 <script>
   var numeroALetras = (function () {

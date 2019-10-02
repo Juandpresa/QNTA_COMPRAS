@@ -459,6 +459,19 @@ namespace MVCCompras.Controllers
       }
       return Json(clabe, JsonRequestBehavior.AllowGet);
     }
+    public JsonResult DatoSol(int idProv, ReferenciaBancaria refe)
+    {
+
+      string solis = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var solicitan = db.Solicitud.FirstOrDefault(e => e.SolicitudID == idProv);
+      if (solicitan != null)
+      {
+        //cuenta = referencia.Cuenta.ToString();
+        solis = solicitan.Solicitante.ToString();
+      }
+      return Json(solis, JsonRequestBehavior.AllowGet);
+    }
 
     public void viewbags()
     {
