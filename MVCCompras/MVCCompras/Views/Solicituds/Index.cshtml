@@ -71,7 +71,7 @@
         {
           <tbody>
             <tr>
-              @*SE AGRGARON CLASES VIRTUALES AL MODELO DE SOLICITUD, PAGADORA, MONEDA Y ESTATUS*@
+              @*SE AGRGARON CLASES VIRTUALES AL MODELO DE SOLICITUD, PAGADORA, MONEDA Y SEGUIMIENTO*@
               <td>
                 @Html.DisplayFor(modelItem => item.FechaRegistro)
               </td>
@@ -94,7 +94,7 @@
                 @Html.DisplayFor(modelItem => item.ImporteTotal)
               </td>
               <td>
-                @Html.DisplayFor(modelItem => item.Estatus.Nombre)
+                @Html.DisplayFor(modelItem => item.Seguimiento.EstatusID)
               </td>
               <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
