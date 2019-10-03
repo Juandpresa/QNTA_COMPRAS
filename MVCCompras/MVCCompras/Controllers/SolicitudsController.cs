@@ -363,7 +363,6 @@ namespace MVCCompras.Controllers
 
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
-
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
