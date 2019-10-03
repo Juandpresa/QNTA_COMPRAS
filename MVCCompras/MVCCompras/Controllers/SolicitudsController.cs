@@ -30,6 +30,50 @@ namespace MVCCompras.Controllers
 
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
+      var paga = (from p in db.Pagadora join s in db.Solicitud 
+                  on p.PagadoraID equals s.PagadoraID
+                  select new{ p.Alias});
+      foreach (var item in paga)
+      {
+        string tpaga = item.Alias;
+        ViewBag.pagadora = tpaga;
+      }
+
+
+      var estat = (from s in db.Solicitud
+                  join e in db.Seguimiento
+                  on s.SolicitudID equals e.SolicitudID
+                  join d in db.Estatus
+                  on e.EstatusID equals d.EstatusId
+                  select new { d.Nombre });
+      foreach (var item in estat)
+      {
+        string test = item.Nombre;
+        ViewBag.estatus = test;
+      }
+
+      var con = (from s in db.Solicitud
+                   join c in db.Concepto
+                   on s.SolicitudID equals c.SolicitudId
+                   select new { c.Nombre });
+      int cont = 0;
+      foreach (var item in con)
+      {
+        cont++;
+      }
+      int cs = 0;
+      string[] cons = new string[cont];
+      foreach (var item in con)
+      {
+        cons[cs] = item.Nombre;
+        cs=cs+1;
+      }
+      string result = string.Join(",", cons);
+      ViewBag.concepto = result;
+
+
+
+
       //TempData["var"] = "Hola";
       var estatus = from s in db.Solicitud
                     select s;
@@ -350,7 +394,7 @@ namespace MVCCompras.Controllers
       //CHECAR PARA EDIT
       string cuenta = "";
       //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
-      var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == 54);
+      var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == solicitud.SolicitudID);
       if (referencia != null)
       {
         cuenta = referencia.EstatusID.ToString();
