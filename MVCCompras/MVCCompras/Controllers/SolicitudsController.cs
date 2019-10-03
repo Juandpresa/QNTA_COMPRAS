@@ -346,6 +346,18 @@ namespace MVCCompras.Controllers
       }
       Solicitud solicitud = db.Solicitud.Find(id);
 
+
+      //CHECAR PARA EDIT
+      string cuenta = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == 54);
+      if (referencia != null)
+      {
+        cuenta = referencia.EstatusID.ToString();
+        ViewBag.estatus = cuenta;
+        //clabe = referencia.Clabe.ToString();
+      }
+
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
