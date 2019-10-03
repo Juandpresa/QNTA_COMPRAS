@@ -346,21 +346,6 @@ namespace MVCCompras.Controllers
       }
       Solicitud solicitud = db.Solicitud.Find(id);
 
-
-      //CHECAR PARA EDIT
-      //ViewModel.Concep = (from t in db.TipoPago
-      //                  join c in db.Concepto on t.TipoPagoID equals c.TipoPagoID
-      //                  join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
-      //                  select new Concepto
-      //                  {
-      //                    tpago = t.Nombre,
-      //                    descrip = c.Nombre,
-      //                    imp=c.ImporteParcial
-      //                  }).ToList();
-
-
-
-
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
 

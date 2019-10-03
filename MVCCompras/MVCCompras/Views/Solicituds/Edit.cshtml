@@ -288,7 +288,8 @@
                                 <div class="padd">
                                     <div class="form quick-post">
                                         <div class="form-horizontal">
-                                            @*@if (int.Parse("EstatusID") == 1)
+                                            @ViewBag.Seg;
+                                            @if (@ViewBag.Seg == 1)
                                             {
                                                 using (Html.BeginForm("Aprobar", "Solicitud", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                                 {
@@ -299,7 +300,7 @@
                                                     </div>
                                                 }
                                             }
-                                            @if (int.Parse("EstatusID") == 2)
+                                            @if (@ViewBag.Seg == 2)
                                             {
                                                 using (Html.BeginForm("Autorizar", "Solicitud", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                                 {
@@ -310,7 +311,7 @@
                                                     </div>
                                                 }
                                             }
-                                            @if (int.Parse("EstatusID") == 3)
+                                            @if (@ViewBag.Seg == 3)
                                             {
 
                                                 using (Html.BeginForm("CargaComprobante", "Solicitud", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -323,12 +324,12 @@
                                                 }
                                             }
 
-                                            @if (int.Parse("EstatusID") == 4)
+                                            @if (int.Parse(@ViewBag.Seg) == 4)
                                             {
                                                 <div class="btn btn-success" style="width: 100%;">Solicitud Pagada</div>
 
 
-                                            }*@
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -357,8 +358,6 @@
         </div>
 
         @Html.HiddenFor(model => model.SolicitudID)
-        @Html.Editor("EstatusID", new { htmlAttributes = new { @class = "form-control" } })
-
 
 
     </section>
