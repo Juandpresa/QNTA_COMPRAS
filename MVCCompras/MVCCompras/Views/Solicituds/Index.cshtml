@@ -79,13 +79,14 @@
                 @Html.DisplayFor(modelItem => item.Solicitante)
               </td>
               <td>
-                @Html.DisplayFor(modelItem => item.Pagadora.Alias)
+                @ViewBag
+
               </td>
               <td>
                 @Html.DisplayFor(modelItem => item.Proveedor.Alias)
               </td>
               <td>
-                @Html.DisplayFor(modelItem => item.Concepto)
+                @Html.DisplayFor(modelItem => item.Concepto.Nombre)
               </td>
               <td>
                 @Html.DisplayFor(modelItem => item.Moneda.Nombre)
