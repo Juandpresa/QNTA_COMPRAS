@@ -573,7 +573,7 @@ namespace MVCCompras.Controllers
       //string EmailOrigen = "demesrmadrid@gmail.com";
       //string EmailDestino = "demesrmadrid@gmail.com";
       //string pass = "/04Demetr.";
-      string url = urlDominio + "/Home/Login/";
+      string url = urlDominio + "Home/Login/";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD:</b></h>" +
         "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
