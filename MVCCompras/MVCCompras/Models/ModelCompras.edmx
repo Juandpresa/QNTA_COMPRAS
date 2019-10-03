@@ -233,6 +233,7 @@
           <Property Name="SolicitudID" Type="int" Nullable="false" />
           <Property Name="EstatusID" Type="int" Nullable="false" />
           <Property Name="CuentaID" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="FechaMovimiento" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="Solicitud">
           <Key>
@@ -857,6 +858,7 @@
           <Property Name="SolicitudID" Type="Int32" Nullable="false" />
           <Property Name="EstatusID" Type="Int32" Nullable="false" />
           <Property Name="CuentaID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaMovimiento" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Solicitud">
           <Key>
@@ -1483,6 +1485,7 @@
           <EntitySetMapping Name="Seguimiento">
             <EntityTypeMapping TypeName="ComprasModel.Seguimiento">
               <MappingFragment StoreEntitySet="Seguimiento">
+                <ScalarProperty Name="FechaMovimiento" ColumnName="FechaMovimiento" />
                 <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
                 <ScalarProperty Name="EstatusID" ColumnName="EstatusID" />
                 <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
