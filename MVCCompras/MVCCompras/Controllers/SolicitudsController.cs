@@ -17,6 +17,7 @@ namespace MVCCompras.Controllers
   public class SolicitudsController : Controller
   {
     string[] conceptos;
+    
     public ActionResult GetPagadora(string PagadoraID)
     {
       Pagadora pagadora = db.Pagadora.Find(int.Parse(PagadoraID));
@@ -233,6 +234,10 @@ namespace MVCCompras.Controllers
             solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
 
 
+
+
+
+
             //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
             //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias", referencia.BancoID);
             //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
@@ -252,7 +257,7 @@ namespace MVCCompras.Controllers
 
             for (int item = 1; item <= NumConcepto; item++)
             {
-              //Crear un objeto que permita guardar el cargamento 
+              //Crear un objeto que permita guardar el concepto
               Concepto NewConcepto = new Concepto();
               //Agregamos registro x registro al la bd
               NewConcepto.SolicitudId = solicitud.SolicitudID;
@@ -340,7 +345,7 @@ namespace MVCCompras.Controllers
       string encabezado = "<tr><th>Concepto</th><th>Descripción</th><th>Peso</th><th>Importe</th></tr>";
       foreach (var item in Concepto)
       {
-       
+
         encabezado += "<tr>" +
             "<td style='width:10px;'>" +
             "<input type='text' readonly id='IdConcepto" +
@@ -403,18 +408,31 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Include = "SolicitudID,ProveedorID,FormaPagoID,TipoGastoID,PeriocidadID,CantidadPagos,ImporteTotal,ImporteLetra,Observacion,FechaRegistro,FechaInicioPagos,FechaModificacion,CuentaIDModificacion,PagadoraID,ObservacionesOtroFormaP,ObsOtroTipoGasto,Solicitante")] Solicitud solicitud)
+    public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection)
     {
+     
       if (ModelState.IsValid)
       {
+        ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
+        ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
+        ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+        solicitud.PeriocidadID = 1;
+        solicitud.CantidadPagos = 1;
+        solicitud.FechaRegistro = DateTime.Now;
+        solicitud.FechaInicioPagos = DateTime.Now;
+        solicitud.FechaModificacion = DateTime.Now;
+        solicitud.CuentaIDModificacion = "asdf125dfg";
+        ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+        solicitud.Solicitante = collection.Get("Solicitante");
+
+
+
+
         db.Entry(solicitud).State = EntityState.Modified;
         db.SaveChanges();
         return RedirectToAction("Index");
       }
-      ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
-      ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
-      ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
-      ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+
       return View(solicitud);
     }
 
@@ -496,7 +514,7 @@ namespace MVCCompras.Controllers
       }
       return Json(clabe, JsonRequestBehavior.AllowGet);
     }
-    public JsonResult DatoSol(int idProv, ReferenciaBancaria refe)
+    public JsonResult DatoSol(int idProv)
     {
 
       string solis = "";
