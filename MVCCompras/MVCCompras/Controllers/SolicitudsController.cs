@@ -348,18 +348,15 @@ namespace MVCCompras.Controllers
 
 
       //CHECAR PARA EDIT
-      //ViewModel.Concep = (from t in db.TipoPago
-      //                  join c in db.Concepto on t.TipoPagoID equals c.TipoPagoID
-      //                  join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
-      //                  select new Concepto
-      //                  {
-      //                    tpago = t.Nombre,
-      //                    descrip = c.Nombre,
-      //                    imp=c.ImporteParcial
-      //                  }).ToList();
-
-
-
+      string cuenta = "";
+      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+      var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == 54);
+      if (referencia != null)
+      {
+        cuenta = referencia.EstatusID.ToString();
+        ViewBag.estatus = cuenta;
+        //clabe = referencia.Clabe.ToString();
+      }
 
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");

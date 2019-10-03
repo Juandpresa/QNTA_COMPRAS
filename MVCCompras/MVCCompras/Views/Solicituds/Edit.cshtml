@@ -287,49 +287,44 @@
                             <div class="panel-body">
                                 <div class="padd">
                                     <div class="form quick-post">
-                                        <div class="form-horizontal">
-                                            @*@if (int.Parse("EstatusID") == 1)
-                                            {
-                                                using (Html.BeginForm("Aprobar", "Solicitud", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                                {
-                                                    <div class="q-form-control">
-                                                        <div>
-                                                            <input value="Aprobar Solicitud" class="btn q-btn-ext" type="submit" />
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                            @if (int.Parse("EstatusID") == 2)
-                                            {
-                                                using (Html.BeginForm("Autorizar", "Solicitud", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                                {
-                                                    <div class="q-form-control">
-                                                        <div>
-                                                            <input value="Autorizar Solicitud" class="btn q-btn-ext" type="submit" />
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                            @if (int.Parse("EstatusID") == 3)
-                                            {
+                                      <div class="form-horizontal">
+                                        @if (ViewBag.estatus == "1")
+                                        {
+                                          <span id="status" style="display:none;">@ViewBag.estatus</span>
+                                         
+                                            <div class="q-form-control">
+                                              <div>
+                                                <input id="aprobar" value="Aprobar Solicitud" class="btn q-btn-ext" type="submit" />
+                                              </div>
+                                            </div>
+                                        }
+                                        @if (ViewBag.estatus == "2")
+                                        {
+                                         
+                                            <div class="q-form-control">
+                                              <div>
+                                                <input value="Autorizar Solicitud" class="btn q-btn-ext" type="submit" />
+                                              </div>
+                                            </div>
+                                          
+                                        }
+                                        @if (ViewBag.estatus == "3")
+                                        {
 
-                                                using (Html.BeginForm("CargaComprobante", "Solicitud", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                                {
-                                                    <label for="file">Subir Comprobante:</label>
-                                                    <input class="btn btn-file" type="file" name="file" id="file" /><br><br>
-                                                    <input class="btn btn-primary" type="submit" value="Subir Archivo" />
-                                                    <br><br>
-                                                    @ViewBag.Message
-                                                }
-                                            }
+                                            <label for="file">Subir Comprobante:</label>
+                                            <input class="btn btn-file" type="file" name="file" id="file" /><br><br>
+                                            <input class="btn btn-primary" type="submit" value="Subir Archivo" />
+                                            <br><br>
+                                          
+                                        }
 
-                                            @if (int.Parse("EstatusID") == 4)
-                                            {
-                                                <div class="btn btn-success" style="width: 100%;">Solicitud Pagada</div>
+                                        @if (ViewBag.estatus == "4")
+                                        {
+                                          <div class="btn btn-success" style="width: 100%;">Solicitud Pagada</div>
 
 
-                                            }*@
-                                        </div>
+                                        }
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -459,7 +454,11 @@
         if ($("#mensaje").html().length > 0) {
             var msg = $("#mensaje").html();
             swal("Atención!", msg, "warning");
-        }
+      }
+      if ($("#status").text() == "1") {
+        $("#aprobar").show();
+           
+      }
 
     })
 </script>
