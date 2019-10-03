@@ -33,10 +33,12 @@
                                         <div class="form-horizontal">
                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                             <div class="form-group">
-                                                @Html.LabelFor(model => model.Solicitantes, "Usuario Solicitante", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                @*@Html.LabelFor(model => model.Solicitantes, "Usuario Solicitante", htmlAttributes: new { @class = "control-label col-md-2" })*@
                                                 <div class="col-md-10">
-                                                    @Html.EnumDropDownListFor(model => model.Solicitantes, "Selecciona Solicitante", new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })
+                                                    @*@Html.EnumDropDownListFor(model => model.Solicitantes, "Selecciona Solicitante", new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })*@
+                                                    <label class="control-label col-sm-4">Solicitante</label>
+                                                    <input type="text" class="col-sm-6" id="Solicitante" name="Solicitante" readonly="readonly" />
                                                 </div>
                                             </div>
 
@@ -279,29 +281,54 @@
                     <section class="panel">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <div class="pull-left"><h4>Distrubución de Gastos</h4></div>
+                                <div class="pull-left"><h4>Seguimineto de Solicitud</h4></div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
                                 <div class="padd">
                                     <div class="form quick-post">
                                         <div class="form-horizontal">
-
-
-                                            <div>
-                                                @switch (int.Parse("EsatusID") != 0)
+                                            @*@if (int.Parse("EstatusID") == 1)
+                                            {
+                                                using (Html.BeginForm("Aprobar", "Solicitud", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                                 {
-                                                    case "EstatusID"==1:
-                                                        <div>Custom Value 1</div>
-                                                        break;
-
-                                                    case 2:
-
-                                                        <span>Custom Value 2</span>
-                                                        break;
+                                                    <div class="q-form-control">
+                                                        <div>
+                                                            <input value="Aprobar Solicitud" class="btn q-btn-ext" type="submit" />
+                                                        </div>
+                                                    </div>
                                                 }
-                                            </div>
+                                            }
+                                            @if (int.Parse("EstatusID") == 2)
+                                            {
+                                                using (Html.BeginForm("Autorizar", "Solicitud", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                                {
+                                                    <div class="q-form-control">
+                                                        <div>
+                                                            <input value="Autorizar Solicitud" class="btn q-btn-ext" type="submit" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            @if (int.Parse("EstatusID") == 3)
+                                            {
 
+                                                using (Html.BeginForm("CargaComprobante", "Solicitud", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                {
+                                                    <label for="file">Subir Comprobante:</label>
+                                                    <input class="btn btn-file" type="file" name="file" id="file" /><br><br>
+                                                    <input class="btn btn-primary" type="submit" value="Subir Archivo" />
+                                                    <br><br>
+                                                    @ViewBag.Message
+                                                }
+                                            }
+
+                                            @if (int.Parse("EstatusID") == 4)
+                                            {
+                                                <div class="btn btn-success" style="width: 100%;">Solicitud Pagada</div>
+
+
+                                            }*@
                                         </div>
                                     </div>
                                 </div>
@@ -330,6 +357,7 @@
         </div>
 
         @Html.HiddenFor(model => model.SolicitudID)
+        @Html.Editor("EstatusID", new { htmlAttributes = new { @class = "form-control" } })
 
 
 
@@ -415,8 +443,7 @@
             data: { idProv: solte },
             datatype: 'json',
             success: function (data) {
-                $('select[id="Solicitantes"]').find('option[value="0"]').text(data);
-                //$('#Solicitantes').text(data);
+                $('#Solicitante').val(data);
             }
         });
 

@@ -44,7 +44,11 @@ namespace MVCCompras.Models
         public string Solicitante { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Concepto> Concepto { get; set; }
+    public virtual Pagadora Pagadora { get; set; }
+    public virtual Moneda Moneda { get; set; }
+    public virtual Seguimiento Seguimiento { get; set; }
+
+    public virtual ICollection<Concepto> Concepto { get; set; }
         public virtual FormaPago FormaPago { get; set; }
         public virtual Periocidad Periocidad { get; set; }
         public virtual Proveedor Proveedor { get; set; }
