@@ -17,5 +17,6 @@ namespace MVCCompras.Models
         public int SolicitudID { get; set; }
         public int EstatusID { get; set; }
         public string CuentaID { get; set; }
+        public Nullable<System.DateTime> FechaMovimiento { get; set; }
     }
 }

@@ -228,7 +228,7 @@ namespace MVCCompras.Controllers
             solicitud.FechaRegistro = DateTime.Now;
             solicitud.FechaInicioPagos = DateTime.Now;
             solicitud.FechaModificacion = DateTime.Now;
-            solicitud.CuentaIDModificacion = "asdf125dfg";
+            solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
             ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
             solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
 
@@ -284,6 +284,14 @@ namespace MVCCompras.Controllers
               }
             }
 
+            Seguimiento Nseguimiento = new Seguimiento();
+            Nseguimiento.CuentaID = Session["idUsuario"].ToString();
+            Nseguimiento.SolicitudID = idSol;
+            Nseguimiento.EstatusID = 1;
+            Nseguimiento.FechaMovimiento = DateTime.Now;
+            db.Seguimiento.Add(Nseguimiento);
+            db.SaveChanges();
+
           }
 
           string correoOrigen = Session["Correo"].ToString();
@@ -332,13 +340,30 @@ namespace MVCCompras.Controllers
     // GET: Solicituds/Edit/5
     public ActionResult Edit(int? id)
     {
-
       if (id == null)
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
       Solicitud solicitud = db.Solicitud.Find(id);
+
+
+      //CHECAR PARA EDIT
+      //ViewModel.Concep = (from t in db.TipoPago
+      //                  join c in db.Concepto on t.TipoPagoID equals c.TipoPagoID
+      //                  join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
+      //                  select new Concepto
+      //                  {
+      //                    tpago = t.Nombre,
+      //                    descrip = c.Nombre,
+      //                    imp=c.ImporteParcial
+      //                  }).ToList();
+
+
+
+
       //VIEWBAGS PARA SOLICITAR DDL
+      ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
+
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
@@ -477,20 +502,13 @@ namespace MVCCompras.Controllers
     public void viewbags()
     {
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
-
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre");
-
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
-
-
       ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias");
       ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias");
       ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre");
-
-
       ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre");
-      //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias");
       ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre");
       ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial");
     }
