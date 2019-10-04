@@ -415,6 +415,9 @@ namespace MVCCompras.Controllers
       return View();
     }   
 
+
+
+    //EDITAR//
     // GET: Solicituds/Edit/5
     public ActionResult Edit(int? id)
     {
@@ -436,16 +439,29 @@ namespace MVCCompras.Controllers
       }
 
       //MOSTRAR FACTURAS CARGADAS
-      var fac = (from f in db.Factura
-                  where id == solicitud.SolicitudID
-                  select new {
-                    f.Nombre,
-                  });
-      foreach (var item in fac)
+      //Consulta join para obtener facturas de solicitud
+      var estat = (from s in db.Solicitud
+                   join f in db.Factura
+                   on s.SolicitudID equals f.SolicitudID
+                   select new { f.Nombre });
+
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae estat
+      int conta = 0;
+      foreach (var item in estat)
       {
-        string fn = item.Nombre;
-        ViewBag.factura = fn;
+        conta++;
       }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int statu = 0;
+      string[] status = new string[conta];
+      foreach (var item in estat)
+      {
+        status[statu] = item.Nombre;
+        statu = statu + 1;
+      }
+      //asignar a ViewData el cvalor del arreglo
+      ViewBag.cont = statu;
+      ViewData["factura"] = status;
 
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
