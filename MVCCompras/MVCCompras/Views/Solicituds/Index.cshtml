@@ -21,7 +21,7 @@
   @using (Html.BeginForm("Index", "Solicituds", FormMethod.Get))
   {
     <p>
-      Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+      Buscar: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
       <input type="submit" value="Search" />
     </p>
   }    <div class="panel">
