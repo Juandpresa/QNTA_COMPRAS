@@ -182,7 +182,13 @@
                                                                 <th style="visibility: hidden">tPago</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody></tbody>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                             </div>
@@ -296,7 +302,7 @@
                                                 @Html.LabelFor(model => model.Factura, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div class="col-md-6">
                                                     <input type="file" id="Factura" name="Factura" class="btn btn-primary" multiple="multiple" /><br /><br />
-                                                    <p>@ViewBag.factura</p>
+                                                    <h4>@ViewBag.factura</h4>
                                                     @Html.ValidationMessageFor(model => model.Factura, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -328,7 +334,7 @@
                                                 <span id="status" style="display:none;">@ViewBag.estatus</span>
 
                                                 <div>
-                                                    <label class="control-label col-sm-4">Aprobar Solicitud</label>
+                                                    <label class="control-label col-sm-4">Aprobar Solicitud</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input id="aprobar" name="valida" type="checkbox" />
                                                 </div>
                                             }
@@ -336,18 +342,19 @@
                                             {
 
                                                 <div class="q-form-control">
-                                                  <div>
-                                                    <label class="control-label col-sm-4">Autorizar Solicitud</label>
-                                                    <input id="autorizar" name="valida" type="checkbox" />                                        
-                                                  </div>
+                                                    <div>
+                                                        <label class="control-label col-sm-4">Autorizar Solicitud</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input id="autorizar" name="valida" type="checkbox" />
+                                                    </div>
                                                 </div>
 
                                             }
                                             @if (ViewBag.estatus == 3)
                                             {
-                                                <label class="control-label col-sm-4">Pagar</label>
-                                                <input id="pagar" type="checkbox" />
-
+                                                <div>
+                                                    <label class="control-label col-sm-4">Pagar</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                    <input id="pagar" type="checkbox" />
+                                                </div>
 
 
                                             }
