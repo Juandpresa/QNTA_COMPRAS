@@ -42,11 +42,10 @@ namespace MVCCompras.Controllers
       string[] pag = new string[cont];
       foreach (var item in paga)
       {
-        string pa = item.Alias;
-        ViewBag.pagadora = pa;
-        //pag[pagadora] = item.Alias;
-        //pagadora = pagadora + 1;
+        pag[pagadora] = item.Alias;
+        pagadora = pagadora + 1;
       }
+      ViewData["pagadora"] = pag;
     
 
 
