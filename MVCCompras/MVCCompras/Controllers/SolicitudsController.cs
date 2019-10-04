@@ -444,7 +444,7 @@ namespace MVCCompras.Controllers
       foreach (var item in fac)
       {
         string fn = item.Nombre;
-        ViewBag.estatus = fn;
+        ViewBag.factura = fn;
       }
 
       //VIEWBAGS PARA SOLICITAR DDL
