@@ -295,7 +295,8 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Factura, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div class="col-md-6">
-                                                    <input type="file" id="Factura" name="Factura" class="btn btn-primary" multiple="multiple" />
+                                                    <input type="file" id="Factura" name="Factura" class="btn btn-primary" multiple="multiple" /><br /><br />
+                                                    <p>@ViewBag.factura</p>
                                                     @Html.ValidationMessageFor(model => model.Factura, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
