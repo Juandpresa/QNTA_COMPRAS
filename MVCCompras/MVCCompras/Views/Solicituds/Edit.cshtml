@@ -277,7 +277,7 @@
                 </div>
 
 
-                <div class="col-lg-11">
+                <div class="col-lg-3">
                     <section class="panel">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -292,12 +292,10 @@
                                         {
                                           <span id="status" style="display:none;">@ViewBag.estatus</span>
                                          
-                                            <div class="q-form-control">
-                                              <div>
-                                                  <label>Aprobar Solicitud</label>
-                                                <input id="aprobar"  class="btn btn-success" type="checkbox" />
-                                              </div>
-                                            </div>
+                                                <div>
+                                                    <label class="control-label col-sm-4">Aprobar Solicitud</label> 
+                                                    <input id="aprobar"  type="checkbox" />
+                                                </div>
                                         }
                                         @if (ViewBag.estatus == "2")
                                         {
@@ -353,7 +351,6 @@
         </div>
 
         @Html.HiddenFor(model => model.SolicitudID)
-        @Html.Editor("EstatusID", new { htmlAttributes = new { @class = "form-control" } })
 
 
 
