@@ -90,7 +90,7 @@
                   @Html.DisplayFor(modelItem => item.ImporteLetra)
                 </td>
                 <td>
-                  @ViewBag.estatus
+                  @(((string[])ViewData["status"])[i])
                 </td>
                 <td>
                   @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
