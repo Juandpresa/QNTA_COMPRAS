@@ -26,79 +26,80 @@
         </p>
     }    <div class="panel">
         <div class="col-lg-12">
-            <table class="table table-bordered table-striped table-advance table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <i class="fa fa-calendar-o"></i>
-                            Fecha de Solicitud
-                        </th>
-                        <th>
-                            <i class="fa fa-user"></i>
-                            Solicitante
-                        </th>
-                        <th>
-                            <i class="fa fa-institution"></i>
-                            Empresa Pagadora
-                        </th>
-                        <th>
-                            <i class="fa fa-credit-card"></i>
-                            Proveedor
-                        </th>
-                        <th>
-                            <i class="fa fa-bars"></i>
-                            Concepto(s)
-                        </th>
-                        <th>
-                            <i class="fa fa-dollar"></i>
-                            Importe
-                        </th>
-                        <th>
-                            <i class="fa fa-check-square-o"></i>
-                            Estatus
-                        </th>
-                        <th>
-                            <i class="fa fa-cogs"></i>
-                            Acciones
-                        </th>
-                    </tr>
-                </thead>
-                @foreach (var item in Model)
-                {
-                    <tbody>
-                        <tr>
-                            @*SE AGRGARON CLASES VIRTUALES AL MODELO DE SOLICITUD, PAGADORA, MONEDA Y SEGUIMIENTO*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FechaRegistro)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Solicitante)
-                            </td>
-                            <td>
-                                @ViewBag.pagadora
-
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Proveedor.Alias)
-                            </td>
-                            <td>
-                                @ViewBag.concepto
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ImporteLetra)
-                            </td>
-                            <td>
-                                @ViewBag.estatus
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
-                                @*@Html.ActionLink("Details", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })*@
-                                @Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })
-                            </td>
-                        </tr>
-                    </tbody>
-                }
-            </table>
+          <table class="table table-bordered table-striped table-advance table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <i class="fa fa-calendar-o"></i>
+                  Fecha de Solicitud
+                </th>
+                <th>
+                  <i class="fa fa-user"></i>
+                  Solicitante
+                </th>
+                <th>
+                  <i class="fa fa-institution"></i>
+                  Empresa Pagadora
+                </th>
+                <th>
+                  <i class="fa fa-credit-card"></i>
+                  Proveedor
+                </th>
+                <th>
+                  <i class="fa fa-bars"></i>
+                  Concepto(s)
+                </th>
+                <th>
+                  <i class="fa fa-dollar"></i>
+                  Importe
+                </th>
+                <th>
+                  <i class="fa fa-check-square-o"></i>
+                  Estatus
+                </th>
+                <th>
+                  <i class="fa fa-cogs"></i>
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+           
+            @foreach (var item in Model)
+            {              
+                <tbody>
+                  <tr>
+                    @*SE AGRGARON CLASES VIRTUALES AL MODELO DE SOLICITUD, PAGADORA, MONEDA Y SEGUIMIENTO*@
+                    <td>
+                      @Html.DisplayFor(modelItem => item.FechaRegistro)
+                    </td>
+                    <td>
+                      @Html.DisplayFor(modelItem => item.Solicitante)
+                    </td>
+                    <td>
+                      @ViewBag.pagadora
+                    </td>
+                    <td>
+                      @Html.DisplayFor(modelItem => item.Proveedor.Alias)
+                    </td>
+                    <td>
+                      @ViewBag.concepto
+                    </td>
+                    <td>
+                      @Html.DisplayFor(modelItem => item.ImporteLetra)
+                    </td>
+                    <td>
+                      @ViewBag.estatus
+                    </td>
+                    <td>
+                      @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
+                      @*@Html.ActionLink("Details", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })*@
+                      @Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })
+                    </td>
+                  </tr>
+                </tbody>
+              
+            }
+          </table>
             <br />
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
