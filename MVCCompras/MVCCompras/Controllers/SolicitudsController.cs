@@ -472,6 +472,10 @@ namespace MVCCompras.Controllers
         {
           Nseguimiento.EstatusID = 4;
         }
+        if (int.Parse(cuenta) == 4)
+        {
+          Nseguimiento.EstatusID = 5;
+        }
         Nseguimiento.CuentaID = Session["idUsuario"].ToString();
         Nseguimiento.SolicitudID = solicitud.SolicitudID;
         Nseguimiento.FechaMovimiento = DateTime.Now;
