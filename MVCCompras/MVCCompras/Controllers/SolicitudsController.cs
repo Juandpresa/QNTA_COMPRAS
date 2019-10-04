@@ -434,6 +434,10 @@ namespace MVCCompras.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection)
     {
+      //if (id)
+      //{
+
+    
 
       if (ModelState.IsValid)
       {
@@ -445,17 +449,38 @@ namespace MVCCompras.Controllers
         solicitud.FechaRegistro = DateTime.Now;
         solicitud.FechaInicioPagos = DateTime.Now;
         solicitud.FechaModificacion = DateTime.Now;
-        solicitud.CuentaIDModificacion = "asdf125dfg";
+        solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
         solicitud.Solicitante = collection.Get("Solicitante");
 
 
-
-
         db.Entry(solicitud).State = EntityState.Modified;
         db.SaveChanges();
+
+        //SEGUIMIENTO
+        Seguimiento Nseguimiento = new Seguimiento();
+        if (Nseguimiento.EstatusID == 1)
+        {
+          Nseguimiento.EstatusID = 2;
+        }
+        if (Nseguimiento.EstatusID == 2)
+        {
+          Nseguimiento.EstatusID = 3;
+        }
+        if (Nseguimiento.EstatusID == 3)
+        {
+          Nseguimiento.EstatusID = 4;
+        }
+        Nseguimiento.CuentaID = Session["idUsuario"].ToString();
+        Nseguimiento.SolicitudID = solicitud.SolicitudID;
+        Nseguimiento.FechaMovimiento = DateTime.Now;
+        db.Seguimiento.Add(Nseguimiento);
+        db.SaveChanges();
+
+
         return RedirectToAction("Index");
       }
+     // }
 
       return View(solicitud);
     }
@@ -603,6 +628,49 @@ namespace MVCCompras.Controllers
         throw;
       }
     }
+
+    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos)
+    {
+      string result = string.Join(",", conceptos);
+      //string result = String.Concat(""+conceptos);
+      //string EmailOrigen = "demesrmadrid@gmail.com";
+      string EmailDestino = "demesrmadrid@gmail.com";
+      //string pass = "/04Demetr.";
+      string url = urlDominio + "Home/Login/";
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
+        "<h1 align=center><b>DATOS DE LA SOLICITUD APROBADA:</b></h>" +
+        "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
+        "<h2 align=center>Conceptos: " + result + "</h2>" +
+        "<h2 align=center>Importe Total de Compra: $" + impT + "</h2>" +
+        "<h2 align=center>Solicitado por: " + solicitante + "</h2>" +
+        "< h2 align = center > Aprobado por: " + solicitante + " </ h2 >"+
+        "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
+
+      msj.IsBodyHtml = true;
+
+      //SmtpClient cliente = new SmtpClient("smtp.gmail.com");
+      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
+      cliente.EnableSsl = false;
+      cliente.UseDefaultCredentials = false;
+      //cliente.Host = "smtp.gmail.com";
+      //cliente.Host = "mail.qnta.mx";
+      cliente.Port = 587;
+      cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
+      try
+      {
+        cliente.Send(msj);
+
+        cliente.Dispose();
+      }
+      catch (Exception ex)
+      {
+
+        throw;
+      }
+    }
+
+
+
     #endregion
   }
 }
