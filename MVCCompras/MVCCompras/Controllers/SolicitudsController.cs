@@ -48,7 +48,7 @@ namespace MVCCompras.Controllers
         pag[pagadora] = item.Alias;
         pagadora = pagadora + 1;
       }
-      //asignar a ViewData el cvalor del arreglo
+      //asignar a ViewData el valor del arreglo
       ViewData["pagadora"] = pag;
 
       //Consulta join para obtener el Status de solicitud
