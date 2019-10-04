@@ -401,6 +401,18 @@ namespace MVCCompras.Controllers
         ViewBag.estatus = st;
       }
 
+      //MOSTRAR FACTURAS CARGADAS
+      var fac = (from f in db.Factura
+                  where id == solicitud.SolicitudID
+                  select new {
+                    f.Nombre,
+                  });
+      foreach (var item in fac)
+      {
+        string fn = item.Nombre;
+        ViewBag.estatus = fn;
+      }
+
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
