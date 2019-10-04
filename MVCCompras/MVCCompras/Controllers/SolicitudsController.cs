@@ -492,7 +492,7 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection)
+    public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection, Seguimiento Nseguimiento)
     {
      
       if (ModelState.IsValid)
@@ -520,7 +520,6 @@ namespace MVCCompras.Controllers
         {
           cuenta = referencia.EstatusID.ToString();
         }
-        Seguimiento Nseguimiento = new Seguimiento();
         if (int.Parse(cuenta) == 1)
         {
           Nseguimiento.EstatusID = 2;
@@ -538,9 +537,9 @@ namespace MVCCompras.Controllers
           Nseguimiento.EstatusID = 5;
         }
         Nseguimiento.CuentaID = Session["idUsuario"].ToString();
-        Nseguimiento.SolicitudID = solicitud.SolicitudID;
+        //Nseguimiento.SolicitudID = solicitud.SolicitudID;
         Nseguimiento.FechaMovimiento = DateTime.Now;
-        db.Seguimiento.Add(Nseguimiento);
+        db.Entry(Nseguimiento).State = EntityState.Modified;
         db.SaveChanges();
 
         string s = collection.Get("valida");
