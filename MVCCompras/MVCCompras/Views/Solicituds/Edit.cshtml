@@ -288,7 +288,7 @@
                                 <div class="padd">
                                     <div class="form quick-post">
                                       <div class="form-horizontal">
-                                        @if (ViewBag.estatus == "1")
+                                        @if (ViewBag.estatus == 1)
                                         {
                                           <span id="status" style="display:none;">@ViewBag.estatus</span>
                                          
@@ -297,17 +297,18 @@
                                                     <input id="aprobar"  type="checkbox" />
                                                 </div>
                                         }
-                                        @if (ViewBag.estatus == "2")
+                                        @if (ViewBag.estatus == 2)
                                         {
                                          
                                             <div class="q-form-control">
                                               <div>
+                                                <label class="control-label col-sm-4">Autorizar Solicitud</label>
                                                 <input value="Autorizar Solicitud" class="btn q-btn-ext" type="checkbox" />
                                               </div>
                                             </div>
                                           
                                         }
-                                        @if (ViewBag.estatus == "3")
+                                        @if (ViewBag.estatus == 3)
                                         {
 
                                             <label for="file">Subir Comprobante:</label>
@@ -317,7 +318,7 @@
                                           
                                         }
 
-                                        @if (ViewBag.estatus == "4")
+                                        @if (ViewBag.estatus == 4)
                                         {
                                           <div class="btn btn-success" style="width: 100%;">Solicitud Pagada</div>
 

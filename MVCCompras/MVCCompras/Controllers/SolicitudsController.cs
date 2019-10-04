@@ -392,14 +392,13 @@ namespace MVCCompras.Controllers
 
 
       //CHECAR PARA EDIT
-      string cuenta = "";
-      //var user = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
-      var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == solicitud.SolicitudID);
-      if (referencia != null)
+      var esta = (from s in db.Seguimiento
+                  where id == solicitud.SolicitudID
+                  select new { s.EstatusID });
+      foreach (var item in esta)
       {
-        cuenta = referencia.EstatusID.ToString();
-        ViewBag.estatus = cuenta;
-        //clabe = referencia.Clabe.ToString();
+        int st = item.EstatusID;
+        ViewBag.estatus = st;
       }
 
       //VIEWBAGS PARA SOLICITAR DDL
@@ -434,11 +433,7 @@ namespace MVCCompras.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection)
     {
-      //if (id)
-      //{
-
-    
-
+     
       if (ModelState.IsValid)
       {
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -457,17 +452,23 @@ namespace MVCCompras.Controllers
         db.Entry(solicitud).State = EntityState.Modified;
         db.SaveChanges();
 
-        //SEGUIMIENTO
+        ////SEGUIMIENTO
+        string cuenta = "";
+        var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == solicitud.SolicitudID);
+        if (referencia != null)
+        {
+          cuenta = referencia.EstatusID.ToString();
+        }
         Seguimiento Nseguimiento = new Seguimiento();
-        if (Nseguimiento.EstatusID == 1)
+        if (int.Parse(cuenta) == 1)
         {
           Nseguimiento.EstatusID = 2;
         }
-        if (Nseguimiento.EstatusID == 2)
+        if (int.Parse(cuenta) == 2)
         {
           Nseguimiento.EstatusID = 3;
         }
-        if (Nseguimiento.EstatusID == 3)
+        if (int.Parse(cuenta) == 3)
         {
           Nseguimiento.EstatusID = 4;
         }
