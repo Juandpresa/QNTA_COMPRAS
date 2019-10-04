@@ -33,11 +33,21 @@ namespace MVCCompras.Controllers
       var paga = (from p in db.Pagadora join s in db.Solicitud 
                   on p.PagadoraID equals s.PagadoraID
                   select new{ p.Alias});
+      int cont = 0;
       foreach (var item in paga)
       {
-        string tpaga = item.Alias;
-        ViewBag.pagadora = tpaga;
+        cont++;
       }
+      int pagadora = 0;
+      string[] pag = new string[cont];
+      foreach (var item in paga)
+      {
+        string pa = item.Alias;
+        ViewBag.pagadora = pa;
+        //pag[pagadora] = item.Alias;
+        //pagadora = pagadora + 1;
+      }
+    
 
 
       var estat = (from s in db.Solicitud
@@ -56,13 +66,13 @@ namespace MVCCompras.Controllers
                    join c in db.Concepto
                    on s.SolicitudID equals c.SolicitudId
                    select new { c.Nombre });
-      int cont = 0;
+      int contador = 0;
       foreach (var item in con)
       {
-        cont++;
+        contador++;
       }
       int cs = 0;
-      string[] cons = new string[cont];
+      string[] cons = new string[contador];
       foreach (var item in con)
       {
         cons[cs] = item.Nombre;
@@ -482,7 +492,34 @@ namespace MVCCompras.Controllers
         db.Seguimiento.Add(Nseguimiento);
         db.SaveChanges();
 
-
+        string s = collection.Get("valida");
+        if (s == "on")
+        {
+          var con = (from so in db.Solicitud
+                     join c in db.Concepto
+                     on so.SolicitudID equals c.SolicitudId
+                     select new { c.Nombre });
+          int cont = 0;
+          foreach (var item in con)
+          {
+            cont++;
+          }
+          int cs = 0;
+          string[] cons = new string[cont];
+          foreach (var item in con)
+          {
+            cons[cs] = item.Nombre;
+            cs = cs + 1;
+          }
+          string correoOrigen = Session["Correo"].ToString();
+          var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
+          if (emailO != null)
+          {
+            string pass = emailO.Pass.ToString();
+            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons);
+            TempData["var"] = "Solicitud Aprobada";
+          }
+        }
         return RedirectToAction("Index");
       }
      // }
