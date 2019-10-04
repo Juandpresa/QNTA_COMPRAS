@@ -460,7 +460,6 @@ namespace MVCCompras.Controllers
         statu = statu + 1;
       }
       //asignar a ViewData el cvalor del arreglo
-      ViewBag.cont = statu;
       ViewData["factura"] = status;
 
       //VIEWBAGS PARA SOLICITAR DDL

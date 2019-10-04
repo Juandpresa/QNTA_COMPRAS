@@ -92,8 +92,10 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.ImporteLetra, "Importe Letra", htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div class="col-md-10">
-                                                    @Html.EditorFor(model => model.ImporteLetra, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"}
-                                                })
+                                                    @Html.EditorFor(model => model.ImporteLetra, new
+                                               {
+                                                   htmlAttributes = new { @class = "form-control", @readonly = "readonly" }
+                                               })
                                                     @Html.ValidationMessageFor(model => model.ImporteLetra, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -302,7 +304,8 @@
                                                 @Html.LabelFor(model => model.Factura, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div class="col-md-6">
                                                     <input type="file" id="Factura" name="Factura" class="btn btn-primary" multiple="multiple" /><br /><br />
-                                                    <h4>@ViewBag.factura</h4>
+                                                   @*VERIFICAR DATO LANZADO*@
+                                                    <h4>@ViewData["factura"]</h4>
                                                     @Html.ValidationMessageFor(model => model.Factura, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
