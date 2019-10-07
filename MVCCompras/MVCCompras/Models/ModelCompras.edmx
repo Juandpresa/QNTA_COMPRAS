@@ -224,11 +224,13 @@
           <Property Name="EstatusID" Type="int" Nullable="false" />
           <Property Name="DetalleSolicitudID" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Compras.Compras.Seguimiento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Seguimiento">
           <Key>
             <PropertyRef Name="SolicitudID" />
-            <PropertyRef Name="EstatusID" />
-            <PropertyRef Name="CuentaID" />
+            
+            
           </Key>
           <Property Name="SolicitudID" Type="int" Nullable="false" />
           <Property Name="EstatusID" Type="int" Nullable="false" />
@@ -524,11 +526,18 @@
           <EntitySet Name="DistribucionGasto" EntityType="Self.DistribucionGasto" Schema="Compras" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="Compras" store:Type="Tables" />
           <EntitySet Name="Pago" EntityType="Self.Pago" Schema="Compras" store:Type="Tables" />
-          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" Schema="Compras" store:Type="Tables" />
           <EntitySet Name="Solicitud" EntityType="Self.Solicitud" Schema="Compras" store:Type="Tables" />
           <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Autorizacion" EntityType="Self.Autorizacion" Schema="Seguridad" store:Type="Tables" />
+          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" store:Type="Tables" store:Schema="Compras">
+            <DefiningQuery>SELECT 
+    [Seguimiento].[SolicitudID] AS [SolicitudID], 
+    [Seguimiento].[EstatusID] AS [EstatusID], 
+    [Seguimiento].[CuentaID] AS [CuentaID], 
+    [Seguimiento].[FechaMovimiento] AS [FechaMovimiento]
+    FROM [Compras].[Seguimiento] AS [Seguimiento]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Cliente_DetalleSolicitud" Association="Self.FK_Cliente_DetalleSolicitud">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="DetalleSolicitud" EntitySet="DetalleSolicitud" />
@@ -852,8 +861,6 @@
         <EntityType Name="Seguimiento">
           <Key>
             <PropertyRef Name="SolicitudID" />
-            <PropertyRef Name="EstatusID" />
-            <PropertyRef Name="CuentaID" />
           </Key>
           <Property Name="SolicitudID" Type="Int32" Nullable="false" />
           <Property Name="EstatusID" Type="Int32" Nullable="false" />
