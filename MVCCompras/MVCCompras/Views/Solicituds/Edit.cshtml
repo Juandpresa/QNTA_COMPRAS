@@ -186,14 +186,14 @@
                                                         </thead>
                                                         <tbody>
                                                             @{int c = 0;
-                                                                string[] concep = new string[2];
+                                                                int[] concep = new int[ViewBag.pago];
                                                                 foreach (var item in concep)
                                                                 {
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td>@(((string[])ViewData["concepto"])[c])</td>
-                                                                    <td>@(((string[])ViewData["importe"])[c])</td>
-                                                                </tr>
+                                                            <tr>
+                                                                <td>@(((string[])ViewData["tpago"])[c])</td>
+                                                                <td>@(((string[])ViewData["concepto"])[c])</td>
+                                                                <td>@(((string[])ViewData["importe"])[c])</td>
+                                                            </tr>
                                                                     c = c + 1;
                                                                 }
                                                             }
