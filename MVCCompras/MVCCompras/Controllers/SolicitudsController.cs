@@ -467,6 +467,7 @@ namespace MVCCompras.Controllers
       var conc = (from s in db.Solicitud
                    join c in db.Concepto
                    on s.SolicitudID equals c.SolicitudId
+                  where c.SolicitudId == solicitud.SolicitudID
                    //join t in db.TipoPago on c.TipoPagoID equals t.TipoPagoID
                    select new {
                                 c.Nombre,
@@ -498,6 +499,7 @@ namespace MVCCompras.Controllers
                   join c in db.Concepto
                   on t.TipoPagoID equals c.TipoPagoID
                   join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
+                  where c.SolicitudId == solicitud.SolicitudID
                   select new
                   {
                     t.Nombre
