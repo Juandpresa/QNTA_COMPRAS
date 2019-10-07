@@ -492,6 +492,34 @@ namespace MVCCompras.Controllers
       ViewData["concepto"] = co;
       ViewData["importe"] = ip;
 
+      //MOSTRAR TIPO DE PAGO DE CONCEPTO
+      //Consulta join para obtener conceptos  
+      var tpago = (from t in db.TipoPago
+                  join c in db.Concepto
+                  on t.TipoPagoID equals c.TipoPagoID
+                  join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
+                  select new
+                  {
+                    t.Nombre
+                  });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int contp = 0;
+      foreach (var item in tpago)
+      {
+        contp++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int tipopago = 0;
+      string[] tp = new string[contp];
+      foreach (var item in tpago)
+      {
+        tp[tipopago] = item.Nombre;
+        tipopago = tipopago + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      ViewBag.pago = contp;
+      ViewData["tpago"] = tp;
+
 
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
