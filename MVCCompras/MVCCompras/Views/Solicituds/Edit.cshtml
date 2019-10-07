@@ -2,8 +2,6 @@
 
 @using MVCCompras.Models
 @{
-    /**/
-
     ViewBag.Title = "Edit";
 }
 @if (ViewBag.Message != null)
@@ -189,17 +187,17 @@
                                                                 string[] concep = new string[ViewBag.pago];
                                                                 foreach (var item in concep)
                                                                 {
-                                                            <tr>
-                                                                <td>@(((string[])ViewData["tpago"])[c])</td>
-                                                                <td>@(((string[])ViewData["concepto"])[c])</td>
-                                                                <td>@(((string[])ViewData["importe"])[c])</td>
-                                                            </tr>
+                                                                    <tr>
+                                                                        <td>@(((string[])ViewData["tpago"])[c])</td>
+                                                                        <td>@(((string[])ViewData["concepto"])[c])</td>
+                                                                        <td>@(((string[])ViewData["importe"])[c])</td>
+                                                                    </tr>
                                                                     c = c + 1;
                                                                 }
                                                             }
                                                         </tbody>
                                                     </table>
-                                                </div>  
+                                                </div>
                                             </div>
 
                                             @*//CHECAR CPNTROLLER EDIT*@
@@ -418,8 +416,8 @@
 
 
     </section>
-    @*@Html.Partial("_CrearConcepto")
-        @Html.Partial("_CrearGasto")*@
+    @Html.Partial("_CrearConcepto")
+    @*@Html.Partial("_CrearGasto")*@
 }
 
 <script>
@@ -524,7 +522,6 @@
     })
 </script>
 
-@*ENVIAR CORREO DE APROBADO*@
 <script>
     $('#aprobar').click(function () {
         var cor = 1;
