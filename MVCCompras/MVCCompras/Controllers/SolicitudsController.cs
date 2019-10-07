@@ -31,9 +31,10 @@ namespace MVCCompras.Controllers
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
       //Consulta join para obtener el ALIAS  de la pagadora 
-      var paga = (from p in db.Pagadora join s in db.Solicitud 
-                  on p.PagadoraID equals s.PagadoraID
-                  select new{ p.Alias});
+      var paga = (from p in db.Pagadora
+                  join s in db.Solicitud
+on p.PagadoraID equals s.PagadoraID
+                  select new { p.Alias });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int cont = 0;
       foreach (var item in paga)
@@ -53,11 +54,11 @@ namespace MVCCompras.Controllers
 
       //Consulta join para obtener el Status de solicitud
       var estat = (from s in db.Solicitud
-                  join e in db.Seguimiento
-                  on s.SolicitudID equals e.SolicitudID
-                  join d in db.Estatus
-                  on e.EstatusID equals d.EstatusId
-                  select new { d.Nombre });
+                   join e in db.Seguimiento
+                   on s.SolicitudID equals e.SolicitudID
+                   join d in db.Estatus
+                   on e.EstatusID equals d.EstatusId
+                   select new { d.Nombre });
 
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae estat
       int conta = 0;
@@ -75,11 +76,6 @@ namespace MVCCompras.Controllers
       }
       //asignar a ViewData el cvalor del arreglo
       ViewData["status"] = status;
-
-
-
-
-
       foreach (var item in estat)
       {
         string test = item.Nombre;
@@ -87,9 +83,10 @@ namespace MVCCompras.Controllers
       }
 
       var con = (from s in db.Solicitud
-                   join c in db.Concepto
-                   on s.SolicitudID equals c.SolicitudId
-                   select new { c.Nombre });
+                 join c in db.Concepto
+                 on s.SolicitudID equals c.SolicitudId
+                 where c.SolicitudId == 7066
+                 select new { c.Nombre });
       int contador = 0;
       foreach (var item in con)
       {
@@ -100,7 +97,7 @@ namespace MVCCompras.Controllers
       foreach (var item in con)
       {
         cons[cs] = item.Nombre;
-        cs=cs+1;
+        cs = cs + 1;
       }
       string result = string.Join(",", cons);
       ViewBag.concepto = result;
@@ -413,7 +410,7 @@ namespace MVCCompras.Controllers
 
       viewbags();
       return View();
-    }   
+    }
 
 
 
@@ -441,8 +438,8 @@ namespace MVCCompras.Controllers
 
       //Consulta join para obtenerla factura  
       var fac = (from f in db.Factura
-                 
-                  select new { f.Nombre });
+
+                 select new { f.Nombre });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int cont = 0;
       foreach (var item in fac)
@@ -459,19 +456,21 @@ namespace MVCCompras.Controllers
       }
       //asignar a ViewData el valor del arreglo
       ViewBag.conf = factura;
-      ViewData["factura"] =fa;
+      ViewData["factura"] = fa;
 
 
       //MOSTRAR CONCEPTOS
       //Consulta join para obtener conceptos  
       var conc = (from s in db.Solicitud
-                   join c in db.Concepto
-                   on s.SolicitudID equals c.SolicitudId
+                  join c in db.Concepto
+                  on s.SolicitudID equals c.SolicitudId
                   where c.SolicitudId == solicitud.SolicitudID
-                   //join t in db.TipoPago on c.TipoPagoID equals t.TipoPagoID
-                   select new {
-                                c.Nombre,
-                                c.ImporteParcial});
+                  //join t in db.TipoPago on c.TipoPagoID equals t.TipoPagoID
+                  select new
+                  {
+                    c.Nombre,
+                    c.ImporteParcial
+                  });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int con = 0;
       foreach (var item in conc)
@@ -496,14 +495,14 @@ namespace MVCCompras.Controllers
       //MOSTRAR TIPO DE PAGO DE CONCEPTO
       //Consulta join para obtener conceptos  
       var tpago = (from t in db.TipoPago
-                  join c in db.Concepto
-                  on t.TipoPagoID equals c.TipoPagoID
-                  join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
-                  where c.SolicitudId == solicitud.SolicitudID
-                  select new
-                  {
-                    t.Nombre
-                  });
+                   join c in db.Concepto
+                   on t.TipoPagoID equals c.TipoPagoID
+                   join s in db.Solicitud on c.SolicitudId equals s.SolicitudID
+                   where c.SolicitudId == solicitud.SolicitudID
+                   select new
+                   {
+                     t.Nombre
+                   });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int contp = 0;
       foreach (var item in tpago)
@@ -555,7 +554,7 @@ namespace MVCCompras.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seg)
     {
-     
+
       if (ModelState.IsValid)
       {
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -575,52 +574,48 @@ namespace MVCCompras.Controllers
         db.SaveChanges();
 
         ////SEGUIMIENTO
-        string cuenta = "";
-        var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == solicitud.SolicitudID);
-        var query = (from q in db.Seguimiento
-                     where q.SolicitudID == solicitud.SolicitudID
-                     select q).FirstOrDefault();
-
-        if (referencia != null)
-        {
-          cuenta = query.EstatusID.ToString();
-        }
-        if (int.Parse(cuenta) == 1)
-        {
-          query.EstatusID = 1;
-          //seg.EstatusID = 2;
-        }
-        if (int.Parse(cuenta) == 2)
-        {
-          query.EstatusID = 3;
-        }
-        if (int.Parse(cuenta) == 3)
-        {
-          query.EstatusID = 4;
-        }
-        if (int.Parse(cuenta) == 4)
-        {
-          query.EstatusID = 5;
-        }
-
-
-        query.CuentaID = Session["idUsuario"].ToString();
-        query.FechaMovimiento = DateTime.Now;
-
-        //db.SubmitChanges(query);
-
-        //seg.CuentaID = Session["idUsuario"].ToString();
-        //seg.FechaMovimiento = DateTime.Now;
-        //seg.SolicitudID = solicitud.SolicitudID;
-        db.Entry(query).State = EntityState.Modified;
-        db.SaveChanges();
-
         string s = collection.Get("valida");
         if (s == "on")
         {
+          string est = "";
+          //Obtenemos la solicitus con la cual trabajaremos
+          var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == solicitud.SolicitudID);
+          //obtenemos de la tabla seguimiento el Id de la solicitus que se editara
+          var segui = new Seguimiento { SolicitudID = solicitud.SolicitudID };
+          //instancimos el contexto
+          using (var context = new ComprasEntities())
+          {
+            context.Seguimiento.Attach(segui);
+            //si referencia trae datos, asignamos a la variable est el valor del estatus que trae esa solicitud
+            if (referencia != null)
+            {
+              est = referencia.EstatusID.ToString();
+            }
+            //depende el estatud de la solicitus se modificara 
+            if (int.Parse(est) == 1)
+            {
+              segui.EstatusID = 2;
+            }
+            if (int.Parse(est) == 2)
+            {
+              segui.EstatusID = 3;
+            }
+            if (int.Parse(est) == 3)
+            {
+              segui.EstatusID = 4;
+            }
+            if (int.Parse(est) == 4)
+            {
+              segui.EstatusID = 5;
+            }            
+            segui.CuentaID = Session["idUsuario"].ToString();
+            segui.FechaMovimiento = DateTime.Now;
+            context.SaveChanges();
+          }
           var con = (from so in db.Solicitud
                      join c in db.Concepto
                      on so.SolicitudID equals c.SolicitudId
+                     where c.SolicitudId == solicitud.SolicitudID
                      select new { c.Nombre });
           int cont = 0;
           foreach (var item in con)
@@ -645,7 +640,7 @@ namespace MVCCompras.Controllers
         }
         return RedirectToAction("Index");
       }
-     // }
+      // }
 
       return View(solicitud);
     }
@@ -808,7 +803,7 @@ namespace MVCCompras.Controllers
         "<h2 align=center>Conceptos: " + result + "</h2>" +
         "<h2 align=center>Importe Total de Compra: $" + impT + "</h2>" +
         "<h2 align=center>Solicitado por: " + solicitante + "</h2>" +
-        "< h2 align = center > Aprobado por: " + solicitante + " </ h2 >"+
+        "<h2 align=center> Aprobado por: " + solicitante + "</h2>" +
         "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
 
       msj.IsBodyHtml = true;
