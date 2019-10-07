@@ -553,9 +553,9 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seg)
+    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seguimiento)
     {
-     
+
       if (ModelState.IsValid)
       {
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
@@ -587,8 +587,8 @@ namespace MVCCompras.Controllers
         }
         if (int.Parse(cuenta) == 1)
         {
-          query.EstatusID = 1;
-          //seg.EstatusID = 2;
+          //query.EstatusID = 2;
+          seguimiento.EstatusID = 2;
         }
         if (int.Parse(cuenta) == 2)
         {
@@ -604,15 +604,15 @@ namespace MVCCompras.Controllers
         }
 
 
-        query.CuentaID = Session["idUsuario"].ToString();
-        query.FechaMovimiento = DateTime.Now;
+        //query.CuentaID = Session["idUsuario"].ToString();
+        //query.FechaMovimiento = DateTime.Now;
 
         //db.SubmitChanges(query);
-
-        //seg.CuentaID = Session["idUsuario"].ToString();
-        //seg.FechaMovimiento = DateTime.Now;
+        //seguimiento.SolicitudID = solicitud.SolicitudID;
+        seguimiento.CuentaID = Session["idUsuario"].ToString();
+        seguimiento.FechaMovimiento = DateTime.Now;
         //seg.SolicitudID = solicitud.SolicitudID;
-        db.Entry(query).State = EntityState.Modified;
+        db.Entry(seguimiento).State = EntityState.Modified;
         db.SaveChanges();
 
         string s = collection.Get("valida");
