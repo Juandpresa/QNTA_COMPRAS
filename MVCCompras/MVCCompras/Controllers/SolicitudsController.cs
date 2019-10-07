@@ -438,29 +438,60 @@ namespace MVCCompras.Controllers
         ViewBag.estatus = st;
       }
 
-      //MOSTRAR FACTURAS CARGADAS
-      //Consulta join para obtener facturas de solicitud
-      var estat = (from s in db.Solicitud
-                   join f in db.Factura
-                   on s.SolicitudID equals f.SolicitudID
-                   select new { f.Nombre });
 
-      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae estat
-      int conta = 0;
-      foreach (var item in estat)
+      //Consulta join para obtenerla factura  
+      var fac = (from f in db.Factura
+                 
+                  select new { f.Nombre });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int cont = 0;
+      foreach (var item in fac)
       {
-        conta++;
+        cont++;
       }
       //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
-      int statu = 0;
-      string[] status = new string[conta];
-      foreach (var item in estat)
+      int factura = 0;
+      string[] fa = new string[cont];
+      foreach (var item in fac)
       {
-        status[statu] = item.Nombre;
-        statu = statu + 1;
+        fa[factura] = item.Nombre;
+        factura = factura + 1;
       }
-      //asignar a ViewData el cvalor del arreglo
-      ViewData["factura"] = status;
+      //asignar a ViewData el valor del arreglo
+      ViewBag.conf = factura;
+      ViewData["factura"] =fa;
+
+
+      //MOSTRAR CONCEPTOS
+      //Consulta join para obtener conceptos  
+      var conc = (from s in db.Solicitud
+                   join c in db.Concepto
+                   on s.SolicitudID equals c.SolicitudId
+                   join t in db.TipoPago on c.TipoPagoID equals t.TipoPagoID
+                   select new {
+                                c.Nombre,
+                                c.ImporteParcial});
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int con = 0;
+      foreach (var item in conc)
+      {
+        con++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int concepto = 0;
+      string[] co = new string[con];
+      string[] ip = new string[con];
+      foreach (var item in conc)
+      {
+        co[concepto] = item.Nombre;
+        ip[concepto] = item.ImporteParcial.ToString();
+        concepto = concepto + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      ViewBag.concepto = con;
+      ViewData["concepto"] = co;
+      ViewData["importe"] = ip;
+
 
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");

@@ -185,14 +185,21 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
+                                                            @{int c = 0;
+                                                                string[] concep = new string[2];
+                                                                foreach (var item in concep)
+                                                                {
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>@(((string[])ViewData["concepto"])[c])</td>
+                                                                    <td>@(((string[])ViewData["importe"])[c])</td>
+                                                                </tr>
+                                                                    c = c + 1;
+                                                                }
+                                                            }
                                                         </tbody>
                                                     </table>
-                                                </div>
+                                                </div>  
                                             </div>
 
                                             @*//CHECAR CPNTROLLER EDIT*@
@@ -304,8 +311,15 @@
                                                 @Html.LabelFor(model => model.Factura, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div class="col-md-6">
                                                     <input type="file" id="Factura" name="Factura" class="btn btn-primary" multiple="multiple" /><br /><br />
-                                                   @*VERIFICAR DATO LANZADO*@
-                                                    <h4>@ViewData["factura"]</h4>
+                                                    @{int j = 0;
+                                                        string[] qry = new string[ViewBag.conf];
+                                                        foreach (var item in qry)
+                                                        {
+                                                            <h4> @(((string[])ViewData["factura"])[j])</h4>
+
+                                                            j = j + 1;
+                                                        }
+                                                    }
                                                     @Html.ValidationMessageFor(model => model.Factura, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -334,7 +348,7 @@
                                         <div class="form-horizontal">
                                             @if (ViewBag.estatus == 1)
                                             {
-                                                <span id="status" style="display:none;">@ViewBag.estatus</span>
+                                                @*<span id="status" style="display:none;">@ViewBag.estatus</span>*@
 
                                                 <div>
                                                     <label class="control-label col-sm-4">Aprobar Solicitud</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
