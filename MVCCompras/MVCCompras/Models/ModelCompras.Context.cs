@@ -50,6 +50,6 @@ namespace MVCCompras.Models
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuario { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
-        public virtual DbSet<Autorizacion> Autorizacion { get; set; }
-    }
+        public virtual DbSet<Autorizacion> Autorizacion { get; set; }   
+  }
 }

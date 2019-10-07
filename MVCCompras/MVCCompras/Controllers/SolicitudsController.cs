@@ -467,7 +467,7 @@ namespace MVCCompras.Controllers
       var conc = (from s in db.Solicitud
                    join c in db.Concepto
                    on s.SolicitudID equals c.SolicitudId
-                   join t in db.TipoPago on c.TipoPagoID equals t.TipoPagoID
+                   //join t in db.TipoPago on c.TipoPagoID equals t.TipoPagoID
                    select new {
                                 c.Nombre,
                                 c.ImporteParcial});
@@ -523,7 +523,7 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection, Seguimiento Nseguimiento)
+    public ActionResult Edit([Bind(Exclude = "Solicitante")] Solicitud solicitud, FormCollection collection)
     {
      
       if (ModelState.IsValid)
@@ -547,30 +547,42 @@ namespace MVCCompras.Controllers
         ////SEGUIMIENTO
         string cuenta = "";
         var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == solicitud.SolicitudID);
+        var query = (from q in db.Seguimiento
+                     where q.SolicitudID == solicitud.SolicitudID
+                     select q).FirstOrDefault();
+
         if (referencia != null)
         {
-          cuenta = referencia.EstatusID.ToString();
+          cuenta = query.EstatusID.ToString();
         }
         if (int.Parse(cuenta) == 1)
         {
-          Nseguimiento.EstatusID = 2;
+          query.EstatusID = int.Parse(cuenta)+ 1;
         }
         if (int.Parse(cuenta) == 2)
         {
-          Nseguimiento.EstatusID = 3;
+          query.EstatusID = 3;
         }
         if (int.Parse(cuenta) == 3)
         {
-          Nseguimiento.EstatusID = 4;
+          query.EstatusID = 4;
         }
         if (int.Parse(cuenta) == 4)
         {
-          Nseguimiento.EstatusID = 5;
+          query.EstatusID = 5;
         }
-        Nseguimiento.CuentaID = Session["idUsuario"].ToString();
-        //Nseguimiento.SolicitudID = solicitud.SolicitudID;
-        Nseguimiento.FechaMovimiento = DateTime.Now;
-        db.Entry(Nseguimiento).State = EntityState.Modified;
+
+        
+
+        query.CuentaID = Session["idUsuario"].ToString();
+        query.FechaMovimiento = DateTime.Now;
+
+        //db.SubmitChanges();
+
+        //Nseguimiento.CuentaID = Session["idUsuario"].ToString();
+        ////Nseguimiento.SolicitudID = solicitud.SolicitudID;
+        //Nseguimiento.FechaMovimiento = DateTime.Now;
+        db.Entry(query).State = EntityState.Modified;
         db.SaveChanges();
 
         string s = collection.Get("valida");
