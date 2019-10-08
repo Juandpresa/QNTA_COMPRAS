@@ -17,6 +17,7 @@ namespace MVCCompras.Controllers
   public class SolicitudsController : Controller
   {
     string[] conceptos;
+    string smtpOff = "office365.com", qdomi = "qnta.com.mx";
     public ActionResult GetPagadora(string PagadoraID)
     {
       Pagadora pagadora = db.Pagadora.Find(int.Parse(PagadoraID));
@@ -553,8 +554,8 @@ on p.PagadoraID equals s.PagadoraID
         solicitud.Solicitante = collection.Get("Solicitante");
 
 
-        db.Entry(solicitud).State = EntityState.Modified;
-        db.SaveChanges();
+        //db.Entry(solicitud).State = EntityState.Modified;
+        //db.SaveChanges();
 
         ////SEGUIMIENTO
         string s = collection.Get("valida");
@@ -590,11 +591,12 @@ on p.PagadoraID equals s.PagadoraID
             if (int.Parse(est) == 4)
             {
               segui.EstatusID = 5;
-            }            
+            }
             segui.CuentaID = Session["idUsuario"].ToString();
             segui.FechaMovimiento = DateTime.Now;
             context.SaveChanges();
           }
+        
           var con = (from so in db.Solicitud
                      join c in db.Concepto
                      on so.SolicitudID equals c.SolicitudId
@@ -614,11 +616,25 @@ on p.PagadoraID equals s.PagadoraID
           }
           string correoOrigen = Session["Correo"].ToString();
           var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
-          if (emailO != null)
+          var emailD = from u in db.Usuarios
+                     where u.idTipoUsuario == 3
+                     select new { u.Correo };
+        int dir = 0;
+        string[] destino = new string[2];
+        foreach (var item in emailD)
+        {
+          destino[dir] = item.Correo;
+          dir++;
+        }
+
+        if (emailO != null)
           {
             string pass = emailO.Pass.ToString();
-            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons);
+            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino);
+            db.Entry(solicitud).State = EntityState.Modified;
+            db.SaveChanges();
             TempData["var"] = "Solicitud Aprobada";
+
           }
         }
         return RedirectToAction("Index");
@@ -736,11 +752,8 @@ on p.PagadoraID equals s.PagadoraID
     #region HELPERS
     private void EnviarCorreo(string EmailOrigen, string EmailDestino, string pass, int idsol, decimal impT, string solicitante, string[] conceptos)
     {
+      string dominio = EmailOrigen.Split('@').Last();
       string result = string.Join(",", conceptos);
-      //string result = String.Concat(""+conceptos);
-      //string EmailOrigen = "demesrmadrid@gmail.com";
-      //string EmailDestino = "demesrmadrid@gmail.com";
-      //string pass = "/04Demetr.";
       string url = urlDominio + "Home/Login/";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD:</b></h>" +
@@ -751,12 +764,9 @@ on p.PagadoraID equals s.PagadoraID
 
       msj.IsBodyHtml = true;
 
-      //SmtpClient cliente = new SmtpClient("smtp.gmail.com");
-      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
+      SmtpClient cliente = new SmtpClient("mail."+dominio);
       cliente.EnableSsl = false;
       cliente.UseDefaultCredentials = false;
-      //cliente.Host = "smtp.gmail.com";
-      //cliente.Host = "mail.qnta.mx";
       cliente.Port = 587;
       cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
       try
@@ -772,13 +782,14 @@ on p.PagadoraID equals s.PagadoraID
       }
     }
 
-    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos)
+    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos, string domi, string dom, string [] dest)
     {
+      //obtener el dominio y guardarlo en varioable
+      string dominio = EmailOrigen.Split('@').Last();
       string result = string.Join(",", conceptos);
-      //string result = String.Concat(""+conceptos);
-      //string EmailOrigen = "demesrmadrid@gmail.com";
-      string EmailDestino = "demesrmadrid@gmail.com";
-      //string pass = "/04Demetr.";
+
+      string EmailDestino = dest[0];
+
       string url = urlDominio + "Home/Login/";
       MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
         "<h1 align=center><b>DATOS DE LA SOLICITUD APROBADA:</b></h>" +
@@ -790,10 +801,23 @@ on p.PagadoraID equals s.PagadoraID
         "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
 
       msj.IsBodyHtml = true;
+      MailAddress copy = new MailAddress(dest[1]);
+      msj.CC.Add(copy);
 
-      //SmtpClient cliente = new SmtpClient("smtp.gmail.com");
-      SmtpClient cliente = new SmtpClient("mail.qnta.mx");
-      cliente.EnableSsl = false;
+      SmtpClient cliente = new SmtpClient();
+      if (dominio == dom)
+      {
+        cliente.Host = "smtp." + domi;
+        cliente.EnableSsl = true;
+      }
+      else
+      {
+        cliente.Host = "mail." + dominio;
+        cliente.EnableSsl = false;
+      }
+      //SmtpClient cliente = new SmtpClient("mail." + dominio);
+
+      
       cliente.UseDefaultCredentials = false;
       //cliente.Host = "smtp.gmail.com";
       //cliente.Host = "mail.qnta.mx";
