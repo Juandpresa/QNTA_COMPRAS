@@ -279,7 +279,6 @@ on p.PagadoraID equals s.PagadoraID
                 }
               }
             }
-            viewbags();
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
             ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
             //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
@@ -297,15 +296,13 @@ on p.PagadoraID equals s.PagadoraID
             solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
             ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
             ViewBag.Solicita = new SelectList(db.Usuarios,"idUsuario", "Nombre", solicitud.Solicitante);
-            //solicitud.Solicitante = solicitud.Solicitantes.GetDescripcion().ToString();
-
-
-            //ViewBag.MonedaID = new SelectList(db.Moneda, "MonedaID", "Nombre", referencia.MonedaID);
-            //ViewBag.BancoID = new SelectList(db.Bancos, "BancoId", "Alias", referencia.BancoID);
-            //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "CuentaID", "Cuenta", referencia.ReferenciaBancariaID);
-            //ViewBag.ReferenciaID = new SelectList(db.ReferenciaBancaria, "ClabeID", "CLABE", referencia.ReferenciaBancariaID);
-            //ViewBag.ConceptoID = new SelectList(db.Concepto, "ConceptoID", "Nombre", solicitud.Concepto);
-            //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial", solicitud.TipoGasto);
+            //obtiene el idUsuario del solicitante
+            string SOLID = CrearConcepto.Get("Solicita");
+            int SOLID2 = int.Parse(SOLID);
+            //Obtener el nombre del solicitante en base al idUsuario
+            var ssoo = db.Usuarios.FirstOrDefault(e => e.idUsuario == SOLID2);
+            //asignamos el nombre solicitante al campo solicitante
+            solicitud.Solicitante = ssoo.Nombre;
 
             db.Solicitud.Add(solicitud);
 
