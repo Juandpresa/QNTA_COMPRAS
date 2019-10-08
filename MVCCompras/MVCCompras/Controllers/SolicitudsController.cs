@@ -248,7 +248,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
+    public ActionResult Create([Bind(Exclude ="Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
 
       string pass = "";
@@ -279,17 +279,12 @@ on p.PagadoraID equals s.PagadoraID
                 }
               }
             }
-
+            viewbags();
             ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
             ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
             //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
 
             ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-
-            //VERIFICAR DATOS !!//RECIEN AGREGADO
-            //ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre", solicitud.TipoGasto);
-            //ViewBag.ClienteID = new SelectList(db.Cliente, "ClienteID", "RazonSocial",solicitud.TipoGasto);
-
             //solicitud.TipoGastoID = 1;
             //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
             solicitud.PeriocidadID = 1;
@@ -382,10 +377,10 @@ on p.PagadoraID equals s.PagadoraID
           TempData["var"] = "Solicitud Creada";
           return RedirectToAction("Index");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-          throw;
+          throw ex;
         }
       }
       viewbags();
@@ -418,7 +413,7 @@ on p.PagadoraID equals s.PagadoraID
 
       //Consulta join para obtenerla factura  
       var fac = (from f in db.Factura
-
+                 where f.SolicitudID==solicitud.SolicitudID
                  select new { f.Nombre });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int cont = 0;
