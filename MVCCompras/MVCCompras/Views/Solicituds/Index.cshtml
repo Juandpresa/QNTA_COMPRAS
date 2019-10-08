@@ -93,8 +93,9 @@
                   @(((string[])ViewData["status"])[i])
                 </td>
                 <td>
-                  @Html.ActionLink("Edit", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
-                  @Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })
+                    @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })|
+                    @Html.ActionLink("Ver", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
                 </td>
               </tr>
             </tbody>
