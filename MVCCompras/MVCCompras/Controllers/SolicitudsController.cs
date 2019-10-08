@@ -1,16 +1,15 @@
-﻿using System;
+﻿using MVCCompras.Models;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using MVCCompras.Models;
-using PagedList;
-using System.IO;
-using System.Data.Entity.Validation;
-using System.Net.Mail;
 
 namespace MVCCompras.Controllers
 {
@@ -119,7 +118,6 @@ on p.PagadoraID equals s.PagadoraID
           if (TempData["var"] == null)
           {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_asc" : "Date";
 
             if (searchString != null)
             {
@@ -134,7 +132,7 @@ on p.PagadoraID equals s.PagadoraID
 
             if (!String.IsNullOrEmpty(searchString))
             {
-              estatus = estatus.Where(s => s.Solicitante.Contains(searchString) || s.Observacion.Contains(searchString));
+              estatus = estatus.Where(s => s.Solicitante.Contains(searchString) || s.ImporteTotal.ToString().Contains(searchString));
             }
             switch (sortOrder)
             {
@@ -148,7 +146,7 @@ on p.PagadoraID equals s.PagadoraID
                 estatus = estatus.OrderByDescending(s => s.FechaRegistro);
                 break;
               default:  // Name ascending 
-                estatus = estatus.OrderBy(s => s.FechaRegistro);
+                estatus = estatus.OrderBy(s => s.SolicitudID);
                 break;
             }
 
@@ -159,7 +157,6 @@ on p.PagadoraID equals s.PagadoraID
           {
             ViewBag.Message = TempData["var"].ToString();
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_asc" : "Date";
 
             if (searchString != null)
             {
@@ -189,7 +186,7 @@ on p.PagadoraID equals s.PagadoraID
                 estatus = estatus.OrderByDescending(s => s.FechaRegistro);
                 break;
               default:  // Name ascending 
-                estatus = estatus.OrderBy(s => s.FechaRegistro);
+                estatus = estatus.OrderBy(s => s.SolicitudID);
                 break;
             }
             return View(estatus.ToPagedList(pageNumber, pageSize));
@@ -248,7 +245,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude ="Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
+    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
 
       string pass = "";
@@ -295,7 +292,7 @@ on p.PagadoraID equals s.PagadoraID
             solicitud.FechaModificacion = DateTime.Now;
             solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
             ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-            ViewBag.Solicita = new SelectList(db.Usuarios,"idUsuario", "Nombre", solicitud.Solicitante);
+            ViewBag.Solicita = new SelectList(db.Usuarios, "idUsuario", "Nombre", solicitud.Solicitante);
             //obtiene el idUsuario del solicitante
             string SOLID = CrearConcepto.Get("Solicita");
             int SOLID2 = int.Parse(SOLID);
@@ -410,7 +407,7 @@ on p.PagadoraID equals s.PagadoraID
 
       //Consulta join para obtenerla factura  
       var fac = (from f in db.Factura
-                 where f.SolicitudID==solicitud.SolicitudID
+                 where f.SolicitudID == solicitud.SolicitudID
                  select new { f.Nombre });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int cont = 0;
@@ -584,7 +581,7 @@ on p.PagadoraID equals s.PagadoraID
             segui.FechaMovimiento = DateTime.Now;
             context.SaveChanges();
           }
-        
+
           var con = (from so in db.Solicitud
                      join c in db.Concepto
                      on so.SolicitudID equals c.SolicitudId
@@ -605,17 +602,17 @@ on p.PagadoraID equals s.PagadoraID
           string correoOrigen = Session["Correo"].ToString();
           var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
           var emailD = from u in db.Usuarios
-                     where u.idTipoUsuario == 3
-                     select new { u.Correo };
-        int dir = 0;
-        string[] destino = new string[2];
-        foreach (var item in emailD)
-        {
-          destino[dir] = item.Correo;
-          dir++;
-        }
+                       where u.idTipoUsuario == 3
+                       select new { u.Correo };
+          int dir = 0;
+          string[] destino = new string[2];
+          foreach (var item in emailD)
+          {
+            destino[dir] = item.Correo;
+            dir++;
+          }
 
-        if (emailO != null)
+          if (emailO != null)
           {
             string pass = emailO.Pass.ToString();
             EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino);
@@ -753,7 +750,7 @@ on p.PagadoraID equals s.PagadoraID
 
       msj.IsBodyHtml = true;
 
-      SmtpClient cliente = new SmtpClient("mail."+dominio);
+      SmtpClient cliente = new SmtpClient("mail." + dominio);
       cliente.EnableSsl = false;
       cliente.UseDefaultCredentials = false;
       cliente.Port = 587;
@@ -771,7 +768,7 @@ on p.PagadoraID equals s.PagadoraID
       }
     }
 
-    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos, string domi, string dom, string [] dest)
+    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos, string domi, string dom, string[] dest)
     {
       //obtener el dominio y guardarlo en varioable
       string dominio = EmailOrigen.Split('@').Last();
@@ -806,7 +803,7 @@ on p.PagadoraID equals s.PagadoraID
       }
       //SmtpClient cliente = new SmtpClient("mail." + dominio);
 
-      
+
       cliente.UseDefaultCredentials = false;
       //cliente.Host = "smtp.gmail.com";
       //cliente.Host = "mail.qnta.mx";
