@@ -4,143 +4,113 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Solicitud</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CantidadPagos)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CantidadPagos)
-        </dd>
+<section id="main-content">
+    <section class=" wrapper">
+        <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-file"></i>Solicitu de Compra</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <section class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h4>Solicitud</h4></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="padd">
+                                <div class="form quick-post">
+                                    <div>
+                                        <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImporteTotal)
-        </dt>
+                                            <dt>
+                                                @Html.DisplayName("Solicitado por:")
+                                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImporteTotal)
-        </dd>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Solicitante)
+                                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImporteLetra)
-        </dt>
+                                            <dt>
+                                                @Html.DisplayName("Importe Total:")
+                                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImporteLetra)
-        </dd>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.ImporteTotal)
+                                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Observacion)
-        </dt>
+                                            <dt>
+                                                @Html.DisplayName("Importe en Letra:")
+                                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Observacion)
-        </dd>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.ImporteLetra)
+                                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </dt>
+                                            <dt>
+                                                @Html.DisplayName("Observaciones:")
+                                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FechaRegistro)
-        </dd>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Observacion)
+                                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaInicioPagos)
-        </dt>
+                                            <dt>
+                                                @Html.DisplayName("Fecha de Registro:")
+                                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FechaInicioPagos)
-        </dd>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.FechaRegistro)
+                                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaModificacion)
-        </dt>
+                                            <dt>
+                                                @Html.DisplayName("Empresa Pagadora:")
+                                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FechaModificacion)
-        </dd>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.PagadoraID)
+                                            </dd>
+                                            <dt>
+                                                @Html.DisplayName("Forma de Pago:")
+                                            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CuentaIDModificacion)
-        </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.FormaPago.Nombre)
+                                            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CuentaIDModificacion)
-        </dd>
+                                            <dt>
+                                                @Html.DisplayName("Proveedor:")
+                                            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PagadoraID)
-        </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Proveedor.Alias)
+                                            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PagadoraID)
-        </dd>
+                                            <dt>
+                                                @Html.DisplayName("Tipo de Gasto:")
+                                            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ObservacionesOtroFormaP)
-        </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.TipoGasto.Nombre)
+                                            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ObservacionesOtroFormaP)
-        </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ObsOtroTipoGasto)
-        </dt>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.SolicitudID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 
-        <dd>
-            @Html.DisplayFor(model => model.ObsOtroTipoGasto)
-        </dd>
+</section>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Solicitante)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Solicitante)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FormaPago.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FormaPago.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Periocidad.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Periocidad.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor.Alias)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor.Alias)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoGasto.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoGasto.Nombre)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SolicitudID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
