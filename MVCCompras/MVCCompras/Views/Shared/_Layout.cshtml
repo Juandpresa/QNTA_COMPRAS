@@ -14,118 +14,134 @@
 </head>
 <body>
 
-    @if (Session["idTipoUsuario"].ToString() == "5")
-    {
-        <aside>
-            <div id="sidebar" class="nav-collapse ">
-                <!-- sidebar menu start-->
-                <ul class="sidebar-menu">
-                    <li class="active">
-                        <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="@Url.Action("Create", "Solicituds")"><i class="icon_document_alt"></i>Solicitud</a>
-                    </li>
+  @if (Session["idTipoUsuario"].ToString() == "5")
+  {
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
+          </li>
+          <li class="sub-menu">
+            <a href="@Url.Action("Create", "Solicituds")"><i class="icon_document_alt"></i>Solicitud</a>
+          </li>
 
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+  }
+
+  @if (Session["idTipoUsuario"].ToString() == "1")
+  {
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
+            @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
+          </li>
+          <li class="sub-menu">
+            <a href="@Url.Action("Create", "Solicituds")"><i class="fa fa-file"></i>Solicitud</a>
+            @*<span>@Html.ActionLink("Solicitud", "Create", "Solicituds", null, new { @class = "icon_genius" });</span>*@
+          </li>
+          <li class="sub-menu">
+            <a href="@Url.Action("Index", "Bancos")"><i class="fa fa-institution"></i>Bancos</a>
+          </li>
+          <li class="sub-menu">
+            <a href="@Url.Action("Index", "Pagadoras")"><i class="fa fa-institution"></i>Pagadoras</a>
+          </li>
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+  }
+
+  @if (Session["idTipoUsuario"].ToString() == "2" || Session["idTipoUsuario"].ToString() == "3" || Session["idTipoUsuario"].ToString() == "4")
+  {
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
+            @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
+          </li>
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+  }
+
+
+
+  <header class="header dark-bg">
+    <!--logo start-->
+    <a class="logo">COMPRAS</a>
+
+    <!--logo end-->
+
+    <div class="top-nav notification-row">
+      <ul class="nav pull-right top-menu">
+        <!-- user login dropdown start-->
+        <li class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            @if (Session["Correo"] != null)
+            {
+              <span class="username">Bienvenido: &nbsp;&nbsp;&nbsp; @Session["Correo"].ToString()&nbsp;&nbsp;&nbsp;</span>
+              <b class="caret"></b>
+
+            }
+
+          </a>
+          <ul class="dropdown-menu extended logout">
+            <div class="log-arrow-up"></div>
+            <li class="eborder-top">
+              <a href="@Url.Action("CerrarSesion", "Home")"><i class="icon_key_alt"></i>Cerrar Sesión</a>
+            </li>
+          </ul>
+        </li>
+        <!-- user login dropdown end -->
+      </ul>
+    </div>
+  </header>
+
+
+
+
+  @*<div class="navbar navbar-inverse navbar-fixed-top">
+        @Html.ActionLink("COMPRAS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <ul class="nav pull-right top-menu">
+            <!-- user login dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    @if (Session["Correo"] != null)
+                    {
+                        <span class="username">Bienvenido:  @Session["Correo"].ToString()</span>
+
+                    }
+
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    <div class="log-arrow-up"></div//VOLVER A COMENTAR ESTA LINEA>
+                    <li>
+                        <a href="@Url.Action("CerrarSesion", "Home")"><i class="icon_key_alt"></i><span>Cerrar Sesión</span></a>
+                    </li>
                 </ul>
-                <!-- sidebar menu end-->
-            </div>
-        </aside>
-    }
+            </li>
+            <!-- user login dropdown end -->
+        </ul>
+    </div>*@
 
-    @if (Session["idTipoUsuario"].ToString() == "1")
-    {
-        <aside>
-            <div id="sidebar" class="nav-collapse ">
-                <!-- sidebar menu start-->
-                <ul class="sidebar-menu">
-                    <li class="active">
-                        <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
-                        @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
-                    </li>
-                    <li class="sub-menu">
-                        <a href="@Url.Action("Create", "Solicituds")"><i class="fa fa-file"></i>Solicitud</a>
-                        @*<span>@Html.ActionLink("Solicitud", "Create", "Solicituds", null, new { @class = "icon_genius" });</span>*@
-                    </li>
-                    <li class="sub-menu">
-                        <a href="@Url.Action("Index", "Bancos")"><i class="fa fa-institution"></i>Bancos</a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="@Url.Action("Index", "Pagadoras")"><i class="fa fa-institution"></i>Pagadoras</a>
-                    </li>
-                </ul>
-                <!-- sidebar menu end-->
-            </div>
-        </aside>
-    }
-
-
-
-    <header class="header dark-bg">
-        <!--logo start-->
-        <a class="logo">COMPRAS</a>
-
-        <!--logo end-->
-
-        <div class="top-nav notification-row">
-            <ul class="nav pull-right top-menu">
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        @if (Session["Correo"] != null)
-                        {
-                        <span class="username">Bienvenido: &nbsp;&nbsp;&nbsp; @Session["Correo"].ToString()&nbsp;&nbsp;&nbsp;</span>
-                            <b class="caret"></b>
-
-                        }
-
-                    </a>
-                    <ul class="dropdown-menu extended logout">
-                        <div class="log-arrow-up"></div>
-                        <li class="eborder-top">
-                            <a href="@Url.Action("CerrarSesion", "Home")"><i class="icon_key_alt"></i>Cerrar Sesión</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-            </ul>
-        </div>
-    </header>
-
-
-
-
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            @Html.ActionLink("COMPRAS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <ul class="nav pull-right top-menu">
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        @if (Session["Correo"] != null)
-                        {
-                            <span class="username">Bienvenido:  @Session["Correo"].ToString()</span>
-
-                        }
-
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu extended logout">
-                        <div class="log-arrow-up"></div//VOLVER A COMENTAR ESTA LINEA>
-                        <li>
-                            <a href="@Url.Action("CerrarSesion", "Home")"><i class="icon_key_alt"></i><span>Cerrar Sesión</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-            </ul>
-        </div>*@
-
-    @RenderBody()
-    <hr />
-    <footer></footer>
-    @Scripts.Render("~/Content/js")
-    @Scripts.Render("~/bundles/datatables")
-    @RenderSection("scripts", required: false)
+  @RenderBody()
+  <hr />
+  <footer></footer>
+  @Scripts.Render("~/Content/js")
+  @Scripts.Render("~/bundles/datatables")
+  @RenderSection("scripts", required: false)
 
 </body>
 

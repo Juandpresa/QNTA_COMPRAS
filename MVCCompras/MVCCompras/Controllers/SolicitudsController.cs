@@ -74,7 +74,7 @@ on p.PagadoraID equals s.PagadoraID
         status[statu] = item.Nombre;
         statu = statu + 1;
       }
-      //asignar a ViewData el cvalor del arreglo
+      //asignar a ViewData el valor del arreglo
       ViewData["status"] = status;
       foreach (var item in estat)
       {
