@@ -81,32 +81,7 @@ on p.PagadoraID equals s.PagadoraID
         string test = item.Nombre;
         ViewBag.estatus = test;
       }
-
-      var con = (from s in db.Solicitud
-                 join c in db.Concepto
-                 on s.SolicitudID equals c.SolicitudId
-                 where c.SolicitudId == s.SolicitudID
-                 select new { c.Nombre });
-      int contador = 0;
-      foreach (var item in con)
-      {
-        contador++;
-      }
-      int cs = 0;
-      string[] cons = new string[contador];
-      foreach (var item in con)
-      {
-        cons[cs] = item.Nombre;
-        cs = cs + 1;
-      }
-      string result = string.Join(",", cons);
-      ViewBag.concepto = cons;
-     // ViewBag.concepto = result;
-
-
-
-
-      //TempData["var"] = "Hola";
+    
       var estatus = from s in db.Solicitud
                     select s;
       int pageSize = 8;
