@@ -85,7 +85,7 @@ on p.PagadoraID equals s.PagadoraID
       var con = (from s in db.Solicitud
                  join c in db.Concepto
                  on s.SolicitudID equals c.SolicitudId
-                 where c.SolicitudId == 7066
+                 where c.SolicitudId == s.SolicitudID
                  select new { c.Nombre });
       int contador = 0;
       foreach (var item in con)
@@ -100,7 +100,8 @@ on p.PagadoraID equals s.PagadoraID
         cs = cs + 1;
       }
       string result = string.Join(",", cons);
-      ViewBag.concepto = result;
+      ViewBag.concepto = cons;
+     // ViewBag.concepto = result;
 
 
 

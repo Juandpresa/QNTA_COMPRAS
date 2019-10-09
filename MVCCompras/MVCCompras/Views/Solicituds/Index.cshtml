@@ -1,142 +1,149 @@
 ﻿@model  PagedList.IPagedList<MVCCompras.Models.Solicitud>
 @using PagedList.Mvc;
+@using MVCCompras.Models
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-  ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
 @if (ViewBag.Message != null)
 {
-  <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 <section id="main-content">
-  <section class=" wrapper">
-    <div class="col-lg-12">
-      <h3 class="page-header"><i class="fa fa-file"></i>Solicitudes de Compra</h3>
-    </div>
-  </section>
+    <section class=" wrapper">
+        <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-file"></i>Solicitudes de Compra</h3>
+        </div>
+    </section>
 </section>
 
 <section id="main-content">
-  @using (Html.BeginForm("Index", "Solicituds", FormMethod.Get))
-  {
-    <p>
-      Buscar: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-      <input type="submit" value="Search" />
-    </p>
-  }    <div class="panel">
-    <div class="col-lg-12">
-      <table class="table table-bordered table-striped table-advance table-hover">
-        <thead>
-            <tr>
-                <th>
-                    <i class="fa fa-calendar-o"></i>
-                    Fecha de Solicitud
-                </th>
-                <th>
-                    <i class="fa fa-file"></i>
-                    Numero de Solicitud
-                </th>
-                <th>
-                    <i class="fa fa-user"></i>
-                    Solicitante
-                </th>
-                <th>
-                    <i class="fa fa-institution"></i>
-                    Empresa Pagadora
-                </th>
-                <th>
-                    <i class="fa fa-credit-card"></i>
-                    Proveedor
-                </th>
-                <th>
-                    <i class="fa fa-bars"></i>
-                    Concepto(s)
-                </th>
-                <th>
-                    <i class="fa fa-dollar"></i>
-                    Importe
-                </th>
-                <th>
-                    <i class="fa fa-check-square-o"></i>
-                    Estatus
-                </th>
-                <th>
-                    <i class="fa fa-cogs"></i>
-                    Acciones
-                </th>
-            </tr>
-        </thead>
+    @using (Html.BeginForm("Index", "Solicituds", FormMethod.Get))
+    {
+        <p>
+            Buscar: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+    }    <div class="panel">
+        <div class="col-lg-12">
+            <table class="table table-bordered table-striped table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-calendar-o"></i>
+                            Fecha de Solicitud
+                        </th>
+                        <th>
+                            <i class="fa fa-file"></i>
+                            Numero de Solicitud
+                        </th>
+                        <th>
+                            <i class="fa fa-user"></i>
+                            Solicitante
+                        </th>
+                        <th>
+                            <i class="fa fa-institution"></i>
+                            Empresa Pagadora
+                        </th>
+                        <th>
+                            <i class="fa fa-credit-card"></i>
+                            Proveedor
+                        </th>
+                        <th>
+                            <i class="fa fa-bars"></i>
+                            Concepto(s)
+                        </th>
+                        <th>
+                            <i class="fa fa-dollar"></i>
+                            Importe
+                        </th>
+                        <th>
+                            <i class="fa fa-check-square-o"></i>
+                            Estatus
+                        </th>
+                        <th>
+                            <i class="fa fa-cogs"></i>
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
 
-        @{
-          int i = 0;
-          foreach (var item in Model)
-          {
-            <tbody>
-                <tr>
+                @{
+                    int i = 0;
+                    foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaRegistro)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SolicitudID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Solicitante)
-                    </td>
-                    <td>
-                        @(((string[])ViewData["pagadora"])[i])
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Proveedor.Alias)
-                    </td>
-                    <td>
-                        @ViewBag.concepto
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ImporteLetra)
-                    </td>
-                    <td>
-                        @(((string[])ViewData["status"])[i])
-                    </td>
-                    <td>
-                        @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })|
-                        @Html.ActionLink("Ver", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
-                    </td>
-                </tr>
-            </tbody>
-            i = i + 1;
-          }
-        }
-      </table>
-      <br />
-      Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SolicitudID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Solicitante)
+                                </td>
+                                <td>
+                                    @(((string[])ViewData["pagadora"])[i])
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Proveedor.Alias)
+                                </td>
+                                <td>
+                                    @{int l = 0;
+                                        foreach (var con in ViewBag.concepto)
+                                        {
+                                            @con;
+                                        l++;
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ImporteLetra)
+                                </td>
+                                <td>
+                                    @(((string[])ViewData["status"])[i])
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })|
+                                    @Html.ActionLink("Ver", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
+                                </td>
+                            </tr>
+                        </tbody>
+                        i = i + 1;
+                    }
+                }
+            </table>
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-      @Html.PagedListPager(Model, page => Url.Action("Index",
-          new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
+        </div>
     </div>
-  </div>
-  <div class="col-lg-3">
-    <div class="btn btn-success">
-      @Html.ActionLink("Ingresar Nueva Solicitud", "Create")
+    <div class="col-lg-3">
+        <div class="btn btn-success">
+            @Html.ActionLink("Ingresar Nueva Solicitud", "Create")
+        </div>
     </div>
-  </div>
 
 </section>
 
 <script>
-  $(document).ready(function () {
-    if ($("#mensaje").html().length > 0) {
-      var msg = $("#mensaje").html();
-      swal("Exitoso!", msg, "success");
-    }
-  });
+    $(document).ready(function () {
+        if ($("#mensaje").html().length > 0) {
+            var msg = $("#mensaje").html();
+            swal("Exitoso!", msg, "success");
+        }
+    });
 </script>
 
 
 @section Scripts {
-  @Scripts.Render("~/bundles/datatables")
-  @Styles.Render("~/Content/Tables")
+    @Scripts.Render("~/bundles/datatables")
+    @Styles.Render("~/Content/Tables")
 }
