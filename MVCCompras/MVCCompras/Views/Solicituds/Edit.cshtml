@@ -192,7 +192,7 @@
                                     <td>@(((string[])ViewData["tpago"])[c])</td>
                                     <td>@(((string[])ViewData["concepto"])[c])</td>
                                     <td>@(((string[])ViewData["importe"])[c])</td>
-                                    <td align="center"> <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a></td>
+                                    <td align="center"> <a class="btn btn-danger" id="delete"><i class="icon_close_alt2"></i></a></td>
                                   </tr>
                                   c = c + 1;
                                 }
@@ -522,6 +522,11 @@
       $("#aprobar").show();
 
     }
+
+      $("#delete").click(function () {
+          var tr = $(this).closest('tr');
+          tr.remove();
+      });
 
   })
 </script>
