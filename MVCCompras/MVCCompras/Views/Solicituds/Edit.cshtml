@@ -175,12 +175,13 @@
                         <div class="col-md-12">
                           <table id="tblConcepto" class="table table-responsive table-bordered table-condensed">
                             <thead>
-                              <tr>
-                                <th>Concepto</th>
-                                <th>Descripción</th>
-                                <th>Importe</th>
-                                <th style="visibility: hidden">tPago</th>
-                              </tr>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Descripción</th>
+                                    <th>Importe</th>
+                                    <th style="text-align:center">Eliminar</th>
+                                    <th style="visibility: hidden">tPago</th>
+                                </tr>
                             </thead>
                             <tbody>
                               @{int c = 0;
@@ -191,6 +192,7 @@
                                     <td>@(((string[])ViewData["tpago"])[c])</td>
                                     <td>@(((string[])ViewData["concepto"])[c])</td>
                                     <td>@(((string[])ViewData["importe"])[c])</td>
+                                    <td align="center"> <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a></td>
                                   </tr>
                                   c = c + 1;
                                 }
