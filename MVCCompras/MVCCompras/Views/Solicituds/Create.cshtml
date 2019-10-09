@@ -169,17 +169,20 @@
 
                       <div class="row">
                         <div class="col-md-12">
-                          <table id="tblConcepto" class="table table-responsive table-bordered table-condensed">
-                            <thead>
-                              <tr>
-                                <th>Concepto</th>
-                                <th>Descripción</th>
-                                <th>Importe</th>
-                                <th style="visibility: hidden">tPago</th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                          </table>
+                            <table id="tblConcepto" class="table table-responsive table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Concepto</th>
+                                        <th>Descripción</th>
+                                        <th>Importe</th>
+                                        <th>Aciones</th>
+                                        <th style="visibility: hidden">tPago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                       </div>
 
@@ -319,56 +322,62 @@
 }
 
 <script>
-  $(document).ready(function () {
-    var total = 0;
-    $('#ImporteID').change(function () {
-      var nume = $('#ImporteID').val();
-      total = parseFloat(total) + parseFloat(nume);
-      $('#ImporteTotal').val(total);
-      var n = $('#ImporteTotal').val();
-      var m = $('#MonedaID').val();
-      if (m == 1) {
-        $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
-      }
-      else {
-        $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
-      }
+    $(document).ready(function () {
+
+        $(".delete").on("click", function () {
+            swal("tabla", "ok", "success");
+            //var tr = $(this).closest('tr');
+            //tr.remove();
+        });
+        var total = 0;
+        $('#ImporteID').change(function () {
+            var nume = $('#ImporteID').val();
+            total = parseFloat(total) + parseFloat(nume);
+            $('#ImporteTotal').val(total);
+            var n = $('#ImporteTotal').val();
+            var m = $('#MonedaID').val();
+            if (m == 1) {
+                $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+            }
+            else {
+                $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+            }
+        });
+
+        $('#ProveedorID').change(function () {
+            var id = $(this).val();
+            $.ajax({
+                url: '../Solicituds/DatoCuenta',
+                data: { idProv: id },
+                datatype: 'json',
+                success: function (data) {
+                    $('#CuentaID').val(data);
+                }
+            });
+            $.ajax({
+                url: '../Solicituds/DatoClabe',
+                data: { idProv: id },
+                datatype: 'json',
+                success: function (data) {
+                    $('#ClabeID').val(data);
+                }
+            });
+            $.ajax({
+                url: '../Solicituds/DatoBanco',
+                data: { idProv: id },
+                datatype: 'json',
+                success: function (data) {
+                    $('#BancoID').val(data);
+                }
+            });
+        });
+
+        if ($("#mensaje").html().length > 0) {
+            var msg = $("#mensaje").html();
+            swal("Atención!", msg, "warning");
+        }
+
     });
-
-    $('#ProveedorID').change(function () {
-      var id = $(this).val();
-      $.ajax({
-        url: '../Solicituds/DatoCuenta',
-        data: { idProv: id },
-        datatype: 'json',
-        success: function (data) {
-          $('#CuentaID').val(data);
-        }
-      });
-      $.ajax({
-        url: '../Solicituds/DatoClabe',
-        data: { idProv: id },
-        datatype: 'json',
-        success: function (data) {
-          $('#ClabeID').val(data);
-        }
-      });
-      $.ajax({
-        url: '../Solicituds/DatoBanco',
-        data: { idProv: id },
-        datatype: 'json',
-        success: function (data) {
-          $('#BancoID').val(data);
-        }
-      });
-    });
-
-    if ($("#mensaje").html().length > 0) {
-      var msg = $("#mensaje").html();
-      swal("Atención!", msg, "warning");
-    }
-
-  })
 </script>
 
 <script>

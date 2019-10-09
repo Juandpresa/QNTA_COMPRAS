@@ -69,7 +69,7 @@
   </div>
 }
 <script>
-  $(document).ready(function () {
+    $(document).ready(function () {
     $("#btnCancelConcepto").click(function () {
       $(".concepto").val("");
     });
@@ -164,7 +164,9 @@
           " id='idTipoPago" + numconcepto + "'" +
           " readonly" +
           " value='" + idTipoPago + "'/>" +
-          "</td>" +
+            "</td>" +
+          "<td><button type='button' id='delete' class='delete btn btn-danger'><i class='icon_close_alt2'></i></button></td>" +
+
           "</tr>"
         );
         $(".concepto").val("");

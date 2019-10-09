@@ -172,34 +172,35 @@
                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                       <div class="row">
-                        <div class="col-md-12">
-                          <table id="tblConcepto" class="table table-responsive table-bordered table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>Concepto</th>
-                                    <th>Descripción</th>
-                                    <th>Importe</th>
-                                    <th style="text-align:center">Eliminar</th>
-                                    <th style="visibility: hidden">tPago</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              @{int c = 0;
-                                string[] concep = new string[ViewBag.pago];
-                                foreach (var item in concep)
-                                {
-                                  <tr>
-                                    <td>@(((string[])ViewData["tpago"])[c])</td>
-                                    <td>@(((string[])ViewData["concepto"])[c])</td>
-                                    <td>@(((string[])ViewData["importe"])[c])</td>
-                                    <td align="center"> <a class="btn btn-danger" id="delete"><i class="icon_close_alt2"></i></a></td>
-                                  </tr>
-                                  c = c + 1;
-                                }
-                              }
-                            </tbody>
-                          </table>
-                        </div>
+                          <div class="col-md-12">
+                              <table id="tblConcepto" class="table table-responsive table-bordered table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th>Concepto</th>
+                                          <th>Descripción</th>
+                                          <th>Importe</th>
+                                          <th style="text-align:center">Eliminar</th>
+                                          <th style="visibility: hidden">tPago</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      @{int c = 0;
+                                          string[] concep = new string[ViewBag.pago];
+                                          foreach (var item in concep)
+                                          {
+                                              <tr>
+                                                  <td>@(((string[])ViewData["tpago"])[c])</td>
+                                                  <td>@(((string[])ViewData["concepto"])[c])</td>
+                                                  <td>@(((string[])ViewData["importe"])[c])</td>
+                                                  <td><button type="button" class="delete btn btn-danger" href="#"><i class="icon_close_alt2"></i></button></td>
+                                              </tr>
+                                              c = c + 1;
+                                          }
+
+                                      }
+                                  </tbody>
+                              </table>
+                          </div>
                       </div>
 
                       <div class="form-group">
@@ -425,110 +426,112 @@
 }
 
 <script>
-  $(document).ready(function () {
-    var total = 0;
-    $('#ImporteID').change(function () {
-      var nume = $('#ImporteID').val();
-      total = parseFloat(total) + parseFloat(nume);
-      $('#ImporteTotal').val(total);
-      var n = $('#ImporteTotal').val();
-      var m = $('#MonedaID').val();
-      if (m == 1) {
-        $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
-      }
-      else {
-        $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
-      }
-    });
+    $(document).ready(function () {
+        $(".delete").on("click", function () {
+            //swal("tabla", "ok", "success");
+            var tr = $(this).closest('tr');
+            tr.remove();
+        });
+        var total = 0;
+        $('#ImporteID').change(function () {
+            var nume = $('#ImporteID').val();
+            total = parseFloat(total) + parseFloat(nume);
+            $('#ImporteTotal').val(total);
+            var n = $('#ImporteTotal').val();
+            var m = $('#MonedaID').val();
+            if (m == 1) {
+                $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+            }
+            else {
+                $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+            }
+        });
 
-    $('#ProveedorID').change(function () {
-      var id = $(this).val();
-      $.ajax({
-        url: '../../Solicituds/DatoCuenta',
-        data: { idProv: id },
-        datatype: 'json',
-        success: function (data) {
-          $('#CuentaID').val(data);
+        $('#ProveedorID').change(function () {
+            var id = $(this).val();
+            $.ajax({
+                url: '../../Solicituds/DatoCuenta',
+                data: { idProv: id },
+                datatype: 'json',
+                success: function (data) {
+                    $('#CuentaID').val(data);
+                }
+            });
+            $.ajax({
+                url: '../../Solicituds/DatoClabe',
+                data: { idProv: id },
+                datatype: 'json',
+                success: function (data) {
+                    $('#ClabeID').val(data);
+                }
+            });
+            $.ajax({
+                url: '../../Solicituds/DatoBanco',
+                data: { idProv: id },
+                datatype: 'json',
+                success: function (data) {
+                    $('#BancoID').val(data);
+                }
+            });
+        });
+
+
+        var id = $('#ProveedorID').val();
+        $.ajax({
+            url: '../../Solicituds/DatoCuenta',
+            data: { idProv: id },
+            datatype: 'json',
+            success: function (data) {
+                $('#CuentaID').val(data);
+            }
+        });
+        $.ajax({
+            url: '../../Solicituds/DatoClabe',
+            data: { idProv: id },
+            datatype: 'json',
+            success: function (data) {
+                $('#ClabeID').val(data);
+            }
+        });
+        $.ajax({
+            url: '../../Solicituds/DatoBanco',
+            data: { idProv: id },
+            datatype: 'json',
+            success: function (data) {
+                $('#BancoID').val(data);
+            }
+        });
+        var solte = $('#SolicitudID').val();
+        $.ajax({
+            url: '../../Solicituds/DatoSol',
+            data: { idProv: solte },
+            datatype: 'json',
+            success: function (data) {
+                $('#Solicitante').val(data);
+            }
+        });
+
+        var moneda = $('#ImporteLetra').val();
+
+        if (moneda.indexOf('MXN') != -1) {
+            $('select[id="MonedaID"]').find('option[value="1"]').text("PESOS");
         }
-      });
-      $.ajax({
-        url: '../../Solicituds/DatoClabe',
-        data: { idProv: id },
-        datatype: 'json',
-        success: function (data) {
-          $('#ClabeID').val(data);
+        else {
+            $('select[id="MonedaID"]').find('option[value="2"]').text("DOLARES");
         }
-      });
-      $.ajax({
-        url: '../../Solicituds/DatoBanco',
-        data: { idProv: id },
-        datatype: 'json',
-        success: function (data) {
-          $('#BancoID').val(data);
+
+        if ($("#mensaje").html().length > 0) {
+            var msg = $("#mensaje").html();
+            swal("Atención!", msg, "warning");
         }
-      });
+        if ($("#status").text() == "1") {
+            $("#aprobar").show();
+
+        }
+        
+
+
     });
-
-
-    var id = $('#ProveedorID').val();
-    $.ajax({
-      url: '../../Solicituds/DatoCuenta',
-      data: { idProv: id },
-      datatype: 'json',
-      success: function (data) {
-        $('#CuentaID').val(data);
-      }
-    });
-    $.ajax({
-      url: '../../Solicituds/DatoClabe',
-      data: { idProv: id },
-      datatype: 'json',
-      success: function (data) {
-        $('#ClabeID').val(data);
-      }
-    });
-    $.ajax({
-      url: '../../Solicituds/DatoBanco',
-      data: { idProv: id },
-      datatype: 'json',
-      success: function (data) {
-        $('#BancoID').val(data);
-      }
-    });
-    var solte = $('#SolicitudID').val();
-    $.ajax({
-      url: '../../Solicituds/DatoSol',
-      data: { idProv: solte },
-      datatype: 'json',
-      success: function (data) {
-        $('#Solicitante').val(data);
-      }
-    });
-
-    var moneda = $('#ImporteLetra').val();
-
-    if (moneda.indexOf('MXN') != -1) {
-      $('select[id="MonedaID"]').find('option[value="1"]').text("PESOS");
-    }
-    else {
-      $('select[id="MonedaID"]').find('option[value="2"]').text("DOLARES");
-    }
-
-    if ($("#mensaje").html().length > 0) {
-      var msg = $("#mensaje").html();
-      swal("Atención!", msg, "warning");
-    }
-    if ($("#status").text() == "1") {
-      $("#aprobar").show();
-
-    }
-
-      $("#delete").click(function () {
-          var tr = $(this).closest('tr');
-          tr.remove();
-      });
-
-  })
 </script>
 
 <script>
