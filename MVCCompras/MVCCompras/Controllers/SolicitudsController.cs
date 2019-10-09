@@ -369,18 +369,6 @@ on p.PagadoraID equals s.PagadoraID
       }
       Solicitud solicitud = db.Solicitud.Find(id);
 
-
-      //CHECAR PARA EDIT
-      var esta = (from s in db.Seguimiento
-                  where id == solicitud.SolicitudID
-                  select new { s.EstatusID });
-      foreach (var item in esta)
-      {
-        int st = item.EstatusID;
-        ViewBag.estatus = st;
-      }
-
-
       //Consulta join para obtenerla factura  
       var fac = (from f in db.Factura
                  where f.SolicitudID == solicitud.SolicitudID
