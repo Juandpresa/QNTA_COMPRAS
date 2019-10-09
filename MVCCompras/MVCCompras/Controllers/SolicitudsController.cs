@@ -207,8 +207,94 @@ on p.PagadoraID equals s.PagadoraID
       return View(solicitud);
     }
 
-    // GET: Solicituds/Create
-    public ActionResult Create()
+    [HttpPost]
+    public ActionResult Details(Solicitud solicitud, FormCollection collection)
+    {
+      ////SEGUIMIENTO
+      string s = collection.Get("valida");
+      string imp = collection.Get("ImporteT");
+      string solicitante = collection.Get("Solicitante");
+      if (s == "on")
+      {
+        string est = "";
+        int S = int.Parse(collection.Get("NumeroSolicitud"));
+        //Obtenemos la solicitus con la cual trabajaremos
+        var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == S);
+        //obtenemos de la tabla seguimiento el Id de la solicitus que se editara
+        var segui = new Seguimiento { SolicitudID = S };
+        //instancimos el contexto
+        using (var context = new ComprasEntities())
+        {
+          context.Seguimiento.Attach(segui);
+          //si referencia trae datos, asignamos a la variable est el valor del estatus que trae esa solicitud
+          if (referencia != null)
+          {
+            est = referencia.EstatusID.ToString();
+          }
+          //depende el estatud de la solicitus se modificara 
+          if (int.Parse(est) == 2)
+          {
+            segui.EstatusID = 3;
+          }
+          if (int.Parse(est) == 3)
+          {
+            segui.EstatusID = 4;
+          }
+          if (int.Parse(est) == 4)
+          {
+            segui.EstatusID = 5;
+          }
+          segui.CuentaID = Session["idUsuario"].ToString();
+          segui.FechaMovimiento = DateTime.Now;
+          context.SaveChanges();
+        }
+
+        var con = (from so in db.Solicitud
+                   join c in db.Concepto
+                   on so.SolicitudID equals c.SolicitudId
+                   where c.SolicitudId == S
+                   select new { c.Nombre });
+        int cont = 0;
+        foreach (var item in con)
+        {
+          cont++;
+        }
+        int cs = 0;
+        string[] cons = new string[cont];
+        foreach (var item in con)
+        {
+          cons[cs] = item.Nombre;
+          cs = cs + 1;
+        }
+        string correoOrigen = Session["Correo"].ToString();
+        var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
+        var emailD = from u in db.Usuarios
+                     where u.idTipoUsuario == 4
+                     select new { u.Correo };
+        int dir = 0;
+        string[] destino = new string[1];
+        foreach (var item in emailD)
+        {
+          destino[dir] = item.Correo;
+          dir++;
+        }
+
+        if (emailO != null)
+        {
+          string pass = emailO.Pass.ToString();
+          string autoriza = emailO.Nombre.ToString();
+          EnviarCorreoAU(correoOrigen, pass, S, imp, solicitante, cons, smtpOff, qdomi, destino, autoriza);
+          TempData["var"] = "Solicitud Autorizada";
+
+        }
+      }
+
+      return RedirectToAction("Index");
+
+    }
+
+      // GET: Solicituds/Create
+      public ActionResult Create()
     {
       viewbags();
 
@@ -579,7 +665,8 @@ on p.PagadoraID equals s.PagadoraID
           if (emailO != null)
           {
             string pass = emailO.Pass.ToString();
-            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino);
+            string aproba = emailO.Nombre.ToString();
+            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
             db.Entry(solicitud).State = EntityState.Modified;
             db.SaveChanges();
             TempData["var"] = "Solicitud Aprobada";
@@ -732,7 +819,7 @@ on p.PagadoraID equals s.PagadoraID
       }
     }
 
-    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos, string domi, string dom, string[] dest)
+    private void EnviarCorreoA(string EmailOrigen, string pass, int idsol, decimal impT, string solicitante, string[] conceptos, string domi, string dom, string[] dest, string aprobado)
     {
       //obtener el dominio y guardarlo en varioable
       string dominio = EmailOrigen.Split('@').Last();
@@ -747,12 +834,66 @@ on p.PagadoraID equals s.PagadoraID
         "<h2 align=center>Conceptos: " + result + "</h2>" +
         "<h2 align=center>Importe Total de Compra: $" + impT + "</h2>" +
         "<h2 align=center>Solicitado por: " + solicitante + "</h2>" +
-        "<h2 align=center> Aprobado por: " + solicitante + "</h2>" +
+        "<h2 align=center> Aprobado por: " + aprobado + "</h2>" +
         "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
 
       msj.IsBodyHtml = true;
       MailAddress copy = new MailAddress(dest[1]);
       msj.CC.Add(copy);
+
+      SmtpClient cliente = new SmtpClient();
+      if (dominio == dom)
+      {
+        cliente.Host = "smtp." + domi;
+        cliente.EnableSsl = true;
+      }
+      else
+      {
+        cliente.Host = "mail." + dominio;
+        cliente.EnableSsl = false;
+      }
+      //SmtpClient cliente = new SmtpClient("mail." + dominio);
+
+
+      cliente.UseDefaultCredentials = false;
+      //cliente.Host = "smtp.gmail.com";
+      //cliente.Host = "mail.qnta.mx";
+      cliente.Port = 587;
+      cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
+      try
+      {
+        cliente.Send(msj);
+
+        cliente.Dispose();
+      }
+      catch (Exception ex)
+      {
+
+        throw;
+      }
+    }
+
+    private void EnviarCorreoAU(string EmailOrigen, string pass, int idsol, string impT, string solicitante, string[] conceptos, string domi, string dom, string[] dest, string autorizado)
+    {
+      //obtener el dominio y guardarlo en varioable
+      string dominio = EmailOrigen.Split('@').Last();
+      string result = string.Join(",", conceptos);
+
+      string EmailDestino = dest[0];
+
+      string url = urlDominio + "Home/Login/";
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
+        "<h1 align=center><b>DATOS DE LA SOLICITUD AUTORIZADA:</b></h>" +
+        "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
+        "<h2 align=center>Conceptos: " + result + "</h2>" +
+        "<h2 align=center>Importe Total de Compra: $" + impT + "</h2>" +
+        "<h2 align=center>Solicitado por: " + solicitante + "</h2>" +
+        "<h2 align=center> Autorizado por: " + autorizado + "</h2>" +
+        "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
+
+      msj.IsBodyHtml = true;
+      //MailAddress copy = new MailAddress(dest[1]);
+      //msj.CC.Add(copy);
 
       SmtpClient cliente = new SmtpClient();
       if (dominio == dom)
