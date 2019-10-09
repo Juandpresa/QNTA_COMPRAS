@@ -55,8 +55,16 @@
                                             <dd>
                                                 @foreach (Concepto item in Model.Concepto)
                                                 {
-                                                    @Html.DisplayFor(model => item.Nombre)
-                                                    @Html.DisplayFor(model => item.ImporteParcial)
+                                                    <tr>
+                                                        <td>Tipo Pago - </td>
+                                                        <td>
+                                                            @Html.DisplayFor(model => item.Nombre) = 
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(model => item.ImporteParcial)
+                                                        </td><br/>
+                                                    </tr>
+
                                                 }
                                             </dd>
 
