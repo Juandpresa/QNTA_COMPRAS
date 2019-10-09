@@ -125,9 +125,18 @@
                                     @(((string[])ViewData["status"])[i])
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })|
+                                  @if (Session["idTipoUsuario"].ToString() == "2" || Session["idTipoUsuario"].ToString() == "5")
+                                  {
+                                    @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
+                                  }
+                                  else
+                                  {
                                     @Html.ActionLink("Ver", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
-                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
+                                  }
+
+
+
+                                  @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
                                 </td>
                             </tr>
                         </tbody>
@@ -156,7 +165,7 @@
         if ($("#mensaje").html().length > 0) {
             var msg = $("#mensaje").html();
             swal("Exitoso!", msg, "success");
-        }
+      }
     });
 </script>
 
