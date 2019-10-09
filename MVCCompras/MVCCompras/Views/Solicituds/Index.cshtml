@@ -1,6 +1,7 @@
 ﻿@model  PagedList.IPagedList<MVCCompras.Models.Solicitud>
 @using PagedList.Mvc;
 @using MVCCompras.Models
+@using System.Linq
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -92,12 +93,29 @@
                                     @Html.DisplayFor(modelItem => item.Proveedor.Alias)
                                 </td>
                                 <td>
-                                    @{int l = 0;
-                                        foreach (var con in ViewBag.concepto)
-                                        {
-                                            @con;
-                                        l++;
-                                        }
+
+                                    @{
+                                      ComprasEntities db = new ComprasEntities();
+                                      var con = (from s in db.Solicitud
+                                                 join c in db.Concepto
+                                                 on s.SolicitudID equals c.SolicitudId
+                                                 where c.SolicitudId == item.SolicitudID
+                                                 select new { c.Nombre });
+
+                                      int contador = 0;
+                                      foreach (var co in con)
+                                      {
+                                        contador++;
+                                      }
+                                      int cs = 0;
+                                      string[] cons = new string[contador];
+                                      foreach (var co in con)
+                                      {
+                                        cons[cs] = co.Nombre;
+                                        cs = cs + 1;
+                                      }
+                                      string result = string.Join(",", cons);
+                                      @result
                                     }
                                 </td>
                                 <td>
