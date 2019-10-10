@@ -165,11 +165,11 @@
                 swal("Atención!", "Concepto incompleto", "warning");
             }
             $('#delete').click(function () {
-                var importe = $(this).parents("tr").find(".importeid").value;
-                swal("f", importe, "error");
+                var importer = $(this).parents("tr").find("importe").value;
+                swal("f", importer, "error");
 
                 var importeT = $('#ImporteTotal').val();
-                importeT = parseFloat(importeT) - parseFloat(importe);
+                importeT = parseFloat(importeT) - parseFloat(importer);
 
                 //var tr = $(this).closest('tr');
                 //tr.remove();
