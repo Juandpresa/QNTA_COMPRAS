@@ -541,6 +541,32 @@ on p.PagadoraID equals s.PagadoraID
       ViewData["tpago"] = tp;
 
 
+      //Consulta join para obtener conceptos  
+      var idconcep = (from idc in db.Concepto
+                      where idc.SolicitudId == solicitud.SolicitudID
+                      select new
+                   {
+                     idc.ConceptoID
+                   });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int contidc = 0;
+      foreach (var item in idconcep)
+      {
+        contidc++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int idcon = 0;
+      string[] idcp = new string[contidc];
+      foreach (var item in idconcep)
+      {
+        idcp[idcon] = item.ConceptoID.ToString();
+        idcon = idcon + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      
+      ViewData["idc"] = idcp;
+
+
       //VIEWBAGS PARA SOLICITAR DDL
       ViewBag.SeguimientoID = new SelectList(db.Seguimiento, "SolicitudID", "EstatusID");
       ViewBag.CentroCostosID = new SelectList(db.CentroCostos, "CentroCostosID", "Nombre");
@@ -713,7 +739,19 @@ on p.PagadoraID equals s.PagadoraID
       }
       base.Dispose(disposing);
     }
+    public JsonResult EliminaConcepto(int idSol, string idcon, decimal impT, string impL)
+    {
+      int concep = int.Parse(idcon);
+      var eliminaCon = from econ in db.Concepto
+                       where econ.SolicitudId == idSol
+                       select econ;
 
+        db.Concepto.RemoveRange(db.Concepto.Where(x => x.ConceptoID==concep));
+        db.SaveChanges();
+      
+
+      return ViewBag.message;
+    }
     public JsonResult DatoBanco(int idProv, ReferenciaBancaria refe)
     {
       string banco = "";
