@@ -165,7 +165,7 @@
                 swal("Atención!", "Concepto incompleto", "warning");
             }
             $('#delete').click(function () {
-                var importer = $(this).parents("tr").find("importe").value;
+                var importer = $(this).parents("tr").find(importe.value);
                 swal("f", importer, "error");
 
                 var importeT = $('#ImporteTotal').val();
