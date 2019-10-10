@@ -2,182 +2,173 @@
 @using (Html.BeginForm())
 {
 
-  <div class="modal fade" id="ModalConcepto" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            &times;
-          </button>
-          <h4>Agregar Concepto</h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-horizontal">
-
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-                <div class="form-group">
-                  @Html.LabelFor(model => model.TipoPagoID, "Concepto", htmlAttributes: new { @class = "control-label col-md-2" })
-                  <div class="col-md-10">
-                    @Html.DropDownList("TipoPagoID", null, "Selecciona", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.TipoPagoID, "", new { @class = "text-danger" })
-                  </div>
+    <div class="modal fade" id="ModalConcepto" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4>Agregar Concepto</h4>
                 </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-horizontal">
 
-                <div class="form-group">
-                  @Html.LabelFor(model => model.Nombre, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
-                  <div class="col-md-10">
-                    @Html.TextBox("ConceptoID", null, htmlAttributes: new { @class = "form-control", @placeholder = "Descripcion" })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                  </div>
-                </div>
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <div class="form-group" oninput="Importe.value = ImporteTotal.value">
-                  @Html.LabelFor(model => model.ImporteParcial, "Importe", htmlAttributes: new { @class = "control-label col-md-2" })
-                  <div class="col-md-10">
-                    @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", ValueType = true, @placeholder = "Solo Numeros" })
-                    @Html.ValidationMessageFor(model => model.ImporteParcial, "", new { @class = "text-danger" })
-                  </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TipoPagoID, "Concepto", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("TipoPagoID", null, "Selecciona", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TipoPagoID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Nombre, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBox("ConceptoID", null, htmlAttributes: new { @class = "form-control", @placeholder = "Descripcion" })
+                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" oninput="Importe.value = ImporteTotal.value">
+                                    @Html.LabelFor(model => model.ImporteParcial, "Importe", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", ValueType = true, @placeholder = "Solo Numeros" })
+                                        @Html.ValidationMessageFor(model => model.ImporteParcial, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="modal-footer">
+                    @Html.Hidden("NumConcepto", 0)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="#" id="btnCancelConcepto"
+                               class="btn btn-danger"
+                               data-dismiss="modal"
+                               role="button">
+                                Cancelar
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" id="btnOkConcepto"
+                               class="btn btn-success"
+                               role="button">Guardar</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="modal-footer">
-          @Html.Hidden("NumConcepto", 0)
-          <div class="row">
-            <div class="col-md-6">
-              <a href="#" id="btnCancelConcepto"
-                 class="btn btn-danger"
-                 data-dismiss="modal"
-                 role="button">
-                Cancelar
-              </a>
-            </div>
-            <div class="col-md-6">
-              <a href="#" id="btnOkConcepto"
-                 class="btn btn-success"
-                 role="button">Guardar</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 }
 <script>
     $(document).ready(function () {
-    $("#btnCancelConcepto").click(function () {
-      $(".concepto").val("");
+        $("#btnCancelConcepto").click(function () {
+            $(".concepto").val("");
+        });
+
+        $("#btnOkConcepto").click(function () {
+            AgregarConcepto();
+
+        });
+
+        $("#ImporteID").keydown(function (event) {
+            if (event.shiftKey) {
+                event.preventDefault();
+            }
+
+            if (event.keyCode == 110 || event.keyCode == 8) {
+
+            }
+            else {
+
+                if (event.keyCode < 95) {
+                    if (event.keyCode < 48 || event.keyCode > 57) {
+                        event.preventDefault();
+                    }
+                }
+                else {
+                    if (event.keyCode < 96 || event.keyCode > 105) {
+                        event.preventDefault();
+                    }
+                }
+            }
+
+        });
     });
-
-    $("#btnOkConcepto").click(function () {
-      AgregarConcepto();
-
-    });
-
-    $("#ImporteID").keydown(function (event) {
-      if (event.shiftKey) {
-        event.preventDefault();
-      }
-
-      if (event.keyCode == 110 || event.keyCode == 8)
-      {
-        
-      }
-      else
-      {
-
-        if (event.keyCode < 95)
-        {
-          if (event.keyCode < 48 || event.keyCode > 57)
-          {
-            event.preventDefault();
-          }
-        }
-        else
-        {
-          if (event.keyCode < 96 || event.keyCode > 105)
-          {
-            event.preventDefault();
-          }
-        }
-      }
-
-    });
-  });
 </script>
 
 
 <script>
-  function AgregarConcepto() {
-    var esvacio = false;
-    $(".concepto").each(function () {
-      if ($(this).val() == "") {
-        esvacio = true;
-      }
+    function AgregarConcepto() {
+        var esvacio = false;
+        $(".concepto").each(function () {
+            if ($(this).val() == "") {
+                esvacio = true;
+            }
 
-    });
+        });
 
-    if ((esvacio) || (!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
-      swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
+        if ((esvacio) || (!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
+            swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
+        }
+        else {
+            //Agregamos concepto
+            var concepto = $("#TipoPagoID").find('option:selected').text();
+            var idTipoPago = $("#TipoPagoID").val();
+            var descrip = $("#ConceptoID").val();
+            var importe = $("#ImporteID").val();
+            var nuevoconcepto = 0;
+            if (nuevoconcepto >= 0 || importe != 0) {
+                //Agregamos el concepto
+                var numconcepto = parseInt($("#NumConcepto").val()) + 1;
+                $("#NumConcepto").val(numconcepto);
+                //Agregamos el concepto a la tabla
+                $("#tblConcepto").append(
+                    "<tr>" +
+                    "<td><input type='text' style='border:0;background:transparent;'name='concepid'" + numconcepto + " id='concepid'" + numconcepto + "readonly value='" + concepto + "'/>" +
+                    "</td>" +
+                    "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='descid" + numconcepto + "'" +
+                    " id='descid" + numconcepto + "'" +
+                    " value='" + descrip + "'/>" +
+                    "</td>" + "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='importeid" + numconcepto + "'" +
+                    " id='importeid" + numconcepto + "'" +
+                    " readonly" +
+                    " value='" + importe + "'/>" +
+                    "</td>" + "<td style=visibility: hidden>tPago>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='idTipoPago" + numconcepto + "'" +
+                    " id='idTipoPago" + numconcepto + "'" +
+                    " readonly" +
+                    " value='" + idTipoPago + "'/>" +
+                    "</td>" +
+                    "<td align='center'><imput type='button' id='delete' class='delete btn btn-danger icon_close_alt2'/></td>" +
+                    "</tr>"
+                );
+                $(".concepto").val("");
+                $("#Importe").val(nuevoconcepto);
+
+                $('#ImporteID').val(0);
+            }
+            else {
+                swal("Atención!", "Concepto incompleto", "warning");
+            }
+            $('#delete').click(function () {
+                var tr = $(this).closest('tr');
+                tr.remove();
+                swal("Eliminado", "Concepto Eliminado", "error");
+            });
+        }
     }
-    else {
-      //Agregamos concepto
-      var concepto = $("#TipoPagoID").find('option:selected').text();
-      var idTipoPago = $("#TipoPagoID").val();
-      var descrip = $("#ConceptoID").val();
-      var importe = $("#ImporteID").val();
-      var nuevoconcepto = 0;
-      if (nuevoconcepto >= 0 || importe != 0) {
-        //Agregamos el concepto
-        var numconcepto = parseInt($("#NumConcepto").val()) + 1;
-        $("#NumConcepto").val(numconcepto);
-        //Agregamos el concepto a la tabla
-        $("#tblConcepto").append(
-          "<tr>" +
-          "<td>" +
-          "<input type='text' style='border:0;background:transparent;' " +
-          " name='concepid" + numconcepto + "'" +
-          " id='concepid" + numconcepto + "'" +
-          " readonly" +
-          " value='" + concepto + "'/>" +
-          "</td>" +
-          "<td>" +
-          "<input type='text' style='border:0;background:transparent;' " +
-          " name='descid" + numconcepto + "'" +
-          " id='descid" + numconcepto + "'" +
-          " readonly" +
-          " value='" + descrip + "'/>" +
-          "</td>" + "<td>" +
-          "<input type='text' style='border:0;background:transparent;' " +
-          " name='importeid" + numconcepto + "'" +
-          " id='importeid" + numconcepto + "'" +
-          " readonly" +
-          " value='" + importe + "'/>" +
-          "</td>" + "<td style=visibility: hidden>tPago>" +
-          "<input type='text' style='border:0;background:transparent;' " +
-          " name='idTipoPago" + numconcepto + "'" +
-          " id='idTipoPago" + numconcepto + "'" +
-          " readonly" +
-          " value='" + idTipoPago + "'/>" +
-            "</td>" +
-          "<td><button type='button' id='delete' class='delete btn btn-danger'><i class='icon_close_alt2'></i></button></td>" +
-
-          "</tr>"
-        );
-        $(".concepto").val("");
-        $("#Importe").val(nuevoconcepto);
-
-        $('#ImporteID').val(0);
-
-      }
-      else {
-        swal("Atención!", "Concepto incompleto", "warning");
-      }
-    }
-  }
 </script>
