@@ -165,9 +165,23 @@
                 swal("Atención!", "Concepto incompleto", "warning");
             }
             $('#delete').click(function () {
-                var tr = $(this).closest('tr');
-                tr.remove();
-                swal("Eliminado", "Concepto Eliminado", "error");
+                var importe = $(this).parents("tr").find(".importeid").value;
+                swal("f", importe, "error");
+
+                var importeT = $('#ImporteTotal').val();
+                importeT = parseFloat(importeT) - parseFloat(importe);
+
+                //var tr = $(this).closest('tr');
+                //tr.remove();
+                //var n = $('#ImporteTotal').val();
+                //var m = $('#MonedaID').val();
+                //if (m == 1) {
+                //    $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+                //}
+                //else {
+                //    $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+                //}
+                //swal("Eliminado", "Concepto Eliminado", "error");
             });
         }
     }
