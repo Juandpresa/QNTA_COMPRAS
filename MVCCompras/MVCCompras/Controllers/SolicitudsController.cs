@@ -746,8 +746,16 @@ on p.PagadoraID equals s.PagadoraID
                        where econ.SolicitudId == idSol
                        select econ;
 
-        db.Concepto.RemoveRange(db.Concepto.Where(x => x.ConceptoID==concep));
-        db.SaveChanges();
+      db.Concepto.RemoveRange(db.Concepto.Where(x => x.ConceptoID == concep));
+      db.SaveChanges();
+
+      var modificaSoli = (from s in db.Solicitud
+                         where s.SolicitudID == idSol
+                         select s).FirstOrDefault();
+
+      modificaSoli.ImporteTotal = impT;
+      modificaSoli.ImporteLetra = impL;
+      db.SaveChanges();
       
 
       return ViewBag.message;
