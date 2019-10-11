@@ -692,7 +692,7 @@ on p.PagadoraID equals s.PagadoraID
           {
             string pass = emailO.Pass.ToString();
             string aproba = emailO.Nombre.ToString();
-            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
+            //EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
             db.Entry(solicitud).State = EntityState.Modified;
             db.SaveChanges();
             TempData["var"] = "Solicitud Aprobada";

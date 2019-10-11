@@ -175,6 +175,12 @@
         swal("Atención!", "Concepto incompleto", "warning");
       }
 
+      $(".delete").on('click', function () {
+        //var importer = $(this).parents("tr").find("td")[2].innerHTML;
+        swal("", "hola", "success");
+      });
+      
+
       //$("#delete").click(function () {
       //  //var importer = $(this).parents("tr").find(importe.value);
       //  var importer = $(this).parents("tr").find("td")[2].innerHTML;
@@ -199,15 +205,5 @@
       //  //swal("Eliminado", "Concepto Eliminado", "error");
       //});
     }
-    $("#delete").on('click', function () {
-      var tabla = ($("#tblConcepto").html());
-      var importer = $(tabla).parents("tr").find("td:eq(2)").text();
-
-      swal("", importer, "");
-      
-    });
-
-
-
   }
 </script>
