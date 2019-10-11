@@ -132,10 +132,12 @@
                 $("#NumConcepto").val(numconcepto);
                 //Agregamos el concepto a la tabla
                 $("#tblConcepto").append(
-                    "<tr>" +
-                    "<td><input type='text' style='border:0;background:transparent;'name='concepid'" + numconcepto + " id='concepid'" + numconcepto + "readonly value='" + concepto + "'/>" +
-                    "</td>" +
-                    "<td>" +
+                    "<tr>" + "<td>" +
+                    "<input type='text' style='border:0;background:transparent;' " +
+                    " name='concepid" + numconcepto + "'" +
+                    " id='concepid" + numconcepto + "'" +
+                    " value='" + concepto + "'/>" +
+                    "</td>" +"<td>" +
                     "<input type='text' style='border:0;background:transparent;' " +
                     " name='descid" + numconcepto + "'" +
                     " id='descid" + numconcepto + "'" +
@@ -151,9 +153,9 @@
                     " name='idTipoPago" + numconcepto + "'" +
                     " id='idTipoPago" + numconcepto + "'" +
                     " readonly" +
-                    " value='" + idTipoPago + "'/>" +
+                    "value='" + idTipoPago + "'/>" +
                     "</td>" +
-                    "<td align='center'><imput type='button' id='delete' class='delete btn btn-danger icon_close_alt2'/></td>" +
+                    "<td align='center'><input type='button' id='delete' class='delete btn btn-danger'/></td>" +
                     "</tr>"
                 );
                 $(".concepto").val("");
@@ -164,25 +166,25 @@
             else {
                 swal("Atención!", "Concepto incompleto", "warning");
             }
-            $('#delete').click(function () {
-                var importer = $(this).parents("tr").find(importe.value);
-                swal("f", importer, "error");
-
-                var importeT = $('#ImporteTotal').val();
-                importeT = parseFloat(importeT) - parseFloat(importer);
-
-                //var tr = $(this).closest('tr');
-                //tr.remove();
-                //var n = $('#ImporteTotal').val();
-                //var m = $('#MonedaID').val();
-                //if (m == 1) {
-                //    $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
-                //}
-                //else {
-                //    $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
-                //}
-                //swal("Eliminado", "Concepto Eliminado", "error");
-            });
+            
         }
+        $('#delete').click(function () {
+            swal("f", "hi", "error");
+
+            var importeT = $('#ImporteTotal').val();
+            importeT = parseFloat(importeT) - parseFloat(importer);
+
+            //var tr = $(this).closest('tr');
+            //tr.remove();
+            //var n = $('#ImporteTotal').val();
+            //var m = $('#MonedaID').val();
+            //if (m == 1) {
+            //    $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+            //}
+            //else {
+            //    $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+            //}
+            //swal("Eliminado", "Concepto Eliminado", "error");
+        });
     }
 </script>

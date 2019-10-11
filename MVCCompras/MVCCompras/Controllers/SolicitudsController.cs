@@ -81,7 +81,7 @@ on p.PagadoraID equals s.PagadoraID
         string test = item.Nombre;
         ViewBag.estatus = test;
       }
-    
+
       var estatus = from s in db.Solicitud
                     select s;
       int pageSize = 8;
@@ -293,8 +293,8 @@ on p.PagadoraID equals s.PagadoraID
 
     }
 
-      // GET: Solicituds/Create
-      public ActionResult Create()
+    // GET: Solicituds/Create
+    public ActionResult Create()
     {
       viewbags();
 
@@ -545,9 +545,9 @@ on p.PagadoraID equals s.PagadoraID
       var idconcep = (from idc in db.Concepto
                       where idc.SolicitudId == solicitud.SolicitudID
                       select new
-                   {
-                     idc.ConceptoID
-                   });
+                      {
+                        idc.ConceptoID
+                      });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int contidc = 0;
       foreach (var item in idconcep)
@@ -563,7 +563,7 @@ on p.PagadoraID equals s.PagadoraID
         idcon = idcon + 1;
       }
       //asignar a ViewData el valor del arreglo
-      
+
       ViewData["idc"] = idcp;
 
 
@@ -597,7 +597,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seg)
+    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto)
     {
 
       if (ModelState.IsValid)
@@ -750,13 +750,13 @@ on p.PagadoraID equals s.PagadoraID
       db.SaveChanges();
 
       var modificaSoli = (from s in db.Solicitud
-                         where s.SolicitudID == idSol
-                         select s).FirstOrDefault();
+                          where s.SolicitudID == idSol
+                          select s).FirstOrDefault();
 
       modificaSoli.ImporteTotal = impT;
       modificaSoli.ImporteLetra = impL;
       db.SaveChanges();
-      
+
 
       return ViewBag.message;
     }
