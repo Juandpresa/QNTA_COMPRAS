@@ -200,6 +200,38 @@ on p.PagadoraID equals s.PagadoraID
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
       Solicitud solicitud = db.Solicitud.Find(id);
+
+
+      //Consulta join para obtenerla factura  
+      var fac = (from f in db.Factura
+                 where f.SolicitudID == id
+                 select new
+                 {
+                   f.Nombre,
+                   f.Archivo
+                 });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int contr = 0;
+      foreach (var item in fac)
+      {
+        contr++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int factura = 0;
+      string[] fa = new string[contr];
+      string[] ru = new string[contr];
+
+      foreach (var item in fac)
+      {
+        fa[factura] = item.Nombre;
+        ru[factura] = item.Archivo;
+        factura = factura + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      ViewBag.conf = factura;
+      ViewData["factura"] = fa;
+      ViewData["ruta"] = ru;
+
       if (solicitud == null)
       {
         return HttpNotFound();
@@ -676,7 +708,7 @@ on p.PagadoraID equals s.PagadoraID
             context.SaveChanges();
           }
 
-          
+
 
 
 

@@ -380,9 +380,6 @@
                                                     @Html.ValidationMessageFor(model => model.Factura, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
-
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -486,8 +483,7 @@
 
         @Html.HiddenFor(model => model.SolicitudID)
     </section>
-    @*@Html.Partial("_CrearConcepto.cshtml")*@
-    @*@Html.Partial("_CrearGasto")*@
+
 }
 <script>
     $(document).ready(function () {
@@ -498,7 +494,7 @@
 
         $("#btnOkConcepto").click(function () {
             AgregarConcepto();
-           
+
         });
 
         $("#ImporteID").keydown(function (event) {
@@ -989,7 +985,7 @@
                 return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
         };
 
-    })();
+    });
 </script>
 
 <script>

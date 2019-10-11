@@ -2,225 +2,348 @@
 @using MVCCompras.Models
 
 @{
-  ViewBag.Title = "Details";
+    ViewBag.Title = "Details";
 }
 
 @using (Html.BeginForm("Details", "Solicituds", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-  @Html.AntiForgeryToken()  
-  string t, imp, solicitante;
-  <section id="main-content">
-    <section class=" wrapper">
-      <div class="col-lg-12">
-        <h3 class="page-header"><i class="fa fa-file"></i>Solicitu de Compra</h3>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-          <section class="panel">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <div class="pull-left"><h4>Solicitud</h4></div>
-                <div class="clearfix"></div>
-              </div>
-              <div class="panel-body">
-                <div class="padd">
-                  <div class="form quick-post">
-                    <div>
-                      <dl class="dl-horizontal">
+    @Html.AntiForgeryToken()
+    string t, imp, solicitante;
+    <section id="main-content">
+        <section class=" wrapper">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-file"></i>Solicitu de Compra</h3>
+            </div>
+            <div class="col-lg-5">
+                <section class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h4>Solicitud</h4></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="padd">
+                                <div class="form quick-post">
+                                    <dl class="dl-horizontal">
 
-                        <dt>
-                          @Html.DisplayName("No. Solicitud:")
-                        </dt>
+                                        <dt>
+                                            @Html.DisplayName("No. Solicitud:")
+                                        </dt>
 
-                        <dd>
-                          @{
-                            t = Html.DisplayFor(model => model.SolicitudID).ToString();
-                          }
-                          @Html.DisplayFor(model => model.SolicitudID)
-                        </dd>
-                        <dt>
-                          @Html.DisplayName("Fecha de Registro:")
-                        </dt>
+                                        <dd>
+                                            @{
+                                                t = Html.DisplayFor(model => model.SolicitudID).ToString();
+                                            }
+                                            @Html.DisplayFor(model => model.SolicitudID)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Fecha de Registro:")
+                                        </dt>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.FechaRegistro)
-                        </dd>
-                        <dt>
-                          @Html.DisplayName("Solicitado por:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.FechaRegistro)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Solicitado por:")
+                                        </dt>
 
-                        <dd>
-                          @{
-                            solicitante = Html.DisplayFor(model => model.Solicitante).ToString();
-                          }
-                          @Html.DisplayFor(model => model.Solicitante)
-                        </dd>
+                                        <dd>
+                                            @{
+                                                solicitante = Html.DisplayFor(model => model.Solicitante).ToString();
+                                            }
+                                            @Html.DisplayFor(model => model.Solicitante)
+                                        </dd>
 
-                        <dt>
-                          @Html.DisplayName("Conceptos:")
-                        </dt>
+                                        <dt>
+                                            @Html.DisplayName("Conceptos:")
+                                        </dt>
 
-                        <dd>
-                          @foreach (Concepto item in Model.Concepto)
-                          {
-                            <tr>
-                              <td>Tipo Pago - </td>
-                              <td>
-                                @Html.DisplayFor(model => item.Nombre) =
-                              </td>
-                              <td>
-                                @Html.DisplayFor(model => item.ImporteParcial)
-                              </td>
-                              <br />
-                            </tr>
+                                        <dd>
+                                            @foreach (Concepto item in Model.Concepto)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(model => item.Nombre) =
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(model => item.ImporteParcial)
+                                                    </td>
+                                                    <br />
+                                                </tr>
+                                            }
+                                        </dd>
 
-                          }
-                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Importe Total:")
+                                        </dt>
 
-                        <dt>
-                          @Html.DisplayName("Importe Total:")
-                        </dt>
+                                        <dd>
+                                            @{
+                                                imp = Html.DisplayFor(model => model.ImporteTotal).ToString();
+                                            }
+                                            @Html.DisplayFor(model => model.ImporteTotal)
+                                        </dd>
 
-                        <dd>
-                          @{
-                            imp = Html.DisplayFor(model => model.ImporteTotal).ToString();
-                          }
-                          @Html.DisplayFor(model => model.ImporteTotal)
-                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Importe en Letra:")
+                                        </dt>
 
-                        <dt>
-                          @Html.DisplayName("Importe en Letra:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.ImporteLetra)
+                                        </dd>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.ImporteLetra)
-                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Observaciones:")
+                                        </dt>
 
-                        <dt>
-                          @Html.DisplayName("Observaciones:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Observacion)
+                                        </dd>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.Observacion)
-                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Empresa Pagadora:")
+                                        </dt>
 
-                        <dt>
-                          @Html.DisplayName("Empresa Pagadora:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.PagadoraID)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Forma de Pago:")
+                                        </dt>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.PagadoraID)
-                        </dd>
-                        <dt>
-                          @Html.DisplayName("Forma de Pago:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.FormaPago.Nombre)
+                                        </dd>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.FormaPago.Nombre)
-                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Proveedor:")
+                                        </dt>
 
-                        <dt>
-                          @Html.DisplayName("Proveedor:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Proveedor.Alias)
+                                        </dd>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.Proveedor.Alias)
-                        </dd>
+                                        <dt>
+                                            @Html.DisplayName("Tipo de Gasto:")
+                                        </dt>
 
-                        <dt>
-                          @Html.DisplayName("Tipo de Gasto:")
-                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.TipoGasto.Nombre)
+                                        </dd>
 
-                        <dd>
-                          @Html.DisplayFor(model => model.TipoGasto.Nombre)
-                        </dd>
-
-                      </dl>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                </section>
+            </div>
+
+            <div class="col-lg-6">
+                <section class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h4>Formato de Pago</h4></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="padd">
+                                <div class="form quick-post">
+                                    <div class="form-horizontal">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">Forma de Pago</label>
+                                            <input type="text" class="col-sm-2" id="FormaPagoID" readonly="readonly" value="@Html.DisplayFor(model => model.FormaPago.Nombre)" />
+
+                                            <label class="control-label col-sm-2">Banco</label>
+                                            <input type="text" class="col-sm-2" id="BancoID" readonly="readonly" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Proveedor, "No. Cuenta", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-8">
+                                                @Html.TextBox("CuentaID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Proveedor, "CLABE", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-8">
+                                                @Html.TextBox("ClabeID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-3">
+                <section class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h4>Archivos</h4></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            (Haz clic sobre el nombre del archivo para descargarlo)
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @{int j = 0;
+                                        string[] qry = new string[ViewBag.conf];
+                                        foreach (var item in qry)
+                                        {
+                                            <h4><a style="color:black" target="_blank" href="@(((string[])ViewData["ruta"])[j])">@(((string[])ViewData["factura"])[j])</a></h4>
+                                            j = j + 1;
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+            <div class="col-lg-3">
+                <section class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h4>Seguimineto de Solicitud</h4></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                @{
+                                    int SO = int.Parse(t);
+                                    ComprasEntities db = new ComprasEntities();
+                                    var esta = (from s in db.Seguimiento
+                                                where s.SolicitudID == SO
+                                                select new { s.EstatusID });
+                                    foreach (var item in esta)
+                                    {
+                                        int st = item.EstatusID;
+                                        ViewBag.estatus = st;
+                                    }
+
+                                    if (ViewBag.estatus == 2)
+                                    {
+
+                                        <div class="q-form-control">
+                                            <div>
+                                                <label class="control-label col-sm-4">Autorizar Solicitud</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input id="autorizar" name="valida" type="checkbox" />
+                                            </div>
+                                        </div>
+
+                                    }
+                                    if (ViewBag.estatus == 3)
+                                    {
+                                        <div>
+                                            <label class="control-label col-sm-4">Pagar</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            <input id="pagar" name="valida" type="checkbox" />
+                                        </div>
+                                    }
+
+                                    if (ViewBag.estatus == 4)
+                                    {
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Comprobante, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-6">
+                                                <input type="file" id="Comprobante" name="Comprobante" class="btn btn-primary" multiple="multiple" />
+                                                @Html.ValidationMessageFor(model => model.Comprobante, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    }
+                                    @Html.Hidden("NumeroSolicitud", SO)
+                                    @Html.Hidden("ImporteT", imp)
+                                    @Html.Hidden("Solicitante", solicitante)
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            @if (Session["idTipoUsuario"].ToString() == "4")
+            {
+
+
+                <div class="comprobante col-md-5" id="comprobante">
+                    <section class="panel">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="pull-left"><h4>Comprobante</h4></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="padd">
+                                    <div class="form quick-post">
+                                        <div class="form-horizontal">
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Comprobante, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-5">
+                                                    <input type="file" id="Comprobante" name="Comprobante" class="btn btn-primary" multiple="multiple" /><br /><br />
+                                                    @Html.ValidationMessageFor(model => model.Comprobante, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <div class="col-lg-3">
-        <section class="panel">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <div class="pull-left"><h4>Seguimineto de Solicitud</h4></div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="panel-body">
-              <div class="padd">
-                <div class="form quick-post">
-                  <div class="form-horizontal">
-                    @{
-                      int SO = int.Parse(t);
-                      ComprasEntities db = new ComprasEntities();
-                      var esta = (from s in db.Seguimiento
-                                  where s.SolicitudID == SO
-                                  select new { s.EstatusID });
-                      foreach (var item in esta)
-                      {
-                        int st = item.EstatusID;
-                        ViewBag.estatus = st;
-                      }
-
-                      if (ViewBag.estatus == 2)
-                      {
-
-                        <div class="q-form-control">
-                          <div>
-                            <label class="control-label col-sm-4">Autorizar Solicitud</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input id="autorizar" name="valida" type="checkbox" />
-                          </div>
-                        </div>
-
-                      }
-                      if (ViewBag.estatus == 3)
-                      {
-                        <div>
-                          <label class="control-label col-sm-4">Pagar</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                          <input id="pagar" name="valida" type="checkbox" />
-                        </div>
-                      }
-
-                      if (ViewBag.estatus == 4)
-                      {
-                        <div class="form-group">
-                          @Html.LabelFor(model => model.Comprobante, htmlAttributes: new { @class = "control-label col-md-2" })
-                          <div class="col-md-6">
-                            <input type="file" id="Comprobante" name="Comprobante" class="btn btn-primary" multiple="multiple" />
-                            @Html.ValidationMessageFor(model => model.Comprobante, "", new { @class = "text-danger" })
-                          </div>
-                        </div>
-                      }
-                      @Html.Hidden("NumeroSolicitud", SO)
-                      @Html.Hidden("ImporteT", imp)
-                      @Html.Hidden("Solicitante", solicitante)
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            }
         </section>
-      </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Aceptar" class="btn btn-success" />
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="btn btn-danger">
+                @Html.ActionLink("Regresar", "Index")
+            </div>
+        </div>
 
     </section>
-    <div class="form-group">
-      <div class="col-md-12">
-        <input type="submit" value="Aceptar" class="btn btn-success" />
-      </div>
-    </div>
-    <div class="form-group col-md-12">
-      <div class="btn btn-danger">
-        @Html.ActionLink("Regresar", "Index")
-      </div>
-    </div>
-
-  </section>
 }
-
+<script>
+    $(document).ready(function () {
+        var id =@Html.DisplayFor(model => model.ProveedorID);
+        $.ajax({
+            url: '../../Solicituds/DatoCuenta',
+            data: { idProv: id },
+            datatype: 'json',
+            success: function (data) {
+                $('#CuentaID').val(data);
+            }
+        });
+        $.ajax({
+            url: '../../Solicituds/DatoClabe',
+            data: { idProv: id },
+            datatype: 'json',
+            success: function (data) {
+                $('#ClabeID').val(data);
+            }
+        });
+        $.ajax({
+            url: '../../Solicituds/DatoBanco',
+            data: { idProv: id },
+            datatype: 'json',
+            success: function (data) {
+                $('#BancoID').val(data);
+            }
+        });
+    });
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
