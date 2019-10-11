@@ -588,7 +588,7 @@ on p.PagadoraID equals s.PagadoraID
       ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
       ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-      ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+      //ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
       return View(solicitud);
     }
 
@@ -597,7 +597,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto)
+    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento,ImporteTotal,ImporteLetra")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto)
     {
 
       if (ModelState.IsValid)
@@ -613,7 +613,25 @@ on p.PagadoraID equals s.PagadoraID
         solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
         solicitud.Solicitante = collection.Get("Solicitante");
+        //AGREGA CONCEPTOS NUEVOS 
+        //guardar los conceptos
+        int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+        conceptos = new string[NumConcepto];
 
+        for (int item = 1; item <= NumConcepto; item++)
+        {
+          //Crear un objeto que permita guardar el cargamento 
+          Concepto NewConcepto = new Concepto();
+          //Agregamos registro x registro al la bd
+          NewConcepto.SolicitudId = solicitud.SolicitudID;
+          NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
+          NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
+          NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+
+          db.Concepto.Add(NewConcepto);
+          conceptos[item - 1] = NewConcepto.Nombre;
+        }
+        db.SaveChanges();
 
         //db.Entry(solicitud).State = EntityState.Modified;
         //db.SaveChanges();
@@ -658,6 +676,11 @@ on p.PagadoraID equals s.PagadoraID
             context.SaveChanges();
           }
 
+          
+
+
+
+
           var con = (from so in db.Solicitud
                      join c in db.Concepto
                      on so.SolicitudID equals c.SolicitudId
@@ -692,7 +715,7 @@ on p.PagadoraID equals s.PagadoraID
           {
             string pass = emailO.Pass.ToString();
             string aproba = emailO.Nombre.ToString();
-            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
+            //EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
             db.Entry(solicitud).State = EntityState.Modified;
             db.SaveChanges();
             TempData["var"] = "Solicitud Aprobada";
