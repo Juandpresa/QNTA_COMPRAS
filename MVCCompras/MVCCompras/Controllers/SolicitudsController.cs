@@ -588,7 +588,7 @@ on p.PagadoraID equals s.PagadoraID
       ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
       ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
       ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-      //ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+      ViewBag.PagadoraID = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
       return View(solicitud);
     }
 
@@ -597,7 +597,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento,ImporteTotal,ImporteLetra")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto)
+    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto)
     {
 
       if (ModelState.IsValid)

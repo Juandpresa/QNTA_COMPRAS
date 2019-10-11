@@ -218,13 +218,14 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-horizontal">
 
+                                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
                                                                         <div class="form-group">
                                                                             @Html.Label("Concepto", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                             <div class="col-md-10">
                                                                                 @Html.DropDownList("TipoPagoID", null, "Selecciona", htmlAttributes: new { @class = "form-control" })
-                                                                                @*@Html.ValidationMessageFor(null, "", new { @class = "text-danger" })*@
+                                                                                @*@Html.ValidationMessageFor(model => model.TipoPagoID, "", new { @class = "text-danger" })*@
                                                                             </div>
                                                                         </div>
 
@@ -268,6 +269,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
 
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Observacion, "Observaciones", htmlAttributes: new { @class = "col-sm-2" })
@@ -484,21 +486,50 @@
 
         @Html.HiddenFor(model => model.SolicitudID)
     </section>
+    @*@Html.Partial("_CrearConcepto.cshtml")*@
     @*@Html.Partial("_CrearGasto")*@
 }
 <script>
     $(document).ready(function () {
+
         $("#btnCancelConcepto").click(function () {
             $(".concepto").val("");
         });
 
         $("#btnOkConcepto").click(function () {
             AgregarConcepto();
-            var importe = $(this).parents("tr").find("td")[2].innerHTML;
-            var importeT = $('#ImporteTotal').val();
-            importeT = parseFloat(importeT) + parseFloat(importe);
+             var importe = $(this).parents("tr").find("td")[2].innerHTML;
+            var importeT = $("#ImporteID").val();
+            importeT = parseFloat(importeT) +parseFloat(importe);
+            $("#ImporteTotal").val(importeT);
+
 
         });
+
+        $("#ImporteID").keydown(function (event) {
+            if (event.shiftKey) {
+                event.preventDefault();
+            }
+
+            if (event.keyCode == 110 || event.keyCode == 8) {
+
+            }
+            else {
+
+                if (event.keyCode < 95) {
+                    if (event.keyCode < 48 || event.keyCode > 57) {
+                        event.preventDefault();
+                    }
+                }
+                else {
+                    if (event.keyCode < 96 || event.keyCode > 105) {
+                        event.preventDefault();
+                    }
+                }
+            }
+
+        });
+
         $(".delete").on("click", function () {
             //valores obtendra el dato del td por posciones [0]
             var idconcepto = $(this).parents("tr").find("td")[4].innerHTML;
@@ -555,6 +586,7 @@
                 }
             });
         });
+
         var total = 0;
         $('#ImporteID').change(function () {
             var nume = $('#ImporteID').val();
@@ -654,32 +686,9 @@
 
 
 
-        $("#ImporteID").keydown(function (event) {
-            if (event.shiftKey) {
-                event.preventDefault();
-            }
-
-            if (event.keyCode == 110 || event.keyCode == 8) {
-
-            }
-            else {
-
-                if (event.keyCode < 95) {
-                    if (event.keyCode < 48 || event.keyCode > 57) {
-                        event.preventDefault();
-                    }
-                }
-                else {
-                    if (event.keyCode < 96 || event.keyCode > 105) {
-                        event.preventDefault();
-                    }
-                }
-            }
-
-        });
-
     });
 </script>
+
 
 <script>
     function AgregarConcepto() {
@@ -751,6 +760,12 @@
                 swal("Atención!", "Concepto incompleto", "warning");
             }
 
+            $(".delete").on('click', function () {
+                //var importer = $(this).parents("tr").find("td")[2].innerHTML;
+                swal("", "hola", "success");
+            });
+
+
             //$("#delete").click(function () {
             //  //var importer = $(this).parents("tr").find(importe.value);
             //  var importer = $(this).parents("tr").find("td")[2].innerHTML;
@@ -775,15 +790,9 @@
             //  //swal("Eliminado", "Concepto Eliminado", "error");
             //});
         }
-        $("#delete").on('click', function () {
-            var tabla = ($("#tblConcepto").html());
-            var importer = $(tabla).parents("tr").find("td:eq(2)").text();
-
-            swal("", importer, "");
-
-        });
     }
 </script>
+
 
 <script>
     $('#aprobar').click(function () {
