@@ -200,6 +200,38 @@ on p.PagadoraID equals s.PagadoraID
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
       Solicitud solicitud = db.Solicitud.Find(id);
+
+
+      //Consulta join para obtenerla factura  
+      var fac = (from f in db.Factura
+                 where f.SolicitudID == id
+                 select new
+                 {
+                   f.Nombre,
+                   f.Archivo
+                 });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int contr = 0;
+      foreach (var item in fac)
+      {
+        contr++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int factura = 0;
+      string[] fa = new string[contr];
+      string[] ru = new string[contr];
+
+      foreach (var item in fac)
+      {
+        fa[factura] = item.Nombre;
+        ru[factura] = item.Archivo;
+        factura = factura + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      ViewBag.conf = factura;
+      ViewData["factura"] = fa;
+      ViewData["ruta"] = ru;
+
       if (solicitud == null)
       {
         return HttpNotFound();
@@ -613,7 +645,25 @@ on p.PagadoraID equals s.PagadoraID
         solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
         solicitud.Solicitante = collection.Get("Solicitante");
+        //AGREGA CONCEPTOS NUEVOS 
+        //guardar los conceptos
+        int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+        conceptos = new string[NumConcepto];
 
+        for (int item = 1; item <= NumConcepto; item++)
+        {
+          //Crear un objeto que permita guardar el cargamento 
+          Concepto NewConcepto = new Concepto();
+          //Agregamos registro x registro al la bd
+          NewConcepto.SolicitudId = solicitud.SolicitudID;
+          NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
+          NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
+          NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+
+          db.Concepto.Add(NewConcepto);
+          conceptos[item - 1] = NewConcepto.Nombre;
+        }
+        db.SaveChanges();
 
         //db.Entry(solicitud).State = EntityState.Modified;
         //db.SaveChanges();
@@ -657,6 +707,11 @@ on p.PagadoraID equals s.PagadoraID
             segui.FechaMovimiento = DateTime.Now;
             context.SaveChanges();
           }
+
+
+
+
+
 
           var con = (from so in db.Solicitud
                      join c in db.Concepto
