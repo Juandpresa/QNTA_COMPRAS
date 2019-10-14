@@ -240,137 +240,138 @@ on p.PagadoraID equals s.PagadoraID
     }
 
     [HttpPost]
-    public ActionResult Details([Bind(Exclude = "Comprobante")]Solicitud solicitud, FormCollection collection, IEnumerable<HttpPostedFileBase> Comprobante, Comprobante comp, Seguimiento seg)
+    public ActionResult Details(Solicitud solicitud, FormCollection collection, IEnumerable<HttpPostedFileBase> Comprobante, Comprobante comp, Seguimiento seg)
     {
       ////SEGUIMIENTO
       string s = collection.Get("valida");
       string imp = collection.Get("ImporteT");
       string solicitante = collection.Get("Solicitante");
+      //NUMERO DE SOLICITUD
+      int S = int.Parse(collection.Get("NumeroSolicitud"));
+      //Obtenemos la solicitus con la cual trabajaremos
+      var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == S);
 
-      //if (Session["idUsuario"].ToString() =="4")
-      //{
-      //  //SE AGREGAN LOS COMPROBANTES
-      //  if (Comprobante != null)
-      //  {
-      //    foreach (var file in Comprobante)
-      //    {
-      //      if (file.ContentLength > 0)
-      //      {
-      //        var fileName = Path.GetFileName(file.FileName);
-      //        //validamos que sea un archivo pdf o xml
-      //        if (Path.GetExtension(fileName).ToLower() == ".pdf" || Path.GetExtension(fileName).ToLower() == ".xml")
-      //        {
+      if (Session["idTipoUsuario"].ToString() == "4")
+      {
+        //SE AGREGAN LOS COMPROBANTES
+        if (Comprobante != null)
+        {
+          foreach (var file in Comprobante)
+          {
+            if (file.ContentLength > 0)
+            {
+              var fileName = Path.GetFileName(file.FileName);
+              //validamos que sea un archivo pdf o xml
+              if (Path.GetExtension(fileName).ToLower() == ".pdf" || Path.GetExtension(fileName).ToLower() == ".xml")
+              {
 
-      //        }
-      //        else
-      //        {
-      //          ViewBag.Message = "Alguno de los archivos no tiene extension (.pdf) o (.xml)";
-      //          viewbags();
-      //          return View();
-      //        }
-      //      }
-      //    }
+              }
+              else
+              {
+                ViewBag.Message = "Alguno de los archivos no tiene extension (.pdf) o (.xml)";
+                viewbags();
+                return View();
+              }
+            }
+          }
 
-      //    //GUARDA EL COMPROBANTE
-      //    foreach (var file2 in Comprobante)
-      //    {
-      //      if (file2.ContentLength > 0)
-      //      {
-      //        var fileName2 = Path.GetFileName(file2.FileName);
-      //        var path = Path.Combine(Server.MapPath("~/Archivos/Comprobantes"), fileName2);
-      //        string ruta = "/Archivos/Comprobantes/" + fileName2;
-      //        comp.Archivo = ruta;
-      //        comp.Nombre = fileName2;
-      //        comp.FechaAlmacenamiento = DateTime.Now;
-      //        comp.SeCargoComprobante = true;
-      //        comp.SolicitudID = solicitud.SolicitudID;
-      //        file2.SaveAs(path);
-      //        db.Comprobante.Add(comp);
-      //        db.SaveChanges();
-      //      }
-      //    }
-      //  }
+          //GUARDA EL COMPROBANTE
+          foreach (var file2 in Comprobante)
+          {
+            if (file2.ContentLength > 0)
+            {
+              var fileName2 = Path.GetFileName(file2.FileName);
+              var path = Path.Combine(Server.MapPath("~/Archivos/Comprobantes"), fileName2);
+              string ruta = "/Archivos/Comprobantes/" + fileName2;
+              comp.Archivo = ruta;
+              comp.Nombre = fileName2;
+              comp.FechaAlmacenamiento = DateTime.Now;
+              comp.SeCargoComprobante = true;
+              comp.SolicitudID = S;
+              file2.SaveAs(path);
+              db.Comprobante.Add(comp);
+              db.SaveChanges();
+            }
+          }
+        }
 
-      //  //ENVIA CORREO DE VUELTA AL USUARIO SOLICITANTE CON STATUS LIBERADA
+        //ENVIA CORREO DE VUELTA AL USUARIO SOLICITANTE CON STATUS LIBERADA
 
-      //  if (s == "on")
-      //  {
-      //    string est = "";
-      //    int S = int.Parse(collection.Get("NumeroSolicitud"));
-      //    //Obtenemos la solicitus con la cual trabajaremos
-      //    var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == S);
-      //    //obtenemos de la tabla seguimiento el Id de la solicitus que se editara
-      //    var segui = new Seguimiento { SolicitudID = S };
-      //    //instancimos el contexto
-      //    using (var context = new ComprasEntities())
-      //    {
-      //      context.Seguimiento.Attach(segui);
-      //      //si referencia trae datos, asignamos a la variable est el valor del estatus que trae esa solicitud
-      //      if (referencia != null)
-      //      {
-      //        est = referencia.EstatusID.ToString();
-      //      }
-      //      //depende el estatud de la solicitus se modificara 
-      //      if (int.Parse(est) == 4)
-      //      {
-      //        segui.EstatusID = 5;
-      //      }
-      //      segui.CuentaID = Session["idUsuario"].ToString();
-      //      segui.FechaMovimiento = DateTime.Now;
-      //      context.SaveChanges();
-      //    }
-
-      //    var con = (from so in db.Solicitud
-      //               join c in db.Concepto
-      //               on so.SolicitudID equals c.SolicitudId
-      //               where c.SolicitudId == S
-      //               select new { c.Nombre });
-      //    int cont = 0;
-      //    foreach (var item in con)
-      //    {
-      //      cont++;
-      //    }
-      //    int cs = 0;
-      //    string[] cons = new string[cont];
-      //    foreach (var item in con)
-      //    {
-      //      cons[cs] = item.Nombre;
-      //      cs = cs + 1;
-      //    }
-      //    string correoOrigen = Session["Correo"].ToString();
-      //    var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
-      //    var emailD = from u in db.Usuarios
-      //                 where u.idTipoUsuario == 4
-      //                 select new { u.Correo };
-      //    int dir = 0;
-      //    string[] destino = new string[1];
-      //    foreach (var item in emailD)
-      //    {
-      //      destino[dir] = item.Correo;
-      //      dir++;
-      //    }
-
-      //    if (emailO != null)
-      //    {
-      //      string pass = emailO.Pass.ToString();
-      //      string autoriza = emailO.Nombre.ToString();
-      //      EnviarCorreoAU(correoOrigen, pass, S, imp, solicitante, cons, smtpOff, qdomi, destino, autoriza);
-      //      TempData["var"] = "Solicitud Autorizada";
-
-      //    }
-      //  }
+        if (s == "on")
+        {
+          string est = "";
+          //int S = int.Parse(collection.Get("NumeroSolicitud"));
+          //Obtenemos la solicitus con la cual trabajaremos
+          //var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == S);
+          //obtenemos de la tabla seguimiento el Id de la solicitus que se editara
+          var segui = new Seguimiento { SolicitudID = S };
+          //instancimos el contexto
+          using (var context = new ComprasEntities())
+          {
+            context.Seguimiento.Attach(segui);
+            //si referencia trae datos, asignamos a la variable est el valor del estatus que trae esa solicitud
+            if (referencia != null)
+            {
+              est = referencia.EstatusID.ToString();
+            }
+            //depende el estatud de la solicitus se modificara 
+            if (int.Parse(est) == 4)
+            {
+              segui.EstatusID = 5;
+            }
+            segui.CuentaID = Session["idUsuario"].ToString();
+            segui.FechaMovimiento = DateTime.Now;
+            context.SaveChanges();
+          }
 
 
-      //}
+          var con = (from so in db.Solicitud
+                     join c in db.Concepto
+                     on so.SolicitudID equals c.SolicitudId
+                     where c.SolicitudId == S
+                     select new { c.Nombre });
+          int cont = 0;
+          foreach (var item in con)
+          {
+            cont++;
+          }
+          int cs = 0;
+          string[] cons = new string[cont];
+          foreach (var item in con)
+          {
+            cons[cs] = item.Nombre;
+            cs = cs + 1;
+          }
+          string correoOrigen = Session["Correo"].ToString();
+          var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
+          var emailD = from u in db.Usuarios
+                       where u.idTipoUsuario == 4
+                       select new { u.Correo };
+          int dir = 0;
+          string[] destino = new string[1];
+          foreach (var item in emailD)
+          {
+            destino[dir] = item.Correo;
+            dir++;
+          }
 
-      
+          if (emailO != null)
+          {
+            string pass = emailO.Pass.ToString();
+            string autoriza = emailO.Nombre.ToString();
+            EnviarCorreoAU(correoOrigen, pass, S, imp, solicitante, cons, smtpOff, qdomi, destino, autoriza);
+            TempData["var"] = "Solicitud Autorizada";
+
+          }
+        }
+      }
 
       if (s == "on")
       {
         string est = "";
-        int S = int.Parse(collection.Get("NumeroSolicitud"));
+        //int S = int.Parse(collection.Get("NumeroSolicitud"));
         //Obtenemos la solicitus con la cual trabajaremos
-        var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == S);
+        //var referencia = db.Seguimiento.FirstOrDefault(e => e.SolicitudID == S);
         //obtenemos de la tabla seguimiento el Id de la solicitus que se editara
         var segui = new Seguimiento { SolicitudID = S };
         //instancimos el contexto
@@ -632,6 +633,37 @@ on p.PagadoraID equals s.PagadoraID
       ViewData["factura"] = fa;
 
 
+      //Consulta join para obtenerla factura  
+      var comp = (from c in db.Comprobante
+                 where c.SolicitudID == id
+                 select new
+                 {
+                   c.Nombre,
+                   c.Archivo
+                 });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int contr = 0;
+      foreach (var item in comp)
+      {
+        contr++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int comprobante = 0;
+      string[] com = new string[contr];
+      string[] ru = new string[contr];
+
+      foreach (var item in comp)
+      {
+        com[comprobante] = item.Nombre;
+        ru[comprobante] = item.Archivo;
+        comprobante = comprobante + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      ViewBag.conc = comprobante;
+      ViewData["comprobante"] = fa;
+      ViewData["ruta"] = ru;
+
+
       //MOSTRAR CONCEPTOS
       //Consulta join para obtener conceptos  
       var conc = (from s in db.Solicitud
@@ -827,7 +859,7 @@ on p.PagadoraID equals s.PagadoraID
               fac.Nombre = fileName2;
               fac.FechaAlmacenamiento = DateTime.Now;
               fac.SeCargoFactura = true;
-              fac.SolicitudID =solicitud.SolicitudID;
+              fac.SolicitudID = solicitud.SolicitudID;
               file2.SaveAs(path);
               db.Factura.Add(fac);
               db.SaveChanges();

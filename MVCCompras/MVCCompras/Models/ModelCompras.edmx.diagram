@@ -26,7 +26,6 @@
         <EntityTypeShape EntityType="ComprasModel.DistribucionGasto" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ComprasModel.Factura" Width="1.5" PointX="5.25" PointY="22.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ComprasModel.Pago" Width="1.5" PointX="10.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ComprasModel.Seguimiento" Width="1.5" PointX="10.375" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ComprasModel.Solicitud" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ComprasModel.TipoUsuario" Width="1.5" PointX="10.75" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ComprasModel.Usuarios" Width="1.5" PointX="13" PointY="1.875" IsExpanded="true" />
@@ -49,6 +48,7 @@
         <AssociationConnector Association="ComprasModel.FK_Cliente_DistribucionGasto" ManuallyRouted="false" />
         <AssociationConnector Association="ComprasModel.FK_Consulta_Factura" ManuallyRouted="false" />
         <AssociationConnector Association="ComprasModel.FK_Usuarios_TipoUsuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ComprasModel.Seguimiento" Width="1.5" PointX="10.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

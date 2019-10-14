@@ -849,15 +849,6 @@
           <Property Name="EstatusID" Type="Int32" Nullable="false" />
           <Property Name="DetalleSolicitudID" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Seguimiento">
-          <Key>
-            <PropertyRef Name="SolicitudID" />
-          </Key>
-          <Property Name="SolicitudID" Type="Int32" Nullable="false" />
-          <Property Name="EstatusID" Type="Int32" Nullable="false" />
-          <Property Name="CuentaID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FechaMovimiento" Type="DateTime" Precision="0" />
-        </EntityType>
         <EntityType Name="Solicitud">
           <Key>
             <PropertyRef Name="SolicitudID" />
@@ -1159,7 +1150,6 @@
           <EntitySet Name="DistribucionGasto" EntityType="Self.DistribucionGasto" />
           <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Pago" EntityType="Self.Pago" />
-          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" />
           <EntitySet Name="Solicitud" EntityType="Self.Solicitud" />
           <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
@@ -1236,7 +1226,19 @@
             <End Role="TipoUsuario" EntitySet="TipoUsuario" />
             <End Role="Usuarios" EntitySet="Usuarios" />
           </AssociationSet>
+          <EntitySet Name="Seguimiento" EntityType="ComprasModel.Seguimiento" />
         </EntityContainer>
+        <EntityType Name="Seguimiento">
+          <Key>
+            <PropertyRef Name="SolicitudID" />
+            <PropertyRef Name="EstatusID" />
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="SolicitudID" Type="Int32" Nullable="false" />
+          <Property Name="EstatusID" Type="Int32" Nullable="false" />
+          <Property Name="CuentaID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FechaMovimiento" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1480,16 +1482,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Seguimiento">
-            <EntityTypeMapping TypeName="ComprasModel.Seguimiento">
-              <MappingFragment StoreEntitySet="Seguimiento">
-                <ScalarProperty Name="FechaMovimiento" ColumnName="FechaMovimiento" />
-                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
-                <ScalarProperty Name="EstatusID" ColumnName="EstatusID" />
-                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Solicitud">
             <EntityTypeMapping TypeName="ComprasModel.Solicitud">
               <MappingFragment StoreEntitySet="Solicitud">
@@ -1542,6 +1534,16 @@
                 <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
                 <ScalarProperty Name="CodigoAcceso" ColumnName="CodigoAcceso" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seguimiento">
+            <EntityTypeMapping TypeName="ComprasModel.Seguimiento">
+              <MappingFragment StoreEntitySet="Seguimiento">
+                <ScalarProperty Name="FechaMovimiento" ColumnName="FechaMovimiento" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+                <ScalarProperty Name="EstatusID" ColumnName="EstatusID" />
+                <ScalarProperty Name="SolicitudID" ColumnName="SolicitudID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -46,10 +46,10 @@ namespace MVCCompras.Models
         public virtual DbSet<DistribucionGasto> DistribucionGasto { get; set; }
         public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Pago> Pago { get; set; }
-        public virtual DbSet<Seguimiento> Seguimiento { get; set; }
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuario { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Autorizacion> Autorizacion { get; set; }
+        public virtual DbSet<Seguimiento> Seguimiento { get; set; }
     }
 }
