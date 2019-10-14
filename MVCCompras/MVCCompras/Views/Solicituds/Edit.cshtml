@@ -36,7 +36,7 @@
                                                 @*@Html.LabelFor(model => model.Solicitantes, "Usuario Solicitante", htmlAttributes: new { @class = "control-label col-md-2" })*@
                                                 <div class="col-md-10">
                                                     @*@Html.EnumDropDownListFor(model => model.Solicitantes, "Selecciona Solicitante", new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })*@
+                                            @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })*@
                                                     <label class="control-label col-sm-4">Solicitante</label>
                                                     <input type="text" class="col-sm-6" id="Solicitante" name="Solicitante" readonly="readonly" />
                                                 </div>
@@ -124,10 +124,10 @@
                                                 </div>
 
                                                 @*@Html.LabelFor(model => model.Proveedor, "Banco", htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <div class="col-md-10">
-                                                      @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
-                                                      @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                                                      @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
+                                        <div class="col-md-10">
+                                          @Html.DropDownList("BancoID", Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @readonly = "readonly" })
+                                          @Html.TextBox("BancoID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                          @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })*@
 
                                                 <label class="control-label col-sm-2">Banco</label>
                                                 <input type="text" class="col-sm-2" id="BancoID" readonly="readonly" />
@@ -455,6 +455,33 @@
                                                 }
                                             }
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+    
+                <div class="col-lg-3">
+                    <section class="panel">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="pull-left"><h4>Comprobante</h4></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                (Haz clic sobre el nombre del archivo para descargarlo)
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @{int C = 0;
+                                            string[] comp = new string[ViewBag.conc];
+                                            foreach (var item in comp)
+                                            {
+                                                <h4><a style="color:midnightblue" target="_blank" href="@(((string[])ViewData["ruta"])[C])">@(((string[])ViewData["comprobante"])[C])</a></h4>
+                                                C = C + 1;
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>

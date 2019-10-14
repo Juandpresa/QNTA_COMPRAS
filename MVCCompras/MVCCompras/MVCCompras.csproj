@@ -890,6 +890,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Archivos\Comprobantes\" />
     <Folder Include="Archivos\Facturas\" />
   </ItemGroup>
   <ItemGroup>
