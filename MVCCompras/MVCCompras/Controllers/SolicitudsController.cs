@@ -240,7 +240,7 @@ on p.PagadoraID equals s.PagadoraID
     }
 
     [HttpPost]
-    public ActionResult Details([Bind(Exclude = "Comprobante, Seguimienrto")]Solicitud solicitud, FormCollection collection, IEnumerable<HttpPostedFileBase> Comprobante, Comprobante comp, Seguimiento seg)
+    public ActionResult Details([Bind(Exclude = "Comprobante")]Solicitud solicitud, FormCollection collection, IEnumerable<HttpPostedFileBase> Comprobante, Comprobante comp, Seguimiento seg)
     {
       ////SEGUIMIENTO
       string s = collection.Get("valida");
