@@ -69,36 +69,33 @@
   </div>
 }
 <script>
+  var total = 0;
   $(document).ready(function () {
     $("#btnCancelConcepto").click(function () {
       $(".concepto").val("");
     });
-    var total = 0;
+    
     $('#ImporteTotal').val(total);
     $("#btnOkConcepto").click(function () { 
       if ((!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
         swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
       } else {
         var impT = $('#ImporteTotal').val();
-        swal("", impT, "");
         if ($('#ImporteID') != 0) {
           var nume = $('#ImporteID').val();
-          impT = parseFloat(impT) + parseFloat(nume);
-          AgregarConcepto();
-
-          $('#ImporteTotal').val(impT);
-
-          var n = $('#ImporteTotal').val();
-          var m = $('#MonedaID').val();
-          if (m == 1) {
-            $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
-          }
-          else {
-            $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
-          }
+          impT = parseFloat(impT) + parseFloat(nume);         
         }
+        $('#ImporteTotal').val(impT);
 
-       
+        var n = $('#ImporteTotal').val();
+        var m = $('#MonedaID').val();
+        if (m == 1) {
+          $('#ImporteLetra').val(numeroALetras(n) + ' MXN');
+        }
+        else {
+          $('#ImporteLetra').val(numeroALetras2(n) + ' USD');
+        }
+        AgregarConcepto();
       }
 
 
@@ -130,10 +127,6 @@
 
     });
   });
-
-</script>
-
-<script>
   var fila = 0;
   function AgregarConcepto() {
     var esvacio = false;
@@ -206,6 +199,8 @@
       }
 
       $(".delete").on("click", function () {
+       
+       
         fila = $(this).parents("tr").find("td")[2].innerHTML;
         cantidad = fila.substring(fila.lastIndexOf('v'));
         const regex = /"([^"]*)"|'([^']*)'/g,
@@ -217,23 +212,25 @@
           //   grupo[1], con el grupo[2] undefined, y viceversa
           resultado.push(grupo[1] || grupo[2]);
         }
-
         var importeR = parseFloat(resultado.join("\n"));
-       
-        var importeT = $('#ImporteTotal').val();
+        var importeT = $("#ImporteTotal").val();       
+        importeT = ((parseFloat(importeT)) - (parseFloat(importeR)));
         swal("", importeT, "");
-        importeT = parseFloat(importeT) - parseFloat(importeR);
-        //swal("", importeT, "");
-        $('#ImporteTotal').val(importeT);
+        //$("#ImporteTotal").val(importeT);
 
         //var tr = $(this).closest('tr');
         //tr.remove();
 
 
       });
-       
+
     }
   }
+
+</script>
+
+<script>
+ 
   //var fila = 0;
   //function AgregarConcepto() {
   //  var esvacio = false;
