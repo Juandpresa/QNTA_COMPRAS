@@ -148,6 +148,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagadorasController.cs" />
     <Compile Include="Controllers\ProveedorsController.cs" />
+    <Compile Include="Controllers\ReferenciaBancariasController.cs" />
     <Compile Include="Controllers\SeguimientoesController.cs" />
     <Compile Include="Controllers\SolicitudsController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
@@ -887,6 +888,11 @@
     <Content Include="Views\Usuarios\InicioRecuperar.cshtml" />
     <Content Include="Views\Usuarios\Recuperar.cshtml" />
     <Content Include="Views\Shared\_CrearGasto.cshtml" />
+    <Content Include="Views\ReferenciaBancarias\Create.cshtml" />
+    <Content Include="Views\ReferenciaBancarias\Delete.cshtml" />
+    <Content Include="Views\ReferenciaBancarias\Details.cshtml" />
+    <Content Include="Views\ReferenciaBancarias\Edit.cshtml" />
+    <Content Include="Views\ReferenciaBancarias\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

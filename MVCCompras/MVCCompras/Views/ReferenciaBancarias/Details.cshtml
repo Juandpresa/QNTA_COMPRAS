@@ -1,0 +1,74 @@
+﻿@model MVCCompras.Models.ReferenciaBancaria
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReferenciaBancaria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cuenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cuenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clabe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clabe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstaActivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstaActivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bancos.Alias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bancos.Alias)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.Alias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.Alias)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReferenciaBancariaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

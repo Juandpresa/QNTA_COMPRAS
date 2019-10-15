@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MVCCompras.Models.ReferenciaBancaria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cuenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Clabe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstaActivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bancos.Alias)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Moneda.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proveedor.Alias)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cuenta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Clabe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstaActivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bancos.Alias)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Moneda.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proveedor.Alias)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReferenciaBancariaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReferenciaBancariaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReferenciaBancariaID })
+        </td>
+    </tr>
+}
+
+</table>

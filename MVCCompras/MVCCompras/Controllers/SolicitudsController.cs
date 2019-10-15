@@ -1316,9 +1316,17 @@ on p.PagadoraID equals s.PagadoraID
         "<h2 align=center> Liberado por: " + liberado + "</h2>" +
         "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
             msj.IsBodyHtml = true;
-
-      SmtpClient cliente = new SmtpClient("mail." + dominio);
-      cliente.EnableSsl = false;
+      SmtpClient cliente = new SmtpClient();
+      if (dominio == dom)
+      {
+        cliente.Host = "smtp." + domi;
+        cliente.EnableSsl = true;
+      }
+      else
+      {
+        cliente.Host = "mail." + dominio;
+        cliente.EnableSsl = false;
+      }
       cliente.UseDefaultCredentials = false;
       cliente.Port = 587;
       cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);

@@ -38,22 +38,28 @@
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
-            @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Create", "Solicituds")"><i class="fa fa-file"></i>Solicitud</a>
-            @*<span>@Html.ActionLink("Solicitud", "Create", "Solicituds", null, new { @class = "icon_genius" });</span>*@
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Index", "Bancos")"><i class="fa fa-institution"></i>Bancos</a>
-          </li>
-          <li class="sub-menu">
-            <a href="@Url.Action("Index", "Pagadoras")"><i class="fa fa-institution"></i>Pagadoras</a>
-          </li>
-        </ul>
+          <ul class="sidebar-menu">
+              <li class="active">
+                  <a href="@Url.Action("Index", "Solicituds")"><i class="icon_house_alt"></i>Inicio</a>
+                  @*<span>@Html.ActionLink("Inicio", "Index", "Home")</span>*@
+              </li>
+              <li class="sub-menu">
+                  <a href="@Url.Action("Create", "Solicituds")"><i class="fa fa-file"></i>Solicitud</a>
+                  @*<span>@Html.ActionLink("Solicitud", "Create", "Solicituds", null, new { @class = "icon_genius" });</span>*@
+              </li>
+              <li class="sub-menu">
+                  <a href="@Url.Action("Index", "Bancos")"><i class="fa fa-institution"></i>Bancos</a>
+              </li>
+              <li class="sub-menu">
+                  <a href="@Url.Action("Index", "Pagadoras")"><i class="fa fa-institution"></i>Pagadoras</a>
+              </li>
+              <li class="sub-menu">
+                  <a href="@Url.Action("Index", "Proveedors")"><i class="fa fa-institution"></i>Proveedores</a>
+              </li>
+              <li class="sub-menu">
+                  <a href="@Url.Action("Index", "ReferenciaBancarias")"><i class="fa fa-institution"></i>Referencias Bancarias</a>
+              </li>
+          </ul>
         <!-- sidebar menu end-->
       </div>
     </aside>
