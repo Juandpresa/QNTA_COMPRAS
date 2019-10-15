@@ -151,6 +151,7 @@
         //Agregamos el concepto
         var numconcepto = parseInt($("#NumConcepto").val()) + 1;
         $("#NumConcepto").val(numconcepto);
+        swal("", numconcepto, "");
         fila++;
         //Agregamos el concepto a la tabla
         $("#tblConcepto").append(

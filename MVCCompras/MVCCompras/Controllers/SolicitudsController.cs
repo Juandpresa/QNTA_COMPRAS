@@ -504,9 +504,9 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, FormCollection CrearGasto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
+    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
-
+     
       string pass = "";
       int idSol = 0;
       //string correo = Session["Correo"].ToString();
@@ -599,7 +599,7 @@ on p.PagadoraID equals s.PagadoraID
           //  NewGasto.ClienteId = int.Parse(CrearGasto["ccostid" + item]);
           //  NewGasto.SolicitudID = solicitud.SolicitudID;
           //  NewGasto.Porc = int.Parse(CrearGasto["Porc"]);
-          //  NewGasto.Importe=int.Parse(CrearGasto["Importe"]);
+          //  NewGasto.Importe = int.Parse(CrearGasto["Importe"]);
 
           //  db.DistribucionGasto.Add(NewGasto);
           //  //gastos[item - 1];
