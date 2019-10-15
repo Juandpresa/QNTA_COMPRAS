@@ -104,7 +104,15 @@
                                         </dt>
 
                                         <dd>
-                                            @Html.DisplayFor(model => model.PagadoraID)
+                                            @{int p = 0;
+                                                string[] pry = new string[ViewBag.conp];
+                                                foreach (var item in pry)
+                                                {
+                                                    @Html.DisplayName((((string[])ViewData["pagadora"])[p]))
+                                                    p = p + 1;
+                                                }
+                                            }
+
                                         </dd>
                                         <dt>
                                             @Html.DisplayName("Forma de Pago:")
