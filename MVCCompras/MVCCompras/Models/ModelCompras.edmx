@@ -171,7 +171,7 @@
           <Property Name="SolicitudID" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Archivo" Type="varchar(max)" />
-          <Property Name="FechaAlmacenamiento" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaAlmacenamiento" Type="datetime" Nullable="false" />
           <Property Name="SeCargoComprobante" Type="bit" />
         </EntityType>
         <EntityType Name="DetalleSolicitud">
@@ -227,8 +227,6 @@
         <EntityType Name="Seguimiento">
           <Key>
             <PropertyRef Name="SolicitudID" />
-            <PropertyRef Name="EstatusID" />
-            <PropertyRef Name="CuentaID" />
           </Key>
           <Property Name="SolicitudID" Type="int" Nullable="false" />
           <Property Name="EstatusID" Type="int" Nullable="false" />
@@ -790,7 +788,7 @@
           <Property Name="SolicitudID" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Archivo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="FechaAlmacenamiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaAlmacenamiento" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SeCargoComprobante" Type="Boolean" />
           <NavigationProperty Name="Solicitud" Relationship="Self.FK_Solicitud_Comprobante" FromRole="Comprobante" ToRole="Solicitud" />
         </EntityType>
@@ -1231,8 +1229,6 @@
         <EntityType Name="Seguimiento">
           <Key>
             <PropertyRef Name="SolicitudID" />
-            <PropertyRef Name="EstatusID" />
-            <PropertyRef Name="CuentaID" />
           </Key>
           <Property Name="SolicitudID" Type="Int32" Nullable="false" />
           <Property Name="EstatusID" Type="Int32" Nullable="false" />
