@@ -203,6 +203,33 @@ on p.PagadoraID equals s.PagadoraID
       }
       Solicitud solicitud = db.Solicitud.Find(id);
 
+      //Consulta join para obtenerla factura  
+      var pag = (from s in db.Solicitud join tp in db.Pagadora
+                 on s.PagadoraID equals tp.PagadoraID
+                 where s.SolicitudID == id
+                 select new
+                 {
+                   tp.Alias
+                 });
+      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+      int contp = 0;
+      foreach (var item in pag)
+      {
+        contp++;
+      }
+      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+      int pagadora = 0;
+      string[] pa = new string[contp];
+
+      foreach (var item in pag)
+      {
+        pa[pagadora] = item.Alias;
+        pagadora = pagadora + 1;
+      }
+      //asignar a ViewData el valor del arreglo
+      ViewBag.conp = pagadora;
+      ViewData["pagadora"] = pa;
+
 
       //Consulta join para obtenerla factura  
       var fac = (from f in db.Factura
@@ -233,6 +260,7 @@ on p.PagadoraID equals s.PagadoraID
       ViewBag.conf = factura;
       ViewData["factura"] = fa;
       ViewData["ruta"] = ru;
+
 
       if (solicitud == null)
       {
