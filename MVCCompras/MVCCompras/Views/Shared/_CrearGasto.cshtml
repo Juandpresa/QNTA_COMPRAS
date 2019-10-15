@@ -112,7 +112,10 @@
             //Agregamos concepto
             var cliente = $("#ClienteID").find('option:selected').text();
             var ccosto = $("#CentroCostosID").find('option:selected').text();
-            var porc = $("#Porc").val();
+          var porc = $("#Porc").val();
+          var tot = $("#ImporteTotal").val();
+          var porcA = (porc/100) * (tot);
+          $("#Importe").val(porcA);
             var importe = $("#Importe").val();
             var nuevogasto = 0;
             if (nuevogasto >= 0 || importe != 0) {
