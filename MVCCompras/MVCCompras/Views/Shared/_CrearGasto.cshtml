@@ -121,7 +121,8 @@
             if (nuevogasto >= 0 || importe != 0) {
                 //Agregamos el concepto
                 var numgasto = parseInt($("#NumGasto").val()) + 1;
-                $("#NumConcepto").val(numgasto);
+              $("#NumGasto").val(numgasto);
+              swal("", numgasto, "");
                 //Agregamos el concepto a la tabla
                 $("#tblGasto").append(
                     "<tr>" +
@@ -154,7 +155,7 @@
                     "</tr>"
                 );
                 $(".concepto").val("");
-                $("#Importe").val(nuevogasto);
+              $("#Importe").val(nuevogasto);
 
             }
             else {
