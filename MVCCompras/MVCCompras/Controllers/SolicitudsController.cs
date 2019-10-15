@@ -16,6 +16,7 @@ namespace MVCCompras.Controllers
   public class SolicitudsController : Controller
   {
     string[] conceptos;
+    string[] gastos;
     string smtpOff = "office365.com", qdomi = "qnta.com.mx";
     public ActionResult GetPagadora(string PagadoraID)
     {
@@ -475,7 +476,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
+    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, FormCollection CrearGasto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
 
       string pass = "";
@@ -544,7 +545,7 @@ on p.PagadoraID equals s.PagadoraID
 
           for (int item = 1; item <= NumConcepto; item++)
           {
-            //Crear un objeto que permita guardar el cargamento 
+            //Crear un objeto que permita guardar 
             Concepto NewConcepto = new Concepto();
             //Agregamos registro x registro al la bd
             NewConcepto.SolicitudId = solicitud.SolicitudID;
@@ -555,7 +556,27 @@ on p.PagadoraID equals s.PagadoraID
             db.Concepto.Add(NewConcepto);
             conceptos[item - 1] = NewConcepto.Nombre;
           }
-          db.SaveChanges();
+
+
+          ////guardar gastos
+          //int NumGasto = int.Parse(CrearGasto["NumGasto"].ToString());
+          //gastos = new string[NumGasto];
+
+          //for (int item = 1; item <= NumGasto; item++)
+          //{
+          //  //Crear un objeto que permita guardar el cargamento 
+          //  DistribucionGasto NewGasto = new DistribucionGasto();
+          //  //Agregamos registro x registro al la bd
+          //  NewGasto.ClienteId = int.Parse(CrearGasto["clientid" + item]);
+          //  NewGasto.ClienteId = int.Parse(CrearGasto["ccostid" + item]);
+          //  NewGasto.SolicitudID = solicitud.SolicitudID;
+          //  NewGasto.Porc = int.Parse(CrearGasto["Porc"]);
+          //  NewGasto.Importe=int.Parse(CrearGasto["Importe"]);
+
+          //  db.DistribucionGasto.Add(NewGasto);
+          //  //gastos[item - 1];
+          //}
+          //db.SaveChanges();
           //guarda el archivo
           if (Factura.Last()!=null)
           {

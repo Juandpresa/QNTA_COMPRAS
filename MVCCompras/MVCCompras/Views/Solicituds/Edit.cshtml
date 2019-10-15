@@ -493,7 +493,7 @@
 <script>
     $(document).ready(function () {
       if ($("#status").val() >= 2) {
-        $('input, select, textarea').attr('disabled', 'disabled');
+        $('input, select, textarea,button').attr('disabled', 'disabled');
         if ($("#status").val() == 5) {
           $("#comprobante").attr('enabled', 'enabled');
         }
