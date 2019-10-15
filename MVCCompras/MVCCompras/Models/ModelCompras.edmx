@@ -227,8 +227,6 @@
         <EntityType Name="Seguimiento">
           <Key>
             <PropertyRef Name="SolicitudID" />
-            <PropertyRef Name="EstatusID" />
-            <PropertyRef Name="CuentaID" />
           </Key>
           <Property Name="SolicitudID" Type="int" Nullable="false" />
           <Property Name="EstatusID" Type="int" Nullable="false" />
@@ -1231,8 +1229,6 @@
         <EntityType Name="Seguimiento">
           <Key>
             <PropertyRef Name="SolicitudID" />
-            <PropertyRef Name="EstatusID" />
-            <PropertyRef Name="CuentaID" />
           </Key>
           <Property Name="SolicitudID" Type="Int32" Nullable="false" />
           <Property Name="EstatusID" Type="Int32" Nullable="false" />

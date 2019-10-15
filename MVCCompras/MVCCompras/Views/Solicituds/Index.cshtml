@@ -95,27 +95,27 @@
                                 <td>
 
                                     @{
-                                      ComprasEntities db = new ComprasEntities();
-                                      var con = (from s in db.Solicitud
-                                                 join c in db.Concepto
-                                                 on s.SolicitudID equals c.SolicitudId
-                                                 where c.SolicitudId == item.SolicitudID
-                                                 select new { c.Nombre });
+                                        ComprasEntities db = new ComprasEntities();
+                                        var con = (from s in db.Solicitud
+                                                   join c in db.Concepto
+                                                   on s.SolicitudID equals c.SolicitudId
+                                                   where c.SolicitudId == item.SolicitudID
+                                                   select new { c.Nombre });
 
-                                      int contador = 0;
-                                      foreach (var co in con)
-                                      {
-                                        contador++;
-                                      }
-                                      int cs = 0;
-                                      string[] cons = new string[contador];
-                                      foreach (var co in con)
-                                      {
-                                        cons[cs] = co.Nombre;
-                                        cs = cs + 1;
-                                      }
-                                      string result = string.Join(",", cons);
-                                      @result
+                                        int contador = 0;
+                                        foreach (var co in con)
+                                        {
+                                            contador++;
+                                        }
+                                        int cs = 0;
+                                        string[] cons = new string[contador];
+                                        foreach (var co in con)
+                                        {
+                                            cons[cs] = co.Nombre;
+                                            cs = cs + 1;
+                                        }
+                                        string result = string.Join(",", cons);
+                                        @result
                                     }
                                 </td>
                                 <td>
@@ -125,18 +125,18 @@
                                     @(((string[])ViewData["status"])[i])
                                 </td>
                                 <td>
-                                  @if (Session["idTipoUsuario"].ToString() == "2" || Session["idTipoUsuario"].ToString() == "5")
-                                  {
-                                    @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
-                                  }
-                                  else
-                                  {
-                                    @Html.ActionLink("Ver", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
-                                  }
+                                    @if (Session["idTipoUsuario"].ToString() == "2" || Session["idTipoUsuario"].ToString() == "5")
+                                    {
+                                        @Html.ActionLink("Ver", "Edit", new { id = item.SolicitudID }, new { @class = "btn  btn-warning" })
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("Ver", "Details", new { id = item.SolicitudID }, new { @class = "btn  btn-info" })
+                                    }
 
 
 
-                                  @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.SolicitudID }, new { @class = "btn  btn-danger" })*@
                                 </td>
                             </tr>
                         </tbody>
@@ -165,7 +165,7 @@
         if ($("#mensaje").html().length > 0) {
             var msg = $("#mensaje").html();
             swal("Exitoso!", msg, "success");
-      }
+        }
     });
 </script>
 
