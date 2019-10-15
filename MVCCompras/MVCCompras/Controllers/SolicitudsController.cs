@@ -30,6 +30,7 @@ namespace MVCCompras.Controllers
 
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
+     
       //Consulta join para obtener el ALIAS  de la pagadora 
       var paga = (from p in db.Pagadora
                   join s in db.Solicitud
@@ -91,7 +92,7 @@ on p.PagadoraID equals s.PagadoraID
         //Si sesion trae datos permite el acceso a la vista
         if (Session["idUsuario"] != null)
         {
-          if (TempData["var"] == null)
+          if (TempData["var"] == null )
           {
             ViewBag.CurrentSort = sortOrder;
 
@@ -254,7 +255,9 @@ on p.PagadoraID equals s.PagadoraID
       if (Session["idTipoUsuario"].ToString() == "4")
       {
         //SE AGREGAN LOS COMPROBANTES
-        if (Comprobante != null)
+        if (referencia.EstatusID==4)
+        {
+        if (Comprobante.Last() != null)
         {
           foreach (var file in Comprobante)
           {
@@ -294,7 +297,10 @@ on p.PagadoraID equals s.PagadoraID
             }
           }
         }
-
+        else
+          {
+          }  
+        }
         //ENVIA CORREO DE VUELTA AL USUARIO SOLICITANTE CON STATUS LIBERADA
 
         if (s == "on")
@@ -315,57 +321,72 @@ on p.PagadoraID equals s.PagadoraID
               est = referencia.EstatusID.ToString();
             }
             //depende el estatud de la solicitus se modificara 
+            if (int.Parse(est) == 3)
+            {
+              segui.EstatusID = 4;
+              TempData["var"] = "Solicitud Pagada";
+
+            }
             if (int.Parse(est) == 4)
             {
               segui.EstatusID = 5;
+
+              var con = (from so in db.Solicitud
+                         join c in db.Concepto
+                         on so.SolicitudID equals c.SolicitudId
+                         where c.SolicitudId == S
+                         select new { c.Nombre });
+              int cont = 0;
+              foreach (var item in con)
+              {
+                cont++;
+              }
+              int cs = 0;
+              string[] cons = new string[cont];
+              foreach (var item in con)
+              {
+                cons[cs] = item.Nombre;
+                cs = cs + 1;
+              }
+              string correoOrigen = Session["Correo"].ToString();
+              var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
+              var emailD = db.Usuarios.FirstOrDefault(e => e.Nombre == solicitud.Solicitante);
+
+              //var emailD = from u in db.Usuarios
+              //             where u.idTipoUsuario == 2
+              //             select new { u.Correo };
+              //int dir = 0;
+              //string[] destino = new string[1];
+              //foreach (var item in emailD)
+              //{
+              //  destino[dir] = item.Correo;
+              //  dir++;
+              //}
+              string destinoF = "";
+              if (emailD != null)
+              {
+                destinoF = emailD.Correo.ToString();
+              }
+                if (emailO != null)
+              {
+                string pass = emailO.Pass.ToString();
+                string libera = emailO.Nombre.ToString();
+                EnviarCorreoF(correoOrigen, pass, S, imp, solicitante, cons, smtpOff, qdomi, destinoF, libera);
+                TempData["var"] = "Solicitud Liberada";
+
+              }
             }
             segui.CuentaID = Session["idUsuario"].ToString();
             segui.FechaMovimiento = DateTime.Now;
             context.SaveChanges();
           }
-
-
-          var con = (from so in db.Solicitud
-                     join c in db.Concepto
-                     on so.SolicitudID equals c.SolicitudId
-                     where c.SolicitudId == S
-                     select new { c.Nombre });
-          int cont = 0;
-          foreach (var item in con)
-          {
-            cont++;
-          }
-          int cs = 0;
-          string[] cons = new string[cont];
-          foreach (var item in con)
-          {
-            cons[cs] = item.Nombre;
-            cs = cs + 1;
-          }
-          string correoOrigen = Session["Correo"].ToString();
-          var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
-          var emailD = from u in db.Usuarios
-                       where u.idTipoUsuario == 4
-                       select new { u.Correo };
-          int dir = 0;
-          string[] destino = new string[1];
-          foreach (var item in emailD)
-          {
-            destino[dir] = item.Correo;
-            dir++;
-          }
-
-          if (emailO != null)
-          {
-            string pass = emailO.Pass.ToString();
-            string autoriza = emailO.Nombre.ToString();
-            EnviarCorreoAU(correoOrigen, pass, S, imp, solicitante, cons, smtpOff, qdomi, destino, autoriza);
-            TempData["var"] = "Solicitud Autorizada";
-
-          }
+         
         }
       }
+      if (Session["idTipoUsuario"].ToString() == "3")
+      {
 
+     
       if (s == "on")
       {
         string est = "";
@@ -387,14 +408,6 @@ on p.PagadoraID equals s.PagadoraID
           if (int.Parse(est) == 2)
           {
             segui.EstatusID = 3;
-          }
-          if (int.Parse(est) == 3)
-          {
-            segui.EstatusID = 4;
-          }
-          if (int.Parse(est) == 4)
-          {
-            segui.EstatusID = 5;
           }
           segui.CuentaID = Session["idUsuario"].ToString();
           segui.FechaMovimiento = DateTime.Now;
@@ -440,7 +453,7 @@ on p.PagadoraID equals s.PagadoraID
 
         }
       }
-
+      }
       return RedirectToAction("Index");
 
     }
@@ -473,7 +486,7 @@ on p.PagadoraID equals s.PagadoraID
         try
         {
           //Validamos que el usuario selecciono un archivo
-          if (Factura != null)
+          if (Factura.Last() != null)
           {
             foreach (var file in Factura)
             {
@@ -493,56 +506,61 @@ on p.PagadoraID equals s.PagadoraID
                 }
               }
             }
-            ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
-            ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
-            //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
+          }
+          ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
+          ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
+          //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
 
-            ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
-            //solicitud.TipoGastoID = 1;
-            //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
-            solicitud.PeriocidadID = 1;
-            solicitud.CantidadPagos = 1;
-            //solicitud.ImporteTotal = 2365;
-            //solicitud.ImporteLetra = "aaaa";
-            solicitud.FechaRegistro = DateTime.Now;
-            solicitud.FechaInicioPagos = DateTime.Now;
-            solicitud.FechaModificacion = DateTime.Now;
-            solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
-            ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-            ViewBag.Solicita = new SelectList(db.Usuarios, "idUsuario", "Nombre", solicitud.Solicitante);
-            //obtiene el idUsuario del solicitante
-            string SOLID = CrearConcepto.Get("Solicita");
-            int SOLID2 = int.Parse(SOLID);
-            //Obtener el nombre del solicitante en base al idUsuario
-            var ssoo = db.Usuarios.FirstOrDefault(e => e.idUsuario == SOLID2);
-            //asignamos el nombre solicitante al campo solicitante
-            solicitud.Solicitante = ssoo.Nombre;
+          ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
+          //solicitud.TipoGastoID = 1;
+          //ViewBag.PeriocidadID = new SelectList(db.Periocidad, "PeriocidadID", "Nombre", solicitud.PeriocidadID);
+          solicitud.PeriocidadID = 1;
+          solicitud.CantidadPagos = 1;
+          //solicitud.ImporteTotal = 2365;
+          //solicitud.ImporteLetra = "aaaa";
+          solicitud.FechaRegistro = DateTime.Now;
+          solicitud.FechaInicioPagos = DateTime.Now;
+          solicitud.FechaModificacion = DateTime.Now;
+          solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
+          ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
+          ViewBag.Solicita = new SelectList(db.Usuarios, "idUsuario", "Nombre", solicitud.Solicitante);
+          //obtiene el idUsuario del solicitante
+          string SOLID = CrearConcepto.Get("Solicita");
+          int SOLID2 = int.Parse(SOLID);
+          //Obtener el nombre del solicitante en base al idUsuario
+          var ssoo = db.Usuarios.FirstOrDefault(e => e.idUsuario == SOLID2);
+          //asignamos el nombre solicitante al campo solicitante
+          solicitud.Solicitante = ssoo.Nombre;
 
-            db.Solicitud.Add(solicitud);
+          db.Solicitud.Add(solicitud);
 
-            //db.ReferenciaBancaria.Add(referencia);
+          //db.ReferenciaBancaria.Add(referencia);
 
-            db.SaveChanges();
-            idSol = db.Solicitud.Max(item => item.SolicitudID);
-            //guardar los conceptos
-            int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
-            conceptos = new string[NumConcepto];
+          db.SaveChanges();
+          idSol = db.Solicitud.Max(item => item.SolicitudID);
+          //guardar los conceptos
+          int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
+          conceptos = new string[NumConcepto];
 
-            for (int item = 1; item <= NumConcepto; item++)
-            {
-              //Crear un objeto que permita guardar el cargamento 
-              Concepto NewConcepto = new Concepto();
-              //Agregamos registro x registro al la bd
-              NewConcepto.SolicitudId = solicitud.SolicitudID;
-              NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
-              NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
-              NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+          for (int item = 1; item <= NumConcepto; item++)
+          {
+            //Crear un objeto que permita guardar el cargamento 
+            Concepto NewConcepto = new Concepto();
+            //Agregamos registro x registro al la bd
+            NewConcepto.SolicitudId = solicitud.SolicitudID;
+            NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
+            NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
+            NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
 
-              db.Concepto.Add(NewConcepto);
-              conceptos[item - 1] = NewConcepto.Nombre;
-            }
-            db.SaveChanges();
-            //guarda el archivo
+            db.Concepto.Add(NewConcepto);
+            conceptos[item - 1] = NewConcepto.Nombre;
+          }
+          db.SaveChanges();
+          //guarda el archivo
+          if (Factura.Last()!=null)
+          {
+
+
             foreach (var file2 in Factura)
             {
               if (file2.ContentLength > 0)
@@ -561,16 +579,16 @@ on p.PagadoraID equals s.PagadoraID
                 db.SaveChanges();
               }
             }
-
-            Seguimiento Nseguimiento = new Seguimiento();
-            Nseguimiento.CuentaID = Session["idUsuario"].ToString();
-            Nseguimiento.SolicitudID = idSol;
-            Nseguimiento.EstatusID = 1;
-            Nseguimiento.FechaMovimiento = DateTime.Now;
-            db.Seguimiento.Add(Nseguimiento);
-            db.SaveChanges();
-
           }
+          Seguimiento Nseguimiento = new Seguimiento();
+          Nseguimiento.CuentaID = Session["idUsuario"].ToString();
+          Nseguimiento.SolicitudID = idSol;
+          Nseguimiento.EstatusID = 1;
+          Nseguimiento.FechaMovimiento = DateTime.Now;
+          db.Seguimiento.Add(Nseguimiento);
+          db.SaveChanges();
+
+
 
           string correoOrigen = Session["Correo"].ToString();
           var emailO = db.Usuarios.FirstOrDefault(e => e.Correo == correoOrigen);
@@ -635,12 +653,12 @@ on p.PagadoraID equals s.PagadoraID
 
       //Consulta join para obtenerla factura  
       var comp = (from c in db.Comprobante
-                 where c.SolicitudID == id
-                 select new
-                 {
-                   c.Nombre,
-                   c.Archivo
-                 });
+                  where c.SolicitudID == id
+                  select new
+                  {
+                    c.Nombre,
+                    c.Archivo
+                  });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int contr = 0;
       foreach (var item in comp)
@@ -660,7 +678,7 @@ on p.PagadoraID equals s.PagadoraID
       }
       //asignar a ViewData el valor del arreglo
       ViewBag.conc = comprobante;
-      ViewData["comprobante"] = fa;
+      ViewData["comprobante"] = com;
       ViewData["ruta"] = ru;
 
 
@@ -783,7 +801,7 @@ on p.PagadoraID equals s.PagadoraID
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento,Factura")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto, IEnumerable<HttpPostedFileBase> Factura, Factura fac)
+    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento,Factura")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto, IEnumerable<HttpPostedFileBase> Factura, Factura fac, object value)
     {
 
       if (ModelState.IsValid)
@@ -799,6 +817,8 @@ on p.PagadoraID equals s.PagadoraID
         solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
         solicitud.Solicitante = collection.Get("Solicitante");
+        db.Entry(solicitud).State = EntityState.Modified;
+        db.SaveChanges();
         //AGREGA CONCEPTOS NUEVOS 
         //guardar los conceptos
         int NumConcepto = int.Parse(CrearConcepto["NumConcepto"].ToString());
@@ -817,6 +837,7 @@ on p.PagadoraID equals s.PagadoraID
           db.Concepto.Add(NewConcepto);
           conceptos[item - 1] = NewConcepto.Nombre;
         }
+        
         db.SaveChanges();
 
         //db.Entry(solicitud).State = EntityState.Modified;
@@ -825,7 +846,11 @@ on p.PagadoraID equals s.PagadoraID
 
 
         //SI AGREGA OTRA FACRURA LA ALMACENA
-        if (Factura != null)
+        if (Factura.Last() == null)
+        {
+
+        }
+        else
         {
           foreach (var file in Factura)
           {
@@ -946,7 +971,7 @@ on p.PagadoraID equals s.PagadoraID
           {
             string pass = emailO.Pass.ToString();
             string aproba = emailO.Nombre.ToString();
-            //EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
+            EnviarCorreoA(correoOrigen, pass, solicitud.SolicitudID, solicitud.ImporteTotal, solicitud.Solicitante, cons, smtpOff, qdomi, destino, aproba);
             db.Entry(solicitud).State = EntityState.Modified;
             db.SaveChanges();
             TempData["var"] = "Solicitud Aprobada";
@@ -1128,7 +1153,7 @@ on p.PagadoraID equals s.PagadoraID
       string EmailDestino = dest[0];
 
       string url = urlDominio + "Home/Login/";
-      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra Aprobada",
         "<h1 align=center><b>DATOS DE LA SOLICITUD APROBADA:</b></h>" +
         "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
         "<h2 align=center>Conceptos: " + result + "</h2>" +
@@ -1182,7 +1207,7 @@ on p.PagadoraID equals s.PagadoraID
       string EmailDestino = dest[0];
 
       string url = urlDominio + "Home/Login/";
-      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Nueva Solicitud de Compra",
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Solicitud de Compra Autorizada",
         "<h1 align=center><b>DATOS DE LA SOLICITUD AUTORIZADA:</b></h>" +
         "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
         "<h2 align=center>Conceptos: " + result + "</h2>" +
@@ -1212,6 +1237,40 @@ on p.PagadoraID equals s.PagadoraID
       cliente.UseDefaultCredentials = false;
       //cliente.Host = "smtp.gmail.com";
       //cliente.Host = "mail.qnta.mx";
+      cliente.Port = 587;
+      cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
+      try
+      {
+        cliente.Send(msj);
+
+        cliente.Dispose();
+      }
+      catch (Exception ex)
+      {
+
+        throw;
+      }
+    }
+
+    private void EnviarCorreoF(string EmailOrigen, string pass, int idsol, string impT, string solicitante, string[] conceptos, string domi, string dom, string dest, string liberado)
+    {
+      string dominio = EmailOrigen.Split('@').Last();
+      string result = string.Join(",", conceptos);
+      string EmailDestino = dest;
+      string url = urlDominio + "Home/Login/";
+      MailMessage msj = new MailMessage(EmailOrigen, EmailDestino, "Solicitud de Compra Liberada",
+        "<h1 align=center><b>DATOS DE LA SOLICITUD LIBERADA:</b></h>" +
+        "<h2 align=center>No.Solicitud: " + idsol + "</h2>" +
+        "<h2 align=center>Conceptos: " + result + "</h2>" +
+        "<h2 align=center>Importe Total de Compra: $" + impT + "</h2>" +
+        "<h2 align=center>Solicitado por: " + solicitante + "</h2>" +
+        "<h2 align=center> Liberado por: " + liberado + "</h2>" +
+        "<br><br><h4 align=center><a href='" + url + "'>Click para Acceder</a></h4>");
+            msj.IsBodyHtml = true;
+
+      SmtpClient cliente = new SmtpClient("mail." + dominio);
+      cliente.EnableSsl = false;
+      cliente.UseDefaultCredentials = false;
       cliente.Port = 587;
       cliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, pass);
       try
