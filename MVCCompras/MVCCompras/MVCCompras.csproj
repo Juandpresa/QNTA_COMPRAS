@@ -151,6 +151,7 @@
     <Compile Include="Controllers\ReferenciaBancariasController.cs" />
     <Compile Include="Controllers\SeguimientoesController.cs" />
     <Compile Include="Controllers\SolicitudsController.cs" />
+    <Compile Include="Controllers\Usuarios1Controller.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Conversion.cs" />
     <Compile Include="Enumeradores.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Models\ValidacionesLogin.cs" />
     <Compile Include="Models\ValidacionesPassword.cs" />
     <Compile Include="Models\ValidacionesRecuperarPassword.cs" />
+    <Compile Include="Models\ValidacionesUsusarios.cs" />
     <Compile Include="Models\ValidacionSolicitante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -629,28 +631,13 @@
     <Content Include="Content\css\xcharts.min.css" />
     <Content Include="Content\dataTables.bootstrap4.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
-    <Content Include="Content\MvcGrid\mvc-grid.css" />
-    <Content Include="Content\MvcGrid\mvc-grid.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\ElegantIcons.svg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="img\arrow-up.png" />
-    <Content Include="img\avatar-mini.jpg" />
-    <Content Include="img\avatar-mini2.jpg" />
-    <Content Include="img\avatar-mini3.jpg" />
-    <Content Include="img\avatar-mini4.jpg" />
-    <Content Include="img\avatar1.jpg" />
-    <Content Include="img\avatar1_small.jpg" />
     <Content Include="img\bg-1.jpg" />
-    <Content Include="img\chart-texture.jpg" />
-    <Content Include="img\chat-avatar.jpg" />
-    <Content Include="img\chat-avatar2.jpg" />
-    <Content Include="img\customSelect-arrow.gif" />
-    <Content Include="img\geekslabs.png" />
-    <Content Include="img\Germany.png" />
     <Content Include="img\icons\line-icon-c.png" />
     <Content Include="img\icons\line-icon-hover.png" />
     <Content Include="img\icons\line-icon.png" />
@@ -658,21 +645,6 @@
     <Content Include="img\icons\social.png" />
     <Content Include="img\icons\weather-hover.png" />
     <Content Include="img\icons\weather.png" />
-    <Content Include="img\India.png" />
-    <Content Include="img\left-arrow.png" />
-    <Content Include="img\logo-big.png" />
-    <Content Include="img\mail-avatar.jpg" />
-    <Content Include="img\profile-avatar.jpg" />
-    <Content Include="img\profile-widget-avatar.jpg" />
-    <Content Include="img\right-arrow.png" />
-    <Content Include="img\Russia.png" />
-    <Content Include="img\sample-img-1.jpg" />
-    <Content Include="img\sample-img-2.png" />
-    <Content Include="img\sample-img-3.png" />
-    <Content Include="img\search-icon.jpg" />
-    <Content Include="img\Spain.png" />
-    <Content Include="img\user.jpg" />
-    <Content Include="img\user22.png" />
     <Content Include="Models\ModelCompras.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelCompras.edmx</DependentUpon>
@@ -743,7 +715,6 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -1187,7 +1187,7 @@ on p.PagadoraID equals s.PagadoraID
       }
       catch (Exception ex)
       {
-
+        var mensaje = "Error message: " + ex.Message;
         throw;
       }
     }
@@ -1241,7 +1241,7 @@ on p.PagadoraID equals s.PagadoraID
       }
       catch (Exception ex)
       {
-
+        var mensaje = "Error message: " + ex.Message;
         throw;
       }
     }
@@ -1295,7 +1295,7 @@ on p.PagadoraID equals s.PagadoraID
       }
       catch (Exception ex)
       {
-
+        var mensaje = "Error message: " + ex.Message;
         throw;
       }
     }
@@ -1337,7 +1337,7 @@ on p.PagadoraID equals s.PagadoraID
       }
       catch (Exception ex)
       {
-
+        var mensaje = "Error message: " + ex.Message;
         throw;
       }
     }

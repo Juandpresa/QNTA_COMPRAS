@@ -1,82 +1,81 @@
 ﻿@using MVCCompras.Models
 @model Login
 @{
-  Layout = null;
+    Layout = null;
 }
 @if (ViewBag.Message != null)
 {
-  <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@ViewBag.Title COMPRAS</title>
-  @Styles.Render("~/Content/Bootstrap")
-  @Styles.Render("~/Content/Tables")
-  @Styles.Render("~/Content/iconos")
-  @Styles.Render("~/Content/estilos")
-  @Scripts.Render("~/bundles/modernizr")
-  @Scripts.Render("~/bundles/jquery")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title COMPRAS</title>
+    @Styles.Render("~/Content/Bootstrap")
+    @Styles.Render("~/Content/Tables")
+    @Styles.Render("~/Content/iconos")
+    @Styles.Render("~/Content/estilos")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
-<body>
+<body class=" login-img-body">
 
-  <div class="container">
+    <div class="container">
 
-    @*<form class="login-form" action="index.cshtml">*@
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "login-form", role = "form" }))
-    {
-      @Html.AntiForgeryToken()
-      <div class="login-wrap">
-        <p class="login-img"><i class="icon_lock_alt"></i></p>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_profile"></i></span>
-          @*<input type="text" class="form-control" placeholder="Username" autofocus>}*@
-          @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "correo electronico" })
-          @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-          @Html.PasswordFor(m => m.Pass, new { @class = "form-control", @placeholder = "contraseña" })
-          @Html.ValidationMessageFor(m => m.Pass, "", new { @class = "text-danger" })
-        </div>
-        <label class="checkbox">
-          <span class="pull-right">@Html.ActionLink("Olvide mi Contraseña", "InicioRecuperar", "Usuarios")</span>
-        </label>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
-      </div>
+        @*<form class="login-form" action="index.cshtml">*@
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "login-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="login-wrap">
+                <p class="login-img"><i class="icon_lock"></i></p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_profile"></i></span>
+                    @*<input type="text" class="form-control" placeholder="Username" autofocus>}*@
+                    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "correo electronico" })
+                    @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                    @Html.PasswordFor(m => m.Pass, new { @class = "form-control", @placeholder = "contraseña" })
+                    @Html.ValidationMessageFor(m => m.Pass, "", new { @class = "text-danger" })
+                </div>
+                @*<label class="checkbox">
+                    <span class="pull-right">@Html.ActionLink("Olvide mi Contraseña", "InicioRecuperar", "Usuarios")</span>
+                </label>*@
+                <button class="btn btn-info btn-lg btn-block" type="submit">Ingresar</button>
+            </div>
 
-    }
-  </div>
-  <script>
-    $(document).ready(function () {
-      if ($("#mensaje").text() == "Se ha producido un error") {
-        var msg = $("#mensaje").html();
-        swal("Error!!", msg, "error");
-      }
-      if ($("#mensaje").text() == "Contraseña modificada") {
-        var msg = $("#mensaje").html();
-        swal("Exitoso!!", msg, "success");
-      }
-      if ($("#mensaje").html().length > 0) {
-        var msg = $("#mensaje").html();
-        swal("Atencion!", msg, "warning");
-      }
-    });
-  </script>
-  <hr />
-  <footer></footer>
-  @Scripts.Render("~/Content/js")
-  @Scripts.Render("~/bundles/datatables")
+        }
+    </div>
+    <script>
+        $(document).ready(function () {
+            if ($("#mensaje").text() == "Se ha producido un error") {
+                var msg = $("#mensaje").html();
+                swal("Error!!", msg, "error");
+            }
+            if ($("#mensaje").text() == "Contraseña modificada") {
+                var msg = $("#mensaje").html();
+                swal("Exitoso!!", msg, "success");
+            }
+            if ($("#mensaje").html().length > 0) {
+                var msg = $("#mensaje").html();
+                swal("Atencion!", msg, "warning");
+            }
+        });
+    </script>
+    <footer></footer>
+    @Scripts.Render("~/Content/js")
+    @Scripts.Render("~/bundles/datatables")
 
 
-  @*@Scripts.Render("~/bundles/jquery")*@
-  @*@Scripts.Render("~/bundles/js")*@
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/js")*@
 </body>
 </html>
 

@@ -29,7 +29,7 @@ namespace MVCCompras.Models
         public string Colonia { get; set; }
         public string Alcaldia { get; set; }
         public string Estado { get; set; }
-        public Nullable<bool> EstaActivo { get; set; }
+        public bool EstaActivo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleSolicitud> DetalleSolicitud { get; set; }

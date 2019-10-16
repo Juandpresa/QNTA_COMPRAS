@@ -4,72 +4,80 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Correo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pass)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.APaterno)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AMaterno)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UActivo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Token_Recuperacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoUsuario.Perfil)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Correo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pass)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.APaterno)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AMaterno)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UActivo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Token_Recuperacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoUsuario.Perfil)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idUsuario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idUsuario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idUsuario })
-        </td>
-    </tr>
+@if (ViewBag.Message != null)
+{
+    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 
-</table>
+
+
+<section id="main-content">
+    <section class=" wrapper">
+        <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-users"></i>Catálogo de Usuarios</h3>
+        </div>
+    </section>
+    <div class="panel">
+        <div class="col-lg-10">
+            <table class="table table-bordered table-striped table-advance table-hover table-responsive">
+                <tr>
+                    <th>
+                        <i class="fa fa-user"></i>  Nombre
+                    </th>
+                    <th>
+                        <i class="fa fa-envelope"></i>  Correo
+                    </th>
+                    <th>
+                        <i class="fa fa-building"></i>  Tipo de Usuario
+                    </th>
+                    <th>
+                        <i class="fa fa-check-square-o"></i> Usuario Activo
+                    </th>
+                    <th><i class="fa fa-cogs"></i>  Acciones</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Correo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoUsuario.Perfil)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UActivo)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.idUsuario }, new { @class = "btn  btn-warning" })
+                            @*@Html.ActionLink("Details", "Details", new { id = item.idUsuario }) |*@
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.idUsuario }, new { @class = "btn  btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <div class="btn btn-success">
+                @Html.ActionLink("Ingresar Nuevo", "Create")
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        if ($("#mensaje").text() == "Usuario Agregado") {
+            var msg = $("#mensaje").html();
+            swal("Exitoso!!", msg, "success");
+        }
+        if ($("#mensaje").html().length > 0) {
+            var msg = $("#mensaje").html();
+            swal("Exitoso!", msg, "success");
+        }
+    });
+</script>

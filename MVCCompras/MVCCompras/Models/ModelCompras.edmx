@@ -35,7 +35,7 @@
           <Property Name="Colonia" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Alcaldia" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="EstaActivo" Type="bit" />
+          <Property Name="EstaActivo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ClienteCentroCostos">
           <Key>
@@ -635,7 +635,7 @@
           <Property Name="Colonia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Alcaldia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EstaActivo" Type="Boolean" />
+          <Property Name="EstaActivo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DetalleSolicitud" Relationship="Self.FK_Cliente_DetalleSolicitud" FromRole="Cliente" ToRole="DetalleSolicitud" />
         </EntityType>
         <EntityType Name="ClienteCentroCostos">
