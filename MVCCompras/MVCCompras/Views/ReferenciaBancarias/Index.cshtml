@@ -3,67 +3,98 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cuenta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Clabe)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstaActivo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bancos.Alias)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Moneda.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Proveedor.Alias)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cuenta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Clabe)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstaActivo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bancos.Alias)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Moneda.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Proveedor.Alias)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReferenciaBancariaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReferenciaBancariaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReferenciaBancariaID })
-        </td>
-    </tr>
+@if (ViewBag.Message != null)
+{
+    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
 }
 
-</table>
+<section id="main-content">
+    <section class=" wrapper">
+        <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-money"></i>Catálogo de Referencias Bancarias</h3>
+        </div>
+    </section>
+</section>
+
+<section id="main-content">
+    <div class="panel">
+        <div class="col-lg-12 ">
+            <table class="table table-bordered table-striped table-advance table-hover ">
+                <tr>
+                    <th>
+                        <i class="fa fa-institution"></i>Nombre
+                    </th>
+                    <th>
+                        <i class="fa fa-institution"></i>Cuenta
+                    </th>
+                    <th>
+                        <i class="fa fa-institution"></i>CLABE
+                    </th>
+                    <th>
+                        <i class="fa fa-institution"></i>Activo
+                    </th>
+                    <th>
+                        <i class="fa fa-institution"></i>Alias Banco
+                    </th>
+                    <th>
+                        <i class="fa fa-institution"></i>Moneda
+                    </th>
+                    <th>
+                        <i class="fa fa-institution"></i>Alias Proveedor
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cuenta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Clabe)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstaActivo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Bancos.Alias)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Moneda.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Proveedor.Alias)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ReferenciaBancariaID }, new { @class = "btn  btn-warning" }) 
+                            @*@Html.ActionLink("Details", "Details", new { id = item.ReferenciaBancariaID }) |*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ReferenciaBancariaID }, new { @class = "btn  btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <div class="btn btn-success">
+                @Html.ActionLink("Ingresar Nuevo", "Create")
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+  $(document).ready(function () {
+    if ($("#mensaje").text() == "Banco Agregado") {
+      var msg = $("#mensaje").html();
+      swal("Exitoso!!", msg, "success");
+    }
+    if ($("#mensaje").html().length > 0) {
+      var msg = $("#mensaje").html();
+      swal("Exitoso!", msg, "success");
+    }
+  });
+</script>
