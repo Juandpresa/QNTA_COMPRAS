@@ -111,7 +111,9 @@
         else {
             //Agregamos concepto
             var cliente = $("#ClienteID").find('option:selected').text();
-            var ccosto = $("#CentroCostosID").find('option:selected').text();
+          var ccosto = $("#CentroCostosID").find('option:selected').text();
+          var cte = $("#ClienteID").val();
+          var cenCosto = $("#CentroCostosID").val();
           var porc = $("#Porc").val();
           var tot = $("#ImporteTotal").val();
           var porcA = (porc/100) * (tot);
@@ -122,7 +124,6 @@
                 //Agregamos el concepto
                 var numgasto = parseInt($("#NumGasto").val()) + 1;
               $("#NumGasto").val(numgasto);
-              swal("", numgasto, "");
                 //Agregamos el concepto a la tabla
                 $("#tblGasto").append(
                     "<tr>" +
@@ -151,7 +152,21 @@
                     " id='importeid2" + numgasto + "'" +
                     " readonly" +
                     " value='"+ importe + "'/>" +
-                    "</td>" +
+                  "</td>" +
+                  "<td style='visibility: hidden'>" +
+                  "<input type='text' style='border:0;background:transparent;' " +
+                  " name='cte" + numgasto + "'" +
+                  " id='cte" + numgasto + "'" +
+                  " readonly" +
+                  " value='" + cte + "'/>" +
+                  "</td>" +
+                  "<td style='visibility: hidden'>" +
+                  "<input type='text' style='border:0;background:transparent;' " +
+                  " name='cenCosto" + numgasto + "'" +
+                  " id='cenCosto" + numgasto + "'" +
+                  " readonly" +
+                  " value='" + cenCosto + "'/>" +
+                  "</td>" +
                     "</tr>"
                 );
                 $(".concepto").val("");

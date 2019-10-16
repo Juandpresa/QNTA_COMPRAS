@@ -594,8 +594,8 @@ on p.PagadoraID equals s.PagadoraID
             //Crear un objeto que permita guardar el cargamento 
             DistribucionGasto NewGasto = new DistribucionGasto();
             //Agregamos registro x registro al la bd
-            //NewGasto.ClienteId = int.Parse(CrearConcepto["clientid" + item].ToString());
-            //NewGasto.CentroCostosID = int.Parse(CrearConcepto["ccostid" + item]);
+            NewGasto.ClienteId = int.Parse(CrearConcepto["cte" + item].ToString());
+            NewGasto.CentroCostosID = int.Parse(CrearConcepto["cenCosto" + item]);
             NewGasto.SolicitudID = solicitud.SolicitudID;
             NewGasto.Porc = int.Parse(CrearConcepto["porcid" + item]);
             NewGasto.Importe = decimal.Parse(CrearConcepto["importeid2" + item].ToString());
