@@ -3,86 +3,81 @@
 @{
     ViewBag.Title = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Usuarios</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Correo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Correo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pass)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pass)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.APaterno)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.APaterno)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AMaterno)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AMaterno)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UActivo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UActivo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Token_Recuperacion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Token_Recuperacion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoUsuario.Perfil)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoUsuario.Perfil)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<section id="main-content">
+    <section class=" wrapper">
+        <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-user"></i>Eliminar Usuario</h3>
         </div>
-    }
-</div>
+        <div class="row">
+            <div class="col-md-4">
+                <section class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h4>Usuario</h4></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="padd">
+                                <div class="form quick-post">
+                                    <h3>
+                                        ¿Estás seguro que quieres eliminar esto?
+                                    </h3>
+                                    <div>
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Correo)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Correo)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Nombre)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Nombre)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayName("Tipo de Usuario")
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.TipoUsuario.Perfil)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.UActivo)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.UActivo)
+                                            </dd>
+                                        </dl>
+
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-actions no-color col-lg-3">
+                                                <input type="submit" value="Eliminar" class="btn btn-danger" />
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="btn btn-info">
+                                                    @Html.ActionLink("Cancelar", "Index")
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</section>

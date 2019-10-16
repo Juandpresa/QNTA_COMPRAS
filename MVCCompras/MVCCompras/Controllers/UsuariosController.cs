@@ -52,10 +52,13 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Include = "idUsuario,idTipoUsuario,Correo,Pass,Nombre,APaterno,AMaterno,UActivo,Token_Recuperacion")] Usuarios usuarios)
+    public ActionResult Create([Bind(Exclude ="APaterno,AMaterno,Token_Recuperacion")] Usuarios usuarios)
     {
       if (ModelState.IsValid)
       {
+        usuarios.AMaterno = usuarios.Nombre;
+        usuarios.APaterno = usuarios.Nombre;
+        usuarios.Token_Recuperacion = null;
         db.Usuarios.Add(usuarios);
         db.SaveChanges();
         return RedirectToAction("Index");
