@@ -1,7 +1,7 @@
 ﻿@model MVCCompras.Models.Concepto
 @using (Html.BeginForm())
 {
-
+  @Html.Hidden("NumGasto", 0)
   <div class="modal fade" id="ModalConcepto" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -74,16 +74,16 @@
     $("#btnCancelConcepto").click(function () {
       $(".concepto").val("");
     });
-    
+
     $('#ImporteTotal').val(total);
-    $("#btnOkConcepto").click(function () { 
+    $("#btnOkConcepto").click(function () {
       if ((!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
         swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
       } else {
         var impT = $('#ImporteTotal').val();
         if ($('#ImporteID') != 0) {
           var nume = $('#ImporteID').val();
-          impT = parseFloat(impT) + parseFloat(nume);         
+          impT = parseFloat(impT) + parseFloat(nume);
         }
         $('#ImporteTotal').val(impT);
 
@@ -99,7 +99,7 @@
       }
 
 
-      
+
 
     });
 
@@ -192,8 +192,8 @@
       }
 
       $(".delete").on("click", function () {
-       
-       
+
+
         fila = $(this).parents("tr").find("td")[2].innerHTML;
         cantidad = fila.substring(fila.lastIndexOf('v'));
         const regex = /"([^"]*)"|'([^']*)'/g,
@@ -206,7 +206,7 @@
           resultado.push(grupo[1] || grupo[2]);
         }
         var importeR = parseFloat(resultado.join("\n"));
-        var importeT = $("#ImporteTotal").val();       
+        var importeT = $("#ImporteTotal").val();
         importeT = ((parseFloat(importeT)) - (parseFloat(importeR)));
         //swal("", importeT, "");
         //$("#ImporteTotal").val(importeT);
@@ -223,101 +223,101 @@
 </script>
 
 <script>
- 
-  //var fila = 0;
-  //function AgregarConcepto() {
-  //  var esvacio = false;
-  //  $(".concepto").each(function () {
-  //    if ($(this).val() == "") {
-  //      esvacio = true;
-  //    }
 
-  //  });
+    //var fila = 0;
+    //function AgregarConcepto() {
+    //  var esvacio = false;
+    //  $(".concepto").each(function () {
+    //    if ($(this).val() == "") {
+    //      esvacio = true;
+    //    }
 
-  //  if ((esvacio) || (!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
-  //    swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
-  //  }
-  //  else {
-  //    //Agregamos concepto
-  //    var concepto = $("#TipoPagoID").find('option:selected').text();
-  //    var idTipoPago = $("#TipoPagoID").val();
-  //    var descrip = $("#ConceptoID").val();
-  //    var importe = $("#ImporteID").val();
-  //    var nuevoconcepto = 0;
-  //    if (nuevoconcepto >= 0 || importe != 0) {
-  //      //Agregamos el concepto
-  //      var numconcepto = parseInt($("#NumConcepto").val()) + 1;
-  //      $("#NumConcepto").val(numconcepto);
-  //      fila++;
-  //      //Agregamos el concepto a la tabla
-  //      $("#tblConcepto").append(
-  //        "<tr>" +
-  //        "<td><input type='text' style='border:0;background:transparent;' name='concepid'" + numconcepto + " id='concepid'" + numconcepto + " readonly value='" + concepto + "'/>" +
-  //        "</td>" +
-  //        "<td>" +
-  //        "<input type='text' style='border:0;background:transparent;'" +
-  //        " name='descid" + numconcepto + "'" +
-  //        " id='descid" + numconcepto + "'" +
-  //        " value='" + descrip + "'/>" +
-  //        "</td>" + "<td>" +
-  //        "<input type='text' style='border:0;background:transparent;'" +
-  //        " name='importeid" + numconcepto + "'" +
-  //        " id='importeid" + numconcepto + "'" +
-  //        " readonly " +
-  //        " value='" + importe + "'/>" +
-  //        "</td>" + "<td align='center'>" +
-  //        "<button type='button' class='delete btn btn-danger' href='#'><i class='icon_close_alt2'></i></button>" +
-  //        "</td>" +
-  //        "<td style='visibility: hidden'>" +
-  //        "<input type='text' style='border:0;background:transparent;'" +
-  //        " name='idTipoPago" + numconcepto + "'" +
-  //        " id='idTipoPago" + numconcepto + "'" +
-  //        " readonly " +
-  //        " value='" + idTipoPago + "'/>" +
-  //        "</td>" +
-  //        "</tr>"
-  //      );
-  //      //$("#tblConcepto").append('<tr><td><input type="text" style="border:0;background:transparent;" name="concepid" id="concepid" value="' + concepto + '"></td>' +
-  //      //  '<td><input type="text" style="border:0;background:transparent;" name="descid" id="descid" value="' + descrip + '"></td>' +
-  //      //  '<td><input type="text" style="border:0;background:transparent;" name="importeid" id="importeid" value="' + importe + '"></td>' +
-  //      //  '<td style=visibility: hidden><input type="text" style="border:0;background:transparent;" name="idTipoPago" id="idTipoPago" value="' + idTipoPago + '"></td>' +
-  //      //  '<td align="center"><input type="button" id="delete" class="delete btn btn - danger icon_close_alt2"/></td></tr>');
+    //  });
 
-
+    //  if ((esvacio) || (!$.isNumeric($("#ImporteID").val())) || ($("#TipoPagoID").find('option:selected').text() == "Selecciona")) {
+    //    swal("Atención!", "Algun campo esta vacio o es erroneo", "warning");
+    //  }
+    //  else {
+    //    //Agregamos concepto
+    //    var concepto = $("#TipoPagoID").find('option:selected').text();
+    //    var idTipoPago = $("#TipoPagoID").val();
+    //    var descrip = $("#ConceptoID").val();
+    //    var importe = $("#ImporteID").val();
+    //    var nuevoconcepto = 0;
+    //    if (nuevoconcepto >= 0 || importe != 0) {
+    //      //Agregamos el concepto
+    //      var numconcepto = parseInt($("#NumConcepto").val()) + 1;
+    //      $("#NumConcepto").val(numconcepto);
+    //      fila++;
+    //      //Agregamos el concepto a la tabla
+    //      $("#tblConcepto").append(
+    //        "<tr>" +
+    //        "<td><input type='text' style='border:0;background:transparent;' name='concepid'" + numconcepto + " id='concepid'" + numconcepto + " readonly value='" + concepto + "'/>" +
+    //        "</td>" +
+    //        "<td>" +
+    //        "<input type='text' style='border:0;background:transparent;'" +
+    //        " name='descid" + numconcepto + "'" +
+    //        " id='descid" + numconcepto + "'" +
+    //        " value='" + descrip + "'/>" +
+    //        "</td>" + "<td>" +
+    //        "<input type='text' style='border:0;background:transparent;'" +
+    //        " name='importeid" + numconcepto + "'" +
+    //        " id='importeid" + numconcepto + "'" +
+    //        " readonly " +
+    //        " value='" + importe + "'/>" +
+    //        "</td>" + "<td align='center'>" +
+    //        "<button type='button' class='delete btn btn-danger' href='#'><i class='icon_close_alt2'></i></button>" +
+    //        "</td>" +
+    //        "<td style='visibility: hidden'>" +
+    //        "<input type='text' style='border:0;background:transparent;'" +
+    //        " name='idTipoPago" + numconcepto + "'" +
+    //        " id='idTipoPago" + numconcepto + "'" +
+    //        " readonly " +
+    //        " value='" + idTipoPago + "'/>" +
+    //        "</td>" +
+    //        "</tr>"
+    //      );
+    //      //$("#tblConcepto").append('<tr><td><input type="text" style="border:0;background:transparent;" name="concepid" id="concepid" value="' + concepto + '"></td>' +
+    //      //  '<td><input type="text" style="border:0;background:transparent;" name="descid" id="descid" value="' + descrip + '"></td>' +
+    //      //  '<td><input type="text" style="border:0;background:transparent;" name="importeid" id="importeid" value="' + importe + '"></td>' +
+    //      //  '<td style=visibility: hidden><input type="text" style="border:0;background:transparent;" name="idTipoPago" id="idTipoPago" value="' + idTipoPago + '"></td>' +
+    //      //  '<td align="center"><input type="button" id="delete" class="delete btn btn - danger icon_close_alt2"/></td></tr>');
 
 
-  //      $(".concepto").val("");
-  //      $("#Importe").val(nuevoconcepto);
 
-  //      $('#ImporteID').val(0);
-  //    }
-  //    else {
-  //      swal("Atención!", "Concepto incompleto", "warning");
-  //    }
 
-  //    $(".delete").on("click", function () {
-  //      fila = $(this).parents("tr").find("td")[2].innerHTML;
-  //      cantidad = fila.substring(fila.lastIndexOf('v'));
-  //      const regex = /"([^"]*)"|'([^']*)'/g,
-  //        texto = cantidad;
-  //      var grupo,
-  //        resultado = [];
-  //      while ((grupo = regex.exec(texto)) !== null) {
-  //        //si coincide con comillas dobles, el contenido estará en el
-  //        //   grupo[1], con el grupo[2] undefined, y viceversa
-  //        resultado.push(grupo[1] || grupo[2]);
-  //      }
-  //      var importe = parseFloat(resultado.join("\n"));
-  //      var importeT = $('#ImporteTotal').val();
-  //      var tr = $(this).closest('tr');
-  //      tr.remove();
-  //      importeT = parseFloat(importeT) - parseFloat(importe);
-  //      $('#ImporteTotal').val(importeT);
-  //      $("#SuperTotal").val(0);
-  //      var l = $("#SuperTotal").val();
-  //      swal("", l, "");
+    //      $(".concepto").val("");
+    //      $("#Importe").val(nuevoconcepto);
 
-  //    });
-  //  }
-  //}
+    //      $('#ImporteID').val(0);
+    //    }
+    //    else {
+    //      swal("Atención!", "Concepto incompleto", "warning");
+    //    }
+
+    //    $(".delete").on("click", function () {
+    //      fila = $(this).parents("tr").find("td")[2].innerHTML;
+    //      cantidad = fila.substring(fila.lastIndexOf('v'));
+    //      const regex = /"([^"]*)"|'([^']*)'/g,
+    //        texto = cantidad;
+    //      var grupo,
+    //        resultado = [];
+    //      while ((grupo = regex.exec(texto)) !== null) {
+    //        //si coincide con comillas dobles, el contenido estará en el
+    //        //   grupo[1], con el grupo[2] undefined, y viceversa
+    //        resultado.push(grupo[1] || grupo[2]);
+    //      }
+    //      var importe = parseFloat(resultado.join("\n"));
+    //      var importeT = $('#ImporteTotal').val();
+    //      var tr = $(this).closest('tr');
+    //      tr.remove();
+    //      importeT = parseFloat(importeT) - parseFloat(importe);
+    //      $('#ImporteTotal').val(importeT);
+    //      $("#SuperTotal").val(0);
+    //      var l = $("#SuperTotal").val();
+    //      swal("", l, "");
+
+    //    });
+    //  }
+    //}
 </script>

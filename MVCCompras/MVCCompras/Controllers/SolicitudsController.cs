@@ -506,7 +506,6 @@ on p.PagadoraID equals s.PagadoraID
     [ValidateAntiForgeryToken]
     public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
-     
       string pass = "";
       int idSol = 0;
       //string correo = Session["Correo"].ToString();
@@ -586,25 +585,25 @@ on p.PagadoraID equals s.PagadoraID
           }
 
 
-          ////guardar gastos
-          //int NumGasto = int.Parse(CrearGasto["NumGasto"].ToString());
-          //gastos = new string[NumGasto];
+          //guardar gastos
+          int NumGasto = int.Parse(CrearConcepto["NumGasto"].ToString());
+          gastos = new string[NumGasto];
 
-          //for (int item = 1; item <= NumGasto; item++)
-          //{
-          //  //Crear un objeto que permita guardar el cargamento 
-          //  DistribucionGasto NewGasto = new DistribucionGasto();
-          //  //Agregamos registro x registro al la bd
-          //  NewGasto.ClienteId = int.Parse(CrearGasto["clientid" + item]);
-          //  NewGasto.ClienteId = int.Parse(CrearGasto["ccostid" + item]);
-          //  NewGasto.SolicitudID = solicitud.SolicitudID;
-          //  NewGasto.Porc = int.Parse(CrearGasto["Porc"]);
-          //  NewGasto.Importe = int.Parse(CrearGasto["Importe"]);
+          for (int item = 1; item <= NumGasto; item++)
+          {
+            //Crear un objeto que permita guardar el cargamento 
+            DistribucionGasto NewGasto = new DistribucionGasto();
+            //Agregamos registro x registro al la bd
+            //NewGasto.ClienteId = int.Parse(CrearConcepto["clientid" + item].ToString());
+            //NewGasto.CentroCostosID = int.Parse(CrearConcepto["ccostid" + item]);
+            NewGasto.SolicitudID = solicitud.SolicitudID;
+            NewGasto.Porc = int.Parse(CrearConcepto["porcid" + item]);
+            NewGasto.Importe = decimal.Parse(CrearConcepto["importeid2" + item].ToString());
 
-          //  db.DistribucionGasto.Add(NewGasto);
-          //  //gastos[item - 1];
-          //}
-          //db.SaveChanges();
+            db.DistribucionGasto.Add(NewGasto);
+            //gastos[item - 1];
+          }
+          db.SaveChanges();
           //guarda el archivo
           if (Factura.Last()!=null)
           {
