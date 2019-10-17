@@ -476,7 +476,7 @@
 
     <div class="form-group">
       <div class="col-md-12">
-        <input type="submit" value="Guardar" class="btn btn-success" />
+        <input type="submit" value="Guardar" id="guardar" class="btn btn-success" />
       </div>
     </div>
 
@@ -496,9 +496,10 @@
   var re = 0;
   $(document).ready(function () {
     if ($("#status").val() >= 2) {
-      $('input, select, textarea,button').attr('disabled', 'disabled');
+        $('input,select, textarea,button').attr('readonly', 'readonly');
       if ($("#status").val() == 5) {
-        $("#comprobante").attr('enabled', 'enabled');
+          $("#comprobante").attr('enabled', 'enabled');
+          
       }
     }
     $("#btnCancelConcepto").click(function () {
