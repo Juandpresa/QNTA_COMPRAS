@@ -35,7 +35,7 @@ namespace MVCCompras.Controllers
       //Consulta join para obtener el ALIAS  de la pagadora 
       var paga = (from p in db.Pagadora
                   join s in db.Solicitud
-on p.PagadoraID equals s.PagadoraID
+                  on p.PagadoraID equals s.PagadoraID
                   select new { p.Alias });
       //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
       int cont = 0;
@@ -1026,6 +1026,7 @@ on p.PagadoraID equals s.PagadoraID
 
           }
         }
+        TempData["var"] = "Solicitud Modificada";
         return RedirectToAction("Index");
       }
       // }

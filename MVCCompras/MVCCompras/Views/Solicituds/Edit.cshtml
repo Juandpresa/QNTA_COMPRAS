@@ -696,12 +696,12 @@
             success: function (data) {
             }
           });
-          swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          swal("Eliminado!", "Concepto eliminado correctamente.", "success");
           // RESUME THE DEFAULT LINK ACTION
           eval(defaultAction);
           return true;
         } else {
-          swal("Cancelled", "Your imaginary file is safe :)", "error");
+          swal("Cancelado", "Accion cancelada.", "error");
           return false;
         }
       });
@@ -738,7 +738,6 @@
 
 
     var id = $('#ProveedorID').val();
-    swal("", id, "");
     $.ajax({
       url: '../../Solicituds/DatoCuenta',
       data: { idProv: id },

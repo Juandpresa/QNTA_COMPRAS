@@ -92,7 +92,7 @@ namespace MVCCompras.Controllers
           else
           {
             //Si user es null regresar a la vista Login
-            //ViewBag.Message = "Correo o Contraseña incorrectos";
+            ViewBag.Message = "Correo o Contraseña incorrectos!";
             return View("Login");
           }
         }
@@ -100,7 +100,7 @@ namespace MVCCompras.Controllers
       catch (Exception ex)
       {
         string error = ex.Message;
-        ViewBag.Message = "Usuario o contraseña incorrectos";
+        ViewBag.Message = "No fue posible conectarse con la Base de Datos, intentalo mas tarde.";
         return View();
       }
       
