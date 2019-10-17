@@ -24,7 +24,7 @@ namespace MVCCompras.Controllers
       return Content(pagadora.ToString());
     }
     Conversion c = new Conversion();
-    string urlDominio = "http://localhost:52772/";
+    string urlDominio = "http://148.244.124.179:8082/";
     private ComprasEntities db = new ComprasEntities();
 
     // GET: Solicituds
