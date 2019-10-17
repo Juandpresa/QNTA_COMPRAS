@@ -55,18 +55,18 @@
     </div>
     <script>
         $(document).ready(function () {
-            if ($("#mensaje").text() == "Se ha producido un error") {
+           if ($("#mensaje").text() == "No fue posible conectarse con la Base de Datos, intentalo mas tarde.") {
                 var msg = $("#mensaje").html();
-                swal("Error!!", msg, "error");
-            }
-            if ($("#mensaje").text() == "Contraseña modificada") {
+                swal("Error!", msg, "error");
+           }
+           if ($("#mensaje").text() == "Contraseña modificada") {
                 var msg = $("#mensaje").html();
-                swal("Exitoso!!", msg, "success");
-            }
-            if ($("#mensaje").html().length > 0) {
+                swal("Exitoso!", msg, "success");
+           }
+          if ($("#mensaje").text() == "Correo o Contraseña incorrectos!") {
                 var msg = $("#mensaje").html();
                 swal("Atencion!", msg, "warning");
-            }
+           }
         });
     </script>
     <footer></footer>

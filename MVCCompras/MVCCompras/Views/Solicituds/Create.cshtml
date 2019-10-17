@@ -320,7 +320,40 @@
 
 <script>
   $(document).ready(function () {
-    
+    var id = $('#ProveedorID').val();
+    $.ajax({
+      url: '../../Solicituds/DatoCuenta',
+      data: { idProv: id },
+      datatype: 'json',
+      success: function (data) {
+        $('#CuentaID').val(data);
+      }
+    });
+    $.ajax({
+      url: '../../Solicituds/DatoClabe',
+      data: { idProv: id },
+      datatype: 'json',
+      success: function (data) {
+        $('#ClabeID').val(data);
+      }
+    });
+    $.ajax({
+      url: '../../Solicituds/DatoBanco',
+      data: { idProv: id },
+      datatype: 'json',
+      success: function (data) {
+        $('#BancoID').val(data);
+      }
+    });
+    var solte = $('#SolicitudID').val();
+    $.ajax({
+      url: '../../Solicituds/DatoSol',
+      data: { idProv: solte },
+      datatype: 'json',
+      success: function (data) {
+        $('#Solicitante').val(data);
+      }
+    });
 
     $('#ProveedorID').change(function () {
       var id = $(this).val();
