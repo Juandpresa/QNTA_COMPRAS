@@ -738,6 +738,7 @@
 
 
     var id = $('#ProveedorID').val();
+    swal("", id, "");
     $.ajax({
       url: '../../Solicituds/DatoCuenta',
       data: { idProv: id },
