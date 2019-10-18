@@ -32,64 +32,67 @@ namespace MVCCompras.Controllers
     public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
     {
      
-      //Consulta join para obtener el ALIAS  de la pagadora 
-      var paga = (from p in db.Pagadora
-                  join s in db.Solicitud
-                  on p.PagadoraID equals s.PagadoraID
-                  select new { p.Alias });
-      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
-      int cont = 0;
-      foreach (var item in paga)
-      {
-        cont++;
-      }
-      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
-      int pagadora = 0;
-      string[] pag = new string[cont];
-      foreach (var item in paga)
-      {
-        pag[pagadora] = item.Alias;
-        pagadora = pagadora + 1;
-      }
-      //asignar a ViewData el valor del arreglo
-      ViewData["pagadora"] = pag;
-
-      //Consulta join para obtener el Status de solicitud
-      var estat = (from s in db.Solicitud
-                   join e in db.Seguimiento
-                   on s.SolicitudID equals e.SolicitudID
-                   join d in db.Estatus
-                   on e.EstatusID equals d.EstatusId
-                   select new { d.Nombre });
-
-      //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae estat
-      int conta = 0;
-      foreach (var item in estat)
-      {
-        conta++;
-      }
-      //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
-      int statu = 0;
-      string[] status = new string[conta];
-      foreach (var item in estat)
-      {
-        status[statu] = item.Nombre;
-        statu = statu + 1;
-      }
-      //asignar a ViewData el valor del arreglo
-      ViewData["status"] = status;
-      foreach (var item in estat)
-      {
-        string test = item.Nombre;
-        ViewBag.estatus = test;
-      }
-
-      var estatus = from s in db.Solicitud
-                    select s;
+      
       int pageSize = 8;
       int pageNumber = (page ?? 1);
       try
       {
+        //Consulta join para obtener el ALIAS  de la pagadora 
+        var paga = (from p in db.Pagadora
+                    join s in db.Solicitud
+                    on p.PagadoraID equals s.PagadoraID
+                    select new { p.Alias });
+        //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae paga
+        int cont = 0;
+        foreach (var item in paga)
+        {
+          cont++;
+        }
+        //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+        int pagadora = 0;
+        string[] pag = new string[cont];
+        foreach (var item in paga)
+        {
+          pag[pagadora] = item.Alias;
+          pagadora = pagadora + 1;
+        }
+        //asignar a ViewData el valor del arreglo
+        ViewData["pagadora"] = pag;
+
+        //Consulta join para obtener el Status de solicitud
+        var estat = (from s in db.Solicitud
+                     join e in db.Seguimiento
+                     on s.SolicitudID equals e.SolicitudID
+                     join d in db.Estatus
+                     on e.EstatusID equals d.EstatusId
+                     select new { d.Nombre });
+
+        //ciclo que asigna a la variable "cont" el tamaño de un arreglo que sera similar al tamaño de las tuplas que trae estat
+        int conta = 0;
+        foreach (var item in estat)
+        {
+          conta++;
+        }
+        //foreach que asigna los valores de la consulta y los guarda en el arreglo pag
+        int statu = 0;
+        string[] status = new string[conta];
+        foreach (var item in estat)
+        {
+          status[statu] = item.Nombre;
+          statu = statu + 1;
+        }
+        //asignar a ViewData el valor del arreglo
+        ViewData["status"] = status;
+        foreach (var item in estat)
+        {
+          string test = item.Nombre;
+          ViewBag.estatus = test;
+        }
+
+        var estatus = from s in db.Solicitud
+                      select s;
+
+
         //Si sesion trae datos permite el acceso a la vista
         if (Session["idUsuario"] != null)
         {
@@ -174,18 +177,20 @@ namespace MVCCompras.Controllers
         }
         else
         {
+
           //return RedirectToActionPermanent("../Home/Login");
-          return View(estatus.ToPagedList(pageNumber, pageSize));
+          //return View(estatus.ToPagedList(pageNumber, pageSize));
+          return View();
         }
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-
+        string ms = ex.Message;
+        HomeController h = new HomeController();
+        ViewBag.Message = "No fue posible conectarse con alguna tabla, intentalo mas tarde.";
+        h.CerrarSesion();
         throw;
       }
-
-
-
     }
 
     //public ActionResult Index()
