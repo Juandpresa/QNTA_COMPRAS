@@ -93,6 +93,9 @@ namespace MVCCompras.Controllers
     {
       if (ModelState.IsValid)
       {
+        usuarios.AMaterno = usuarios.Nombre;
+        usuarios.APaterno = usuarios.Nombre;
+        usuarios.Token_Recuperacion = null;
         db.Entry(usuarios).State = EntityState.Modified;
         db.SaveChanges();
         return RedirectToAction("Index");

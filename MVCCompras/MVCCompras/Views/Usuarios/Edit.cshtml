@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "Edit";
 }
-@using (Html.BeginForm())
+@if (ViewBag.Message != null)
+{
+    <span id="mensaje" style="display:none;">@ViewBag.Message</span>
+}
+@using (Html.BeginForm(Html.BeginForm("Edit", "Usuarios", FormMethod.Post, new { enctype = "multipart/form-data" })))
 {
     @Html.AntiForgeryToken()
     <section id="main-content">
