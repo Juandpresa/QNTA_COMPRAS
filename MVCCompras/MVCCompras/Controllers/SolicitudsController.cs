@@ -33,7 +33,7 @@ namespace MVCCompras.Controllers
     {
      
       
-      int pageSize = 8;
+      int pageSize = 15;
       int pageNumber = (page ?? 1);
       try
       {
@@ -509,11 +509,12 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, ReferenciaBancaria referencia, Usuarios usr, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
+    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
       string pass = "";
       int idSol = 0;
       //string correo = Session["Correo"].ToString();
+      
       if (ModelState.IsValid)
       {
         try
