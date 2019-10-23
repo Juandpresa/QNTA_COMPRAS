@@ -541,7 +541,7 @@ namespace MVCCompras.Controllers
               }
             }
           }
-          decimal tota = decimal.Parse(CrearConcepto.Get("ImporteTotal"));
+          decimal tota = decimal.Parse(CrearConcepto.Get("ImporteTotal").ToString());
           ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
           ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
           //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
