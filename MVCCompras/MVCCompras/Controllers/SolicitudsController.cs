@@ -509,7 +509,7 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Exclude = "Solicitante, Factura")] Solicitud solicitud, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
+    public ActionResult Create([Bind(Exclude = "Solicitante, Factura, ImporteTotal")] Solicitud solicitud, FormCollection CrearConcepto, Factura fac, IEnumerable<HttpPostedFileBase> Factura)
     {
       string pass = "";
       int idSol = 0;
@@ -541,6 +541,7 @@ namespace MVCCompras.Controllers
               }
             }
           }
+          decimal tota = decimal.Parse(CrearConcepto.Get("ImporteTotal"));
           ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
           ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
           //ViewBag.TipoPAgoID = new SelectList(db.TipoPago, "TipoPagoID", "Nombre", solicitud.Concepto);
@@ -565,7 +566,7 @@ namespace MVCCompras.Controllers
           var ssoo = db.Usuarios.FirstOrDefault(e => e.idUsuario == SOLID2);
           //asignamos el nombre solicitante al campo solicitante
           solicitud.Solicitante = ssoo.Nombre;
-
+          solicitud.ImporteTotal = tota;
           db.Solicitud.Add(solicitud);
 
           //db.ReferenciaBancaria.Add(referencia);
