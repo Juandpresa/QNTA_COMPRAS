@@ -586,7 +586,9 @@ namespace MVCCompras.Controllers
             NewConcepto.SolicitudId = solicitud.SolicitudID;
             NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
             NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
-            NewConcepto.ImporteParcial = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+            decimal total = decimal.Parse(CrearConcepto["importeid" + item].ToString());
+            total = total / 100;
+            NewConcepto.ImporteParcial = total;
 
             db.Concepto.Add(NewConcepto);
             conceptos[item - 1] = NewConcepto.Nombre;
