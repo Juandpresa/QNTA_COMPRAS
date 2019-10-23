@@ -514,7 +514,7 @@ namespace MVCCompras.Controllers
       string pass = "";
       int idSol = 0;
       //string correo = Session["Correo"].ToString();
-      
+      //ModelState.Remove("ImporteTotal");
       if (ModelState.IsValid)
       {
         try
