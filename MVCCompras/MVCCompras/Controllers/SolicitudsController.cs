@@ -566,6 +566,7 @@ namespace MVCCompras.Controllers
           var ssoo = db.Usuarios.FirstOrDefault(e => e.idUsuario == SOLID2);
           //asignamos el nombre solicitante al campo solicitante
           solicitud.Solicitante = ssoo.Nombre;
+          tota = tota / 100;
           solicitud.ImporteTotal = tota;
           db.Solicitud.Add(solicitud);
 
