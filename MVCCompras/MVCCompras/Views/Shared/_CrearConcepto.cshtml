@@ -38,7 +38,7 @@
                 <div class="form-group" oninput="Importe.value = ImporteTotal.value">
                   @Html.LabelFor(model => model.ImporteParcial, "Importe", htmlAttributes: new { @class = "control-label col-md-2" })
                   <div class="col-md-10">
-                    @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", ValueType = true, @placeholder = "Solo Numeros" })
+                    @Html.TextBox("ImporteID", null, htmlAttributes: new { @class = "form-control", @placeholder = "Solo Numeros" })
                     @Html.ValidationMessageFor(model => model.ImporteParcial, "", new { @class = "text-danger" })
                   </div>
                 </div>
