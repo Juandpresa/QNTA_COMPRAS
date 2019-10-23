@@ -856,11 +856,12 @@ namespace MVCCompras.Controllers
     // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento,Factura")] Solicitud solicitud, FormCollection collection, Seguimiento seg, FormCollection CrearConcepto, IEnumerable<HttpPostedFileBase> Factura, Factura fac, object value)
+    public ActionResult Edit([Bind(Exclude = "Solicitante, EstatusID, CuentaID, FechaMovimiento,Factura, ImporteTotal")] Solicitud solicitud, Seguimiento seg, FormCollection CrearConcepto, IEnumerable<HttpPostedFileBase> Factura, Factura fac, object value)
     {
 
       if (ModelState.IsValid)
       {
+        decimal tota = decimal.Parse(CrearConcepto.Get("ImporteTotal"));
         ViewBag.ProveedorID = new SelectList(db.Proveedor, "ProveedorID", "Alias", solicitud.ProveedorID);
         ViewBag.FormaPagoID = new SelectList(db.FormaPago, "FormaPagoID", "Nombre", solicitud.FormaPagoID);
         ViewBag.TipoGastoID = new SelectList(db.TipoGasto, "TipoGastoID", "Nombre", solicitud.TipoGastoID);
@@ -871,7 +872,8 @@ namespace MVCCompras.Controllers
         solicitud.FechaModificacion = DateTime.Now;
         solicitud.CuentaIDModificacion = Session["idUsuario"].ToString();
         ViewBag.Pagadora = new SelectList(db.Pagadora, "PagadoraID", "Alias", solicitud.PagadoraID);
-        solicitud.Solicitante = collection.Get("Solicitante");
+        solicitud.Solicitante = CrearConcepto.Get("Solicitante");
+        solicitud.ImporteTotal = tota;
         db.Entry(solicitud).State = EntityState.Modified;
         db.SaveChanges();
         //AGREGA CONCEPTOS NUEVOS 
@@ -948,7 +950,7 @@ namespace MVCCompras.Controllers
         }
 
         ////SEGUIMIENTO
-        string s = collection.Get("valida");
+        string s = CrearConcepto.Get("valida");
         if (s == "on")
         {
           string est = "";
