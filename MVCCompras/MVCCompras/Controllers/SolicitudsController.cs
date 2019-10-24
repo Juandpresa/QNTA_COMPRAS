@@ -566,7 +566,7 @@ namespace MVCCompras.Controllers
           var ssoo = db.Usuarios.FirstOrDefault(e => e.idUsuario == SOLID2);
           //asignamos el nombre solicitante al campo solicitante
           solicitud.Solicitante = ssoo.Nombre;
-          tota = tota / 100;
+          //tota = tota / 100;
           solicitud.ImporteTotal = tota;
           db.Solicitud.Add(solicitud);
 
@@ -587,7 +587,7 @@ namespace MVCCompras.Controllers
             NewConcepto.TipoPagoID = int.Parse(CrearConcepto["idTipoPago" + item]);
             NewConcepto.Nombre = CrearConcepto["descid" + item].ToString();
             decimal Total = decimal.Parse(CrearConcepto["importeid" + item].ToString());
-            Total = Total / 100;
+            //Total = Total / 100;
             NewConcepto.ImporteParcial = Total;
 
             db.Concepto.Add(NewConcepto);
